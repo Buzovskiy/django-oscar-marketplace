@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from oscar.defaults import *
 
+import decouple
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-iuge%-@c!ljz%4)p8hey&xc8o0_5lw(8u*8u67cc%-dha8j#co'
+SECRET_KEY = decouple.config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = decouple.config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = decouple.config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 
 # Application definition
@@ -139,12 +140,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'marketplace',
-        'USER': 'marketplace',
-        'PASSWORD': 'marketplace',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': decouple.config('DEFAULT_DB_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': decouple.config('DEFAULT_DB_NAME', default=BASE_DIR / 'db.sqlite3'),
+        'USER': decouple.config('DEFAULT_DB_USER'),
+        'PASSWORD': decouple.config('DEFAULT_DB_PASSWORD'),
+        'HOST': decouple.config('DEFAULT_DB_HOST', default='localhost'),
+        'PORT': decouple.config('DEFAULT_DB_PORT', default='5432'),
     }
 }
 
@@ -198,3 +199,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+OSCAR_INITIAL_ORDER_STATUS = 'Pending'
+OSCAR_INITIAL_LINE_STATUS = 'Pending'
+OSCAR_ORDER_STATUS_PIPELINE = {
+    'Pending': ('Being processed', 'Cancelled',),
+    'Being processed': ('Processed', 'Cancelled',),
+    'Cancelled': (),
+}
