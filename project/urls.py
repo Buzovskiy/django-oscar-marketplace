@@ -28,6 +28,7 @@ urlpatterns = [
     # Nonetheless, it's often useful for debugging.
 
     path('admin/', admin.site.urls),
+    path('testmail/', include('testmail.urls')),
 
     path('', include(apps.get_app_config('oscar').urls[0])),
 ]

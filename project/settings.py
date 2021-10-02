@@ -81,6 +81,8 @@ INSTALLED_APPS = [
     'treebeard',
     'sorl.thumbnail',  # Default thumbnail backend, can be replaced
     'django_tables2',
+
+    'testmail'
 ]
 
 SITE_ID = 1
@@ -210,3 +212,12 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 }
 
 OSCAR_SHOP_NAME = 'Weestep'
+
+EMAIL_HOST = decouple.config('EMAIL_HOST')
+EMAIL_PORT = decouple.config('EMAIL_PORT')
+EMAIL_HOST_USER = decouple.config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = decouple.config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = decouple.config('EMAIL_USE_SSL', default=False, cast=bool)
+EMAIL_USE_TLS = decouple.config('EMAIL_USE_TLS', default=False, cast=bool)
+OSCAR_FROM_EMAIL = decouple.config('OSCAR_FROM_EMAIL')
+
