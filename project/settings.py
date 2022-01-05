@@ -86,6 +86,10 @@ INSTALLED_APPS = [
     'testmail'
 ]
 
+if DEBUG:
+    # INSTALLED_APPS += ['debug_toolbar']
+    pass
+
 SITE_ID = 1
 
 MIDDLEWARE = [
@@ -100,6 +104,9 @@ MIDDLEWARE = [
     'oscar.apps.basket.middleware.BasketMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
+
+if 'debug_toolbar' in INSTALLED_APPS:
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
@@ -221,4 +228,9 @@ EMAIL_HOST_PASSWORD = decouple.config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = decouple.config('EMAIL_USE_SSL', default=False, cast=bool)
 EMAIL_USE_TLS = decouple.config('EMAIL_USE_TLS', default=False, cast=bool)
 OSCAR_FROM_EMAIL = decouple.config('OSCAR_FROM_EMAIL')
+
+# The Debug Toolbar is shown only if your IP address is listed in the INTERNAL_IPS
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
