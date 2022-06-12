@@ -115,7 +115,11 @@ AUTHENTICATION_BACKENDS = (
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+        # 'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://solr:mQgWyuKlfq@127.0.0.1:8983/solr/django-oscar-marketplace',
+        'ADMIN_URL': 'http://solr:mQgWyuKlfq@127.0.0.1:8983/solr/admin/cores',
+        'INCLUDE_SPELLING': True,
     },
 }
 
