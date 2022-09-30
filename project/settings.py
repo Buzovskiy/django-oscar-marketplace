@@ -141,7 +141,7 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         # 'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/marketplace",
+        'URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/{decouple.config('SOLR_CORE')}",
         'ADMIN_URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/admin/cores",
         'INCLUDE_SPELLING': True,
     },
