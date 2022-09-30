@@ -1,0 +1,55 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load blog_tag %}
+
+{% block title %}{{ shop_name }} | {% trans 'Blog' %}{% endblock %}
+
+{% block blog_active %}active{% endblock %}
+
+{% block content_wrapper %}
+<section class="blog section-top">
+    <div class="container">
+        <div class="tabs">
+            <div class="blog__box">
+                <h1 class="title color-orange">{% filter lower %}{% trans 'Blog' %}{% endfilter %}</h1>
+                <ul class="tabs__list">
+                    <li class="tabs__item">
+                        <a href="{% url 'blog:blog-all' %}">
+                            <button class="tabs__btn {{ active_label|check_active:'all' }}" data-tabs-path="all-publications">{% trans 'All publications' %}</button>
+                        </a>
+                    </li>
+                    <li class="tabs__item">
+                        <a href="{% url 'blog:blog-sorted' 'popular' %}">
+                            <button class="tabs__btn {{ active_label|check_active:'popular' }}" data-tabs-path="popular">{% trans 'Popular' %}</button>
+                        </a>
+                    </li>
+                    <li class="tabs__item">
+                        <a href="{% url 'blog:blog-sorted' 'new' %}">
+                            <button class="tabs__btn {{ active_label|check_active:'new' }}" data-tabs-path="new">{% trans 'New' %}</button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tabs__content tabs__content--active" data-tabs-target="all-publications">
+                <div class="blog__items">
+                    {% for object in page_obj %}
+                        {% include 'blog/partials/post.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% block pagination %}
+            {% if page_obj.has_next %}
+                <div class="show__more">
+                    <a href="{{ page_url }}?page={{ page_obj.next_page_number }}" class="btn btn-orange--transparent">{% trans 'Show more' %}</a>
+                </div>
+            {% endif %}
+            {% if page_obj.paginator.num_pages > 1 %}
+                {% include 'partials/pagination.html' %}
+            {% endif %}
+        {% endblock %}
+    </div>
+</section>
+{% endblock %}

@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import sys
+from django.utils.translation import gettext_lazy as _
 from oscar.defaults import *
 
 import decouple
@@ -31,6 +32,10 @@ DEBUG = decouple.config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = decouple.config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20 Mb
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,13 +48,15 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django.contrib.sitemaps',
 
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
     'oscar.apps.checkout.apps.CheckoutConfig',
     'oscar.apps.address.apps.AddressConfig',
     'oscar.apps.shipping.apps.ShippingConfig',
-    'oscar.apps.catalogue.apps.CatalogueConfig',
+    # 'oscar.apps.catalogue.apps.CatalogueConfig',
+    'application.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
     # 'oscar.apps.partner.apps.PartnerConfig',
@@ -59,7 +66,12 @@ INSTALLED_APPS = [
     'oscar.apps.offer.apps.OfferConfig',
     'oscar.apps.order.apps.OrderConfig',
     'oscar.apps.customer.apps.CustomerConfig',
-    'oscar.apps.search.apps.SearchConfig',
+
+
+    # 'oscar.apps.search.apps.SearchConfig',  # oscar
+    'application.search.apps.SearchConfig',  # application
+
+
     'oscar.apps.voucher.apps.VoucherConfig',
     'oscar.apps.wishlists.apps.WishlistsConfig',
     'oscar.apps.dashboard.apps.DashboardConfig',
@@ -83,7 +95,19 @@ INSTALLED_APPS = [
     'sorl.thumbnail',  # Default thumbnail backend, can be replaced
     'django_tables2',
 
-    'testmail'
+    'adminsortable2',
+    'ckeditor',
+    'ckeditor_uploader',
+    'rosetta',
+    'captcha',
+    'testmail',
+    'oscar_routing',
+    'application.home.apps.HomeConfig',
+    'application.blog.apps.BlogConfig',
+    'application.contacts.apps.ContactsConfig',
+    'application.exchange.apps.ExchangeConfig',
+    'application.interview.apps.InterviewConfig',
+    'application.search_optimisation_fields.apps.SearchOptimisationFieldsConfig',
 ]
 
 if DEBUG:
@@ -102,7 +126,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'oscar.apps.basket.middleware.BasketMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'oscar_routing.middleware.block_ip.BlockedIpMiddleware',
 ]
 
 if 'debug_toolbar' in INSTALLED_APPS:
@@ -117,8 +141,8 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         # 'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://solr:mQgWyuKlfq@127.0.0.1:8983/solr/django-oscar-marketplace',
-        'ADMIN_URL': 'http://solr:mQgWyuKlfq@127.0.0.1:8983/solr/admin/cores',
+        'URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/marketplace",
+        'ADMIN_URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/admin/cores",
         'INCLUDE_SPELLING': True,
     },
 }
@@ -143,6 +167,10 @@ TEMPLATES = [
                 'oscar.apps.communication.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
             ],
+            'libraries':{
+                'common_template_tags': 'templatetags.common_template_tags',
+                'common_filters': 'templatetags.common_filters',
+            }
         },
     },
 ]
@@ -187,7 +215,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -196,6 +224,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LOCALE_PATHS = (
+    BASE_DIR / 'locale',
+)
+
+ROSETTA_MESSAGES_PER_PAGE = 1000
+ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -209,11 +244,20 @@ STATICFILES_DIRS = [BASE_DIR / 'static_src']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+CKEDITOR_UPLOAD_PATH = "ckeditor-uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 'auto',
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 OSCAR_INITIAL_ORDER_STATUS = 'Pending'
 OSCAR_INITIAL_LINE_STATUS = 'Pending'
@@ -224,6 +268,12 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 }
 
 OSCAR_SHOP_NAME = 'Weestep'
+OSCAR_SHOP_TAGLINE = 'be bigger'
+OSCAR_HOMEPAGE = reverse_lazy('home:home')
+
+OSCAR_PRODUCTS_PER_PAGE = 12
+
+OSCAR_DEFAULT_CURRENCY = 'EUR'
 
 EMAIL_HOST = decouple.config('EMAIL_HOST')
 EMAIL_PORT = decouple.config('EMAIL_PORT')
@@ -233,8 +283,86 @@ EMAIL_USE_SSL = decouple.config('EMAIL_USE_SSL', default=False, cast=bool)
 EMAIL_USE_TLS = decouple.config('EMAIL_USE_TLS', default=False, cast=bool)
 OSCAR_FROM_EMAIL = decouple.config('OSCAR_FROM_EMAIL')
 
+SERVER_EMAIL = decouple.config('OSCAR_FROM_EMAIL')
+EMAIL_SUBJECT_PREFIX = '[POSTMASTER] '
+
 # The Debug Toolbar is shown only if your IP address is listed in the INTERNAL_IPS
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+# Список 2-tuples email адресов, на которые отправляются сообщения со страницы /contacts/
+MANAGERS = []
+for email in decouple.config('MANAGERS', cast=lambda v: [s.strip() for s in v.split(',')]):
+    if email:
+        MANAGERS += [('Postmaster', email)]
+
+# Root directory for 1c exchange temporary files
+EXCHANGE_ROOT = MEDIA_ROOT / '1c'
+# The directory where temporary import and offers xml are stored.
+# The string value will be appended to MEDIA_ROOT
+EXCHANGE_XML_UPLOAD_TO = '1c/temp/'
+# The directory where temporary product images are stored.
+# The string value will be appended to MEDIA_ROOT
+EXCHANGE_IMAGE_UPLOAD_TO = '1c/temp/images/'
+
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+# CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_arcs', 'captcha.helpers.noise_dots',)
+# CAPTCHA_LETTER_ROTATION = (-1, 1)
+CAPTCHA_IMAGE_SIZE = (130, 100)
+CAPTCHA_FONT_SIZE = 30
+# CAPTCHA_LENGTH = 3
+if 'test' in sys.argv:
+    CAPTCHA_TEST_MODE = True
+
+# Setting for oscar_routing.middleware.block_ip.BlockedIpMiddleware
+BLOCKED_IPS = ['46.161.11.252']
+
+# Attributes code
+# that are the result of slugifying when 1c exchanges happen
+ATTR_COLOR_CODE = 'tsvet'
+ATTR_SIZES_CODE = 'razmery'
+# The slug of product class shoes
+PRODUCT_CLASS_SHOES_SLUG = 'shoes'
+# The partner which is to be added to the database on 1c exchange
+PARTNER_DEFAULT = {'code': 'weestep', 'name': 'Weestep'}
+
+# Search facets
+OSCAR_SEARCH_FACETS = {
+    'fields': OrderedDict([
+        # The key for these dicts will be used when passing facet data
+        # to the template. Same for the 'queries' dict below.
+        # ('product_class', {'name': _('Type'), 'field': 'product_class'}),
+        ('rating', {'name': _('Rating'), 'field': 'rating'}),
+        ('category', {'name': _('Type'), 'field': 'category'}),
+        ('gender', {'name': _('Gender'), 'field': 'gender'}),
+        ('season', {'name': _('Season'), 'field': 'season'}),
+        ('size', {'name': _('Size'), 'field': 'size', 'options': {'sort': 'index'}}),
+        ('material', {'name': _('Material'), 'field': 'material'}),
+        ('color', {'name': _('Color'), 'field': 'color'}),
+        # You can specify an 'options' element that will be passed to the
+        # SearchQuerySet.facet() call.
+        # For instance, with Elasticsearch backend, 'options': {'order': 'term'}
+        # will sort items in a facet by title instead of number of items.
+        # It's hard to get 'missing' to work
+        # correctly though as of Solr's hilarious syntax for selecting
+        # items without a specific facet:
+        # http://wiki.apache.org/solr/SimpleFacetParameters#facet.method
+        # 'options': {'missing': 'true'}
+    ]),
+    'queries': OrderedDict([
+        # ('price_range',
+        #  {
+        #      'name': _('Price range'),
+        #      'field': 'price',
+        #      'queries': [
+        #          # This is a list of (name, query) tuples where the name will
+        #          # be displayed on the front-end.
+        #          (_('0 to 20'), '[0 TO 20]'),
+        #          (_('20 to 40'), '[20 TO 40]'),
+        #          (_('40 to 60'), '[40 TO 60]'),
+        #          (_('60+'), '[60 TO *]'),
+        #      ]
+        #  }),
+    ]),
+}

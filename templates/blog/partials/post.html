@@ -1,0 +1,8 @@
+<a href="{% url 'blog:post-detail' object.slug %}" class="blog__item">
+    <div class="blog__img">
+        {% if object.image_preview %}
+        <img src="{{ object.image_preview.url }}" alt="image"/>
+        {% endif %}
+    </div>
+    <p class="blog__desc">{{ object.title }}</p>
+</a>

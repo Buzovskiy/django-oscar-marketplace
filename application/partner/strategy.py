@@ -37,7 +37,8 @@ class UseFirstStockRecord(object):
     """
 
     def select_stockrecord(self, product):
-        return product.stockrecords.filter(num_in_stock__gt=0).filter(num_in_stock__gt=F('num_allocated')).first()
+        # return product.stockrecords.filter(num_in_stock__gt=0).filter(num_in_stock__gt=F('num_allocated')).first()
+        return product.stockrecords.first()
 
 
 class Default(UseFirstStockRecord, StockRequired, NoTax, Structured):

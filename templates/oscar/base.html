@@ -1,0 +1,72 @@
+{% load i18n %}
+{% load static %}
+
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="{% block html_class %}no-js{% endblock %}">
+    <head>
+        <title>{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
+
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="created" content="{% now "jS M Y h:i" %}" />
+        <meta name="description" content="{% block description %}Weestep official online store and wholesale of weestep brand shoes in Europe, children's shoes wholesale at Wólka Kosowska, Weestep Sp. z o. o.{% endblock %}" />
+        <meta name="keywords" content="{% block keywords %}{% trans 'weestep, wholesale baby shoes, Europe wholesale warehouse shoes Weestep, wholesale stock children\'s shoes from the manufacturer, Wólka Kosowska' %}{% endblock %}">
+        <meta name="viewport" content="{% block viewport %}width=device-width, initial-scale=1, shrink-to-fit=no{% endblock %}" />
+        <meta name="robots" content="NOARCHIVE,NOCACHE" />
+        {% block favicon %}
+		<!--	favicon-->
+			<link rel="apple-touch-icon" sizes="180x180" href="{% static "custom/favicon/apple-touch-icon.png" %}">
+			<link rel="icon" type="image/png" sizes="32x32" href="{% static "custom/favicon/favicon-32x32.png" %}">
+			<link rel="icon" type="image/png" sizes="194x194" href="{% static "custom/favicon/favicon-194x194.png" %}">
+			<link rel="icon" type="image/png" sizes="192x192" href="{% static "custom/favicon/android-chrome-192x192.png" %}">
+			<link rel="icon" type="image/png" sizes="16x16" href="{% static "custom/favicon/favicon-16x16.png" %}">
+			<link rel="manifest" href="{% static "custom/favicon/site.webmanifest" %}">
+			<link rel="mask-icon" href="{% static "custom/favicon/safari-pinned-tab.svg" %}" color="#ff7c2a">
+			<link rel="shortcut icon" href="{% static "custom/favicon/favicon.ico" %}?v=1">
+			<meta name="apple-mobile-web-app-title" content="weestep">
+			<meta name="application-name" content="weestep">
+			<meta name="msapplication-TileColor" content="#fff">
+			<meta name="msapplication-config" content="{% static "custom/favicon/browserconfig.xml" %}">
+			<meta name="theme-color" content="#fff">
+		<!--	end favicon-->
+        {% endblock %}
+
+        {# Block where global CSS will go. #}
+        {% block styles %}{% endblock %}
+
+        {# Additional CSS - specific to certain pages #}
+        {% block extrastyles %}{% endblock %}
+
+        {% block extrahead %}{% endblock %}
+
+        {% block tracking %}
+            {# Default to using Google analytics #}
+            {% include "oscar/partials/google_analytics.html" %}
+        {% endblock %}
+    </head>
+
+    <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %}">
+        {# Main content goes in this 'layout' block #}
+        {% block layout %}{% endblock %}
+
+        {# Scripts loaded from a CDN. #}
+		{% block cdn_scripts %}{% endblock %}
+
+        {# Local scripts #}
+        {% block scripts %}
+        {% endblock %}
+
+        {# Additional JS scripts #}
+        {% block extrascripts %}{% endblock %}
+
+        {# Block for body onload functions #}
+        <script>
+            $(function() {
+                {% block onbodyload %}{% endblock %}
+            });
+        </script>
+
+        {# Page meta-data - this is populated by the 'metadata' template context processor #}
+    </body>
+</html>

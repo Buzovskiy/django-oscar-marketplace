@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load image_tags %}
+
+{% with all_images=product.get_all_images %}
+    {# use length rather then count as the images get queried anyways #}
+    {% if all_images|length > 1 %}
+        <div class="swiper cart__swiper">
+            <div class="swiper-wrapper cart__wrapper">
+                {% for image in all_images %}
+                    <div class="swiper-slide">
+                        <div class="cart__img">
+                            {% oscar_thumbnail image.original "440x400" upscale=False as thumb %}
+                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    {% endif %}
+{% endwith %}

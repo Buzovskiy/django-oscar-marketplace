@@ -1,0 +1,20 @@
+{% extends "interview/interview-layout.html" %}
+{% load static %}
+{% load i18n %}
+
+
+{% block back_to_catalogue %}{% endblock %}
+
+{% block interview__inner %}
+    <div class="interview__img">
+        <img src="{% static 'custom/build/img/image-3.png' %}" alt="image" />
+    </div>
+    <div class="interview__right">
+        <h2 class="interview__title color-white">perfect fit</h2>
+        <p class="interview__desc color-white">{% trans "Thanks to the answers of the child, we will choose the best option" %}</p>
+        <div class="interview__btn">
+            <a href="{% url 'interview:stage_01' %}" class="btn btn-white">{% trans "Start" %}</a>
+            <a href="{% url 'catalogue:index' %}" class="btn btn-white--transparent">{% trans "Go to the catalog" %}</a>
+        </div>
+    </div>
+{% endblock %}

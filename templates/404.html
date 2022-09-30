@@ -1,0 +1,26 @@
+{% extends 'oscar/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% trans 'Page not found' %} | {{ block.super }}
+{% endblock %}
+
+{% block content_wrapper %}
+<section class="error">
+    <div class="error__content">
+        <div class="paint error__img" id="paint"></div>
+        <h3 class="error__numbers">404</h3>
+        <p class="error__text">{% trans "Page not found, moved, changed, or no longer exists." %} </p>
+        <a href="{{ homepage_url }}" class="btn btn-orange">{% trans "Home" %}</a>
+
+        <div class="error__choose error__choose-desktop">
+            {% trans "Choose your favorite color by clicking the left mouse button." %}
+        </div>
+
+        <div class="error__choose error__choose-mob">
+            {% trans "To change the color, double-tap the screen in place of the picture" %}
+        </div>
+    </div>
+</section>
+{% endblock %}

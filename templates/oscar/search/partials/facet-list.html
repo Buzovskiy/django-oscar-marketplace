@@ -1,0 +1,37 @@
+{% load i18n %}
+{% load catalogue_filters %}
+
+{% for item in items %}
+    {% if item.selected %}
+        <li data-index="{{ forloop.counter }}" class="active">
+            <label>
+                    {% if is_color %}
+                        <span style="background-color: {{ item.name|get_facet_color_hex_code }};" class="color"></span>
+                    {% endif %}
+                <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" checked />
+                <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ item.deselect_url }}" />
+                <a href="{{ item.deselect_url }}">{{ item.name|show_facet_value:field }}</a>
+                {% if item.show_count %}
+                    <span class="count">({{ item.count }})</span>
+                {% endif %}
+            </label>
+        </li>
+    {% else %}
+        {% if item.disabled %}
+        {% else %}
+            <li data-index="{{ forloop.counter }}">
+                <label>
+                        {% if is_color %}
+                            <span style="background-color: {{ item.name|get_facet_color_hex_code }};" class="color"></span>
+                        {% endif %}
+                    <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" />
+                    <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ item.select_url }}" />
+                    <a href="{{ item.select_url }}">{{ item.name|show_facet_value:field }}</a>
+                    {% if item.show_count %}
+                        <span class="count">({{ item.count }})</span>
+                    {% endif %}
+                </label>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}

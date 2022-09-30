@@ -1,0 +1,54 @@
+.quantity {
+	width: 88px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	margin: 30px auto 0;
+
+	&__button {
+		flex: 0 0 30px;
+		position: relative;
+		cursor: pointer;
+
+		&::after {
+			content: '';
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+			top: 50%;
+			width: 7px;
+			height: 10px;
+		}
+
+
+		&_plus {
+			&::after {
+				transform: translateY(-50%);
+				left: 10px;
+			}
+		}
+
+		&_minus {
+			&::after {
+				transform: translateY(-50%) rotate(-180deg);
+				right: 10px;
+			}
+		}
+	}
+
+	&__input {
+		flex: 1 1 auto;
+
+		input {
+			width: 40px;
+			height: 100%;
+			border-radius: 50%;
+			background-color: #F0F0F0;
+			color: $gray92;
+			font-size: 16px;
+			font-weight: 700;
+			text-align: center;
+		}
+	}
+}

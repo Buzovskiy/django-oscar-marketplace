@@ -1,0 +1,39 @@
+.intro {
+	position: relative;
+	background-color: $color-grey;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 1050px;
+	margin-top: -149px;
+
+	@media (min-width: 992px) {
+		margin-top: -182px;
+	}
+
+	@media (min-width: 1210px) {
+		margin-top: -149px;
+	}
+
+	&__title {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		transform: translateY(-50%);
+		width: 100%;
+		text-align: center;
+		font-size: 64px;
+		line-height: 1.2;
+		font-weight: 700;
+		color: $color-orange;
+		letter-spacing: -3px;
+
+		@media (min-width: 576px) {
+			font-size: 130px;
+		}
+
+		@media (min-width: 992px) {
+			font-size: 200px;
+		}
+	}
+}

@@ -1,0 +1,82 @@
+.fieldWrapper {
+    .selectric {
+        border-radius: 100px;
+        background: #F3F1F2;
+        border: none;
+        height: 50px;
+
+        .button {
+            background: #F3F1F2;
+            height: 50px;
+
+            &::before {
+                content: '';
+                background-image: url('../img/arrow-down-3.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                position: absolute;
+                top: 50%;
+                right: 20px;
+                transform: translateY(-50%);
+                width: 10px;
+                height: 7px;
+                transition: all 0.3s ease;
+            }
+
+            &:after {
+                content: none;
+            }
+        }
+
+        .label {
+            margin-left: 25px;
+            color: #4A4A4A;
+            font-size: 16px;
+            line-height: 50px;
+            height: 50px;
+        }
+
+        &-open {
+            .selectric {
+                border-radius: 20px 20px 0 0;
+
+                .button {
+                    &::before {
+                        transform: translateY(-50%) rotate(180deg);
+                    }
+                }
+            }
+        }
+
+        &-items {
+            background: #F3F1F2;
+            border: none;
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+            box-shadow: none;
+
+            ul {
+                padding: 0 25px;
+            }
+
+            li {
+                padding: 20px 0;
+                color: #4A4A4A;
+                font-size: 16px;
+                transition: all 0.1s ease;
+                border-top: 1px solid #E8E5E6;
+
+                &:hover {
+                    background-color: transparent;
+                    color: $color-orange;
+                }
+
+                &.highlighted {
+                    background-color: transparent;
+                    color: $color-orange;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,59 @@
+.accordion {
+
+	&__item {
+		border-top: 1px solid #D1CDCC;
+	}
+
+	&__title {
+		position: relative;
+		padding: 15px 0;
+		cursor: pointer;
+		color: $pr;
+		font-size: 24px;
+		font-weight: 700;
+
+		@media (max-width: 575.98px) {
+			font-size: 18px;
+		}
+
+		&:before {
+			content: '';
+			background-image: url('../img/icons/plus.svg');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 100%;
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			transform: translateY(-50%);
+			transition: all 0.3s ease;
+		}
+
+		&.active {
+			&:before {
+				transform: translateY(-50%) rotate(45deg);
+			}
+		}
+	}
+
+	&__body {
+		display: none;
+		margin-top: 10px;
+		padding-bottom: 15px;
+
+		p {
+			font-size: 16px;
+			line-height: calc(20 / 16);
+		}
+
+		.row {
+			margin-top: -15px;
+
+			&>[class*='col'] {
+				margin-top: 30px;
+			}
+		}
+	}
+}

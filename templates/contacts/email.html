@@ -1,0 +1,6 @@
+{% load i18n %}
+
+<h1>{% trans 'Email from'%} <a href="{{ contacts_uri }}">{% trans 'page' %}</a></h1>
+{% for label, value in data.items %}
+    <p><b>{{ label }}:</b> {{ value }}</p>
+{% endfor %}

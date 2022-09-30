@@ -1,0 +1,22 @@
+{% load i18n %}
+
+<section class="country">
+	<h2 class="country__title">{% trans 'Where to buy?' %}</h2>
+
+	<div class="country__content country__content--top">
+		<span class="country__name color-teal">Poland</span>
+		<span class="country__name color-beige">Estonia</span>
+		<span class="country__name color-teal">Germany</span>
+		<span class="country__name color-red">Greece</span>
+	</div>
+
+	<div class="country__content country__content--bottom">
+		<span class="country__name color-orange">Latvia</span>
+		<span class="country__name color-red">Lithuania</span>
+		<span class="country__name color-beige">Switzerland</span>
+	</div>
+
+	<div class="country__btn">
+		<a href="{% url 'partner:stores' %}" class="btn btn-orange">{% trans 'Show' %}</a>
+	</div>
+</section>

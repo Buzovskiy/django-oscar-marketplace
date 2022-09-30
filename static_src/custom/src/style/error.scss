@@ -1,0 +1,153 @@
+.error {
+	padding: 0 15px;
+	text-align: center;
+	margin-top: 40px;
+
+	@media (min-width: 992px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+		min-height: 700px;
+	}
+
+	@media (max-width: 991px) {
+		margin-bottom: 25px;
+	}
+
+	&__content {
+		position: relative;
+		max-width: 725px;
+
+		@media (max-width: 1024px) {
+			padding-bottom: 90px;
+		}
+
+		@media (max-width: 991px) {
+			margin: auto;
+		}
+	}
+
+	&__img {
+		max-width: 100%!important;
+		overflow: hidden!important;
+		@media (max-width: 767px) {
+			img {
+				width: 100%;
+			}
+		}
+	}
+
+	&__numbers {
+		margin-top: 50px;
+		font-size: 36px;
+		font-weight: 700;
+		color: $color-orange;
+	}
+
+	&__text {
+		max-width: 650px;
+		margin: 20px auto 30px;
+		font-size: 20px;
+		line-height: 1.5;
+		text-transform: lowercase;
+		text-align: center;
+
+		@media (max-width: 575px) {
+			font-size: 14px;
+		}
+	}
+
+	&__choose {
+		position: absolute;
+		color: #9B9598;
+		font-size: 17px;
+		line-height: 1.5;
+		text-transform: lowercase;
+
+		@media (min-width: 1024px) {
+			right: 0;
+			top: 375px;
+			max-width: 250px;
+		}
+
+		@media (min-width: 1200px) {
+			right: -30%;
+			top: 340px;
+		}
+
+		&::before {
+			content: '';
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			position: absolute;
+		}
+
+		&-desktop {
+			@media (max-width: 1024px) {
+				display: none;
+			}
+
+			&::before {
+				top: 0;
+				left: 0;
+				background-image: url('../img/icon-1.svg');
+				width: 18px;
+				height: 18px;
+
+				@media (min-width: 768px) {
+					top: -12px;
+					left: -12px;
+				}
+			}
+		}
+
+		&-mob {
+			max-width: 290px;
+			width: 100%;
+			text-align: left;
+			font-size: 14px;
+
+			@media (min-width: 1024px) {
+				display: none;
+			}
+
+			@media (max-width: 1024px) {
+				padding-left: 20px;
+				left: 50%;
+				bottom: 0;
+				transform: translateX(-50%);
+			}
+
+			&::before {
+				top: -20px;
+				left: 0;
+				background-image: url('../img/icon-2.svg');
+				width: 18px;
+				height: 18px;
+			}
+
+		}
+	}
+
+	.btn {
+		@media (max-width: 575px) {
+			width: 100%;
+		}
+	}
+
+	.p5Canvas{
+		cursor: url('../img/cursor-0.png'), none;
+		position: relative !important;
+		left: auto !important;
+		top: auto !important;
+
+		@media (max-width: 767px) {
+			max-width: 90%!important;
+			height: auto!important;
+			overflow: hidden!important;
+		}
+	}
+}

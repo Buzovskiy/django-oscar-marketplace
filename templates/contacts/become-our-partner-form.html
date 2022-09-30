@@ -1,0 +1,84 @@
+{% load i18n %}
+
+<div class="partner-form">
+    {% if message == 'success' %}
+        <h3 class="partner-form__heading">{% trans 'Thank you for the message. We will answer you as soon as possible' %}</h3>
+    {% else %}
+        <h3 class="partner-form__heading">{% trans 'BECOME A WEESTEP PARTNER' %}</h3>
+        <div class="partner-form__desc">
+            <p>{% trans 'You want to become a part of the “Weestep” team?' %}</p>
+            <p>{% trans 'You want to become an official dealer or you want to open branded store “Weestep”?' %}</p>
+            <p>{% trans 'Fill out simple form and we will contact you to get necessary information.' %}</p>
+        </div>
+        <form method="post" class="partner-form__form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="fieldWrapper">
+                {{ form.name.errors }}
+                {{ form.name }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.last_name.errors }}
+                {{ form.last_name }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.email.errors }}
+                {{ form.email }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.phone.errors }}
+                {{ form.phone }}
+                <p class="form-help-text">{{ form.phone.field.help_text }}</p>
+            </div>
+            <div class="fieldWrapper fieldWrapper__country">
+                {{ form.country.errors }}
+                {{ form.country }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.city.errors }}
+                {{ form.city }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.postal_code.errors }}
+                {{ form.postal_code }}
+            </div>
+            <div class="fieldWrapper fieldWrapper__subject">
+                {{ form.subject.errors }}
+                {{ form.subject }}
+            </div>
+            <div class="fieldWrapper fieldWrapper__message">
+                {{ form.message.errors }}
+                {{ form.message }}
+            </div>
+            <div class="fieldWrapper fieldWrapper__shop-question">
+                {{ form.shop_question.errors }}
+                {{ form.shop_question }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.shop_sign.errors }}
+                {{ form.shop_sign }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.website.errors }}
+                {{ form.website }}
+            </div>
+            <div class="fieldWrapper fieldWrapper__user-aggreement">
+                <label>{% trans 'User agreement' %}</label>
+                <div class="user-aggrement-content">
+                    {% include 'partials/user-aggreement.html' %}
+                </div>
+            </div>
+            <div class="fieldWrapper fieldWrapper__accept">
+                {{ form.accept.errors }}
+                {{ form.accept.label_tag }}
+                {{ form.accept }}
+            </div>
+            <div class="fieldWrapper fieldWrapper__captcha">
+                {{ form.captcha.errors }}
+                {{ form.captcha.label_tag }}
+                {{ form.captcha }}
+            </div>
+            <button type="submit" class="btn btn-orange partner-form__submit">Submit</button>
+        </form>
+    {% endif %}
+</div>

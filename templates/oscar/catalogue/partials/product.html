@@ -1,0 +1,52 @@
+{% load display_tags %}
+{% load i18n %}
+{% load image_tags %}
+{% load reviews_tags %}
+{% load product_attributes_tags %}
+
+{% block product %}
+    <a href="{{ product.get_absolute_url }}" class="shop__item" title="{{product.title}}">
+        <div class="shop__img">
+            {% block product_image %}
+                {% with image=product.primary_image %}
+                {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                <img src="{{ thumb.url }}" alt="{{ product.get_title }}"/>
+                {% endwith %}
+            {% endblock %}
+        </div>
+        <div class="shop-colors">
+            <div class="shop-colors__numbers">
+                {% get_child_products_sizes product.product_children as sizes %}
+                {% for size in sizes %}
+                    <span>{{ size }}</span>
+                {% endfor %}
+            </div>
+            <div class="cart__select cart__first-select color-select">
+                <p class="color-select__selected">Color <span></span></p>
+                <ul class="color-select__list">
+                    {# the product itself #}
+                    <li class="color-select__item">
+                        {% with image=product.primary_image %}
+                        {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                        <i class="color-select__btn btn-reset color-select__btn--active" data-url="{{ thumb.url }}"
+                           data-product-url="{{product.get_absolute_url}}"
+                           data-product-title="{{product.title}}"
+                           style="background-color: {{product.attributes_container.color_hex_code.value}}"></i>
+                        {% endwith %}
+                    </li>
+                    {% for recommended_product in product.recommended_products.all %}
+                        <li class="color-select__item">
+                            {% with image=recommended_product.primary_image %}
+                            {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                            <i class="color-select__btn btn-reset" data-url="{{ thumb.url }}"
+                               data-product-url="{{recommended_product.get_absolute_url}}"
+                               data-product-title="{{recommended_product.title}}"
+                               style="background-color: {{recommended_product.attributes_container.color_hex_code.value}}"></i>
+                            {% endwith %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </a>
+{% endblock %}

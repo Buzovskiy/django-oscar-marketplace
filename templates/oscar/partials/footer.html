@@ -1,0 +1,72 @@
+{% load static %}
+{% load i18n %}
+
+<footer class="footer">
+	<div class="container">
+		<div class="footer__content">
+			<div class="footer__top">
+				<a href="{{ homepage_url }}" class="footer__logo">
+					<img src="{% static 'custom/build/img/logo.svg' %}" alt="logo-{{ shop_name }}">
+				</a>
+				<ul class="footer__list">
+					<li>
+						<a href="{% url 'django.contrib.flatpages.views.flatpage' 'about-us/' %}">{% trans 'about us' %}</a>
+					</li>
+					<li>
+						<a href="{% url 'contacts:become-our-partner' %}" class="{% block become_our_partner_active %}{% endblock %}">
+							{% trans 'Become our partner' %}
+						</a>
+					</li>
+<!--					<li>-->
+<!--						<a href="shop.html">Каталог</a>-->
+<!--					</li>-->
+					<li>
+						<a href="{% url 'partner:stores' %}">{% trans 'Stores' %}</a>
+					</li>
+					<li>
+						<a href="{% url 'contacts:contacts' %}">{% trans 'Contacts' %}</a>
+					</li>
+					<li>
+						<a href="{% url 'django.contrib.flatpages.views.flatpage' 'size-guide/' %}">{% trans 'Find yor fit' %}</a>
+					</li>
+				</ul>
+
+				<ul class="footer__list">
+					<li>
+						<a href="https://www.tiktok.com/@weestep_shoes" target="blank" rel="nofollow">tiktok</a>
+					</li>
+					<li>
+						<a href="https://www.instagram.com/weestep_eu" target="blank" rel="nofollow">instagram</a>
+					</li>
+					<li>
+						<a href="https://www.facebook.com/weestep.eu" target="blank" rel="nofollow">facebook</a>
+					</li>
+					<li>
+						<a href="https://www.youtube.com/c/WeestepShoes" target="blank" rel="nofollow">youtube</a>
+					</li>
+				</ul>
+
+				<div class="footer__info">
+					<a href="#">Private policy</a>
+					<a href="#">Terms & conditions</a>
+				</div>
+				{% comment %}
+					<div class="header-lang header-lang-footer">
+						<p class="header-lang__text header-lang__text-footer">укр</p>
+						<ul class="header-lang__list">
+							<li class="header-lang__item">
+								<a class="header-lang__link" href="#">ру</a>
+							</li>
+						</ul>
+					</div>
+				{% endcomment %}
+			</div>
+
+			<div class="footer__bottom">
+				<p>(с) 2022 All rigths reserved</p>
+
+				<p>Website: weestep.eu</p>
+			</div>
+		</div>
+	</div>
+</footer>

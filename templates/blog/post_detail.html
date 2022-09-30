@@ -1,0 +1,52 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ shop_name }} | {% trans 'Blog' %}{% endblock %}
+
+{% block blog_active %}active{% endblock %}
+
+{% block content_wrapper %}
+<section class="blog section-top">
+    <div class="container">
+        <div class="blog__wrap">
+            <h1 class="blog__title title color-orange">{{ object.title }}</h1>
+            <div class="blog__pic">
+                {% if object.image %}
+                <img src="{{ object.image.url }}" alt="image"/>
+                {% endif %}
+            </div>
+            <div class="blog__content">
+                {{ object.content|safe }}
+            </div>
+
+            <div class="blog-share">
+                <p class="blog-share__desc">{% trans 'share' %}</p>
+                <div class="blog-share__icons">
+                    <a href="#" class="blog-share__icon" target="blank" rel="nofollow">
+                        <img src="{% static 'custom/build/img/tiktok.svg' %}" alt="icon"/>
+                    </a>
+                    <a href="#" class="blog-share__icon" target="blank" rel="nofollow">
+                        <img src="{% static 'custom/build/img/facebook.svg' %}" alt="icon"/>
+                    </a>
+                    <a href="#" class="blog-share__icon" target="blank" rel="nofollow">
+                        <img src="{% static 'custom/build/img/youtube.svg' %}" alt="icon"/>
+                    </a>
+                    <a href="#" class="blog-share__icon" target="blank" rel="nofollow">
+                        <img src="{% static 'custom/build/img/instagram.svg' %}" alt="icon"/>
+                    </a>
+                </div>
+            </div>
+
+            {% if also_read_posts.count %}
+                <h2 class="title color-red">{% trans 'also read' %}</h2>
+                <div class="blog__items">
+                    {% for object in also_read_posts %}
+                        {% include 'blog/partials/post.html' %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

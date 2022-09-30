@@ -1,0 +1,32 @@
+{% extends "interview/interview-layout.html" %}
+{% load i18n %}
+{% load static %}
+{% load interview_tags %}
+
+
+{% block interview__content-class %}{% endblock %}
+
+{% block interview-title-color1 %}teal{% endblock %}
+{% block interview-title-color2 %}teal{% endblock %}
+
+{% block interview-form-action %}{% url 'interview:stage_02' %}{% endblock %}
+
+{% block question-type %}colors{% endblock %}
+
+{% block interview-input-container %}
+    <div class="colors__item">
+        <input
+                {% print_checked form attribute_obj.slug value %}
+                type="radio"
+                id="color-{{ forloop.counter0 }}"
+                name="{{ attribute_obj.slug }}"
+                value="{{ value }}">
+        <label for="color-{{ forloop.counter0 }}">
+            <span class="bgc-{{ label.slug }}">
+                <img src="{% static 'custom/build/img/check.svg' %}" alt="checked icon"/>
+            </span>
+        </label>
+    </div>
+{% endblock %}
+
+{% block go-back-button-href %}{% url 'interview:start' %}{% endblock %}

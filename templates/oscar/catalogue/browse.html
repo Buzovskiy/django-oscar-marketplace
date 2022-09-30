@@ -1,0 +1,150 @@
+{% extends "oscar/layout.html" %}
+
+{% load display_tags %}
+{% load basket_tags %}
+{% load category_tags %}
+{% load product_tags %}
+{% load i18n %}
+{% load catalogue_filters %}
+{% load meta_title_filter meta_keywords_filter meta_description_filter from common_filters %}
+
+{% block title %}{{ 'catalogue'|meta_title_filter }}{% if summary %}{{ summary }} |{% endif %} {{ block.super }}{% endblock %}
+{% block description %}{% if 'catalogue'|meta_description_filter %}{{ 'catalogue'|meta_description_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block keywords %}{% if 'catalogue'|meta_keywords_filter %}{{ 'catalogue'|meta_keywords_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block catalogue_active %}active{% endblock %}
+
+{% block content_wrapper %}
+
+<section class="shop section-top">
+    <div class="container">
+        <h1 class="title color-orange">shop</h1>
+        <div class="shop__content">
+            <div class="shop__filter">
+                <div class="shop__filter-mob">
+                    <button class="button-filter">filter</button>
+                    <button class="button-sort">sort</button>
+                </div>
+                <div class="shop__filter-content"> {# Facet buttons on desktop #}
+                    {% for field, data in facet_data.items %}
+                        {% if data.results %}
+                            {% include 'oscar/search/partials/facet-button.html' with name=data.name items=data.results %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="shop__filter-content">
+                    <div class="shop__select">
+                        <div class="selectric-wrapper selectric-below">
+                            <div class="selectric" data-type="Sort">
+                                <span class="label">{{ form|get_sort_button_title }}</span>
+                                <b class="button">▾</b>
+                            </div>
+                        </div>
+                        <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 1L5 5L9 1" stroke="#FF7C2A" stroke-width="2"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            {% if selected_facets|length %}
+                {# The list of reset buttons on desktop #}
+                <div class="shop__filter-result">
+                    {% for field, data in facet_data.items %}
+                        {% if data.results %}
+                            {% for item in data.results %}
+                                {% if item.selected %}
+                                    <div>
+                                        <p>{{ item.name|show_facet_value:field }}</p>
+                                        <a href="{{ item.deselect_url }}" class="close">
+                                            <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M8.26758 8.26562L1.42285 1.4209" stroke="black" stroke-width="2"/>
+                                                <path d="M8.26758 1.42188L1.42285 8.2666" stroke="black" stroke-width="2"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    <a class="reset-filter" href="{% url 'catalogue:index' %}">
+                        reset filter
+                    </a>
+                </div>
+            {% endif %}
+
+            <div class="shop__items">
+                <!-- product -->
+                {% if products %}
+                    {% for product in products %}
+                        {% render_product product %}
+                    {% endfor %}
+                {% else %}
+                    <p class="nonefound">{% trans "No products found." %}</p>
+                {% endif %}
+                <!-- end product -->
+            </div>
+
+            {% block pagination %}
+                {% if page_obj.has_next %}
+                    <div class="show__more">
+                        <a href="?{% get_parameters 'page' %}page={{ page_obj.next_page_number }}" class="btn btn-orange--transparent">{% trans 'Show more' %}</a>
+                    </div>
+                {% endif %}
+                {% if page_obj.paginator.num_pages > 1 %}
+                    {% include 'partials/pagination.html' %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block facet-modal-window %}
+    {% include 'oscar/search/partials/facet-modal-window.html' with facet_data=facet_data %}
+{% endblock %}
+
+{% comment %}
+    {% include "oscar/partials/pagination.html" %}
+
+    {% block content %}
+    <form method="get">
+        {# Render other search params as hidden inputs #}
+        {% for value in selected_facets %}
+        <input type="hidden" name="selected_facets" value="{{ value }}"/>
+        {% endfor %}
+        <input type="hidden" name="q" value="{{ search_form.q.value|default_if_none:"" }}" />
+
+        {% if paginator.count %}
+        {% if paginator.num_pages > 1 %}
+        {% blocktrans with start=page_obj.start_index end=page_obj.end_index count num_results=paginator.count %}
+        <strong>{{ num_results }}</strong> result - showing <strong>{{ start }}</strong> to <strong>{{ end }}</strong>.
+        {% plural %}
+        <strong>{{ num_results }}</strong> results - showing <strong>{{ start }}</strong> to <strong>{{ end }}</strong>.
+        {% endblocktrans %}
+        {% else %}
+        {% blocktrans count num_results=paginator.count %}
+        <strong>{{ num_results }}</strong> result.
+        {% plural %}
+        <strong>{{ num_results }}</strong> results.
+        {% endblocktrans %}
+        {% endif %}
+        {% if form %}
+        <div class="float-right">
+            {% include "oscar/partials/form_field.html" with field=form.sort_by style='horizontal' %}
+        </div>
+        {% endif %}
+        {% else %}
+        <p>
+            {% trans "<strong>0</strong> results." %}
+        </p>
+        {% endif %}
+    </form>
+
+    {% endblock content %}
+
+    {% block onbodyload %}
+    {{ block.super }}
+    oscar.search.init();
+    {% endblock %}
+{% endcomment %}

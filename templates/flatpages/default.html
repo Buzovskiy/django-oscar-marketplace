@@ -1,0 +1,22 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+
+{% block title %}
+    {{ flatpage.title}} | {{ block.super }}
+{% endblock %}
+
+{% block content_wrapper %}
+    <section class="section-top">
+        <div class="container">
+            <h1 class="title color-orange">{{ flatpage.title }}</h1>
+            {{ flatpage.content }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block edit_flat_page %}
+    {% if user.is_staff %}
+    <a class="float-right d-none d-md-block" href="{% url 'dashboard:page-update' pk=flatpage.id %}"><small><i
+            class="fas fa-pencil-alt"></i> {% trans "Edit this page" %}</small></a>
+    {% endif %}
+{% endblock %}

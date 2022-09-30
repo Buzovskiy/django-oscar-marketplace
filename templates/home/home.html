@@ -1,0 +1,265 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content_wrapper %}
+<section class="canvas-hero-wrap">
+	<div class="canvas-hero-block block-scroll">
+		<div class="canvas-hero__inner">
+			<div class="canvas-hero">
+				<div class="canvas-hero--mob canvas-hero__wrap">
+					<div id="canvasHeroMob" class="canvas-hero__content">
+						<input
+							name="frames-url-mob"
+							type="hidden"
+							value="{% static 'custom/videos/hero-main/webp-mob-100' %}/{% templatetag openvariable %}id{% templatetag closevariable %}.webp"
+							data-frame-start="1"
+							data-frame-end="100"
+							data-frame-id-padding="3"
+						>
+					</div>
+				</div>
+				<div class="canvas-hero--pc canvas-hero__wrap">
+					<div id="canvasHeroPC" class="canvas-hero__content">
+						<input
+							name="frames-url-pc"
+							type="hidden"
+							value="{% static 'custom/videos/hero-main/jpg-pc' %}/{% templatetag openvariable %}id{% templatetag closevariable %}.jpg"
+							data-frame-start="1"
+							data-frame-end="200"
+							data-frame-id-padding="3"
+						>
+					</div>
+				</div>
+			</div>
+			<div class="canvas-hero__desc block-scroll__inner">
+				<div class="block-scroll__content">
+					<div class="item-0">
+						<div class="canvas-hero__headline">
+						</div>
+						<div class="canvas-hero__title">
+							<p>{% trans 'We make' %}</p>
+							<p>{% trans 'shoes' %}</p>
+						</div>
+						<div class="canvas-hero__subtitle">
+							{% trans 'for children as for adults' %}
+						</div>
+					</div>
+					<div class="item-1">
+						<div class="canvas-hero__headline">
+							{% trans 'We look at adult' %}
+						</div>
+						<div class="canvas-hero__title">
+							{% trans 'fashion' %}
+						</div>
+						<div class="canvas-hero__subtitle">
+							{% trans 'and use trends in our design' %}
+						</div>
+					</div>
+					<div class="item-2">
+						<div class="canvas-hero__headline">
+							{% trans 'We give' %}
+						</div>
+						<div class="canvas-hero__title">
+							<p>{% trans 'your child' %}</p>
+							<p>{% trans 'a sense' %}</p>
+						</div>
+						<div class="canvas-hero__subtitle">
+							{% trans 'of uniqueness and self-importance' %}
+						</div>
+					</div>
+					<div class="item-3">
+						<div class="canvas-hero__title">
+							<p>{% trans 'We help' %}</p>
+						</div>
+						<div class="canvas-hero__subtitle">
+							<p>{% trans 'parents raise their' %}</p>
+
+						</div>
+						<div class="canvas-hero__headline">
+							<p>{% trans 'personalities' %}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="canvas-hero-end"></div>
+</section>
+
+<section class="weare-wrap">
+	<div id="weare" class="weare block-scroll">
+		<div class="weare-block">
+			<div class="weare__inner">
+				<div class="weare__slide">
+					<div class="weare__left">
+						<div class="weare__desc">
+							<div class="block-scroll__content">
+								<div class="item-0 element-show">
+									<h2 class="weare__title">
+										{% trans 'hi, <br>we are <br>weestep!' %}
+									</h2>
+								</div>
+								<div class="item-1">
+									<div class="weare__text">
+										<p>{% trans "We manufacture children’s shoes like for adults, only better." %}</p>
+										<p>{% trans "We believe that children are small adults, and the fact that they grow out of their shoes quickly doesn't mean that footwear should be approached differently." %}</p>
+									</div>
+									<div class="weare__btn">
+										<a href="{% url 'django.contrib.flatpages.views.flatpage' 'about-us/' %}" class="btn btn-white">{% trans 'about us' %}</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="weare__img">
+						<img src="{% static 'custom/build/img/brand-of-the-year/cert-girls-min.png' %}" alt="image">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="weare-end"></div>
+</section>
+
+<section class="why-wrap">
+	<div id="why" class="why block-scroll">
+		<div class="why__content">
+			<div class="why__item">
+				<div class="why__desc-wrap">
+					<div class="why__desc">
+						<h2 class="why__title">{% trans 'why weestep?' %}</h2>
+						<div class="block-scroll__content">
+							<div data-color="#d9b89a" class="item-0 element-show">
+								<div class="why__text">
+									<p class="why__subtitle">{% trans 'Trendset' %}</p>
+									<p class="why__desc">{% trans "We follow the adult fashion trends and bring them to children’s shoes" %}</p>
+								</div>
+							</div>
+							<div data-color="#115e67" class="item-1">
+								<div class="why__text">
+									<p class="why__subtitle">{% trans 'We believe' %}</p>
+									<p class="why__desc">{% trans 'We believe that a child—who will ultimately be wearing our shoes—should be treated with respect and should have a right to choose what his or her shoes will look like' %}</p>
+								</div>
+							</div>
+							<div data-color="#9d2b2e" class="item-2">
+								<div class="why__text">
+									<p class="why__subtitle">{% trans 'Individuality' %}</p>
+									<p class="why__desc">{% trans 'We give your child a sense of uniqueness and self-importance. We help parents raise their personalities' %}</p>
+								</div>
+							</div>
+							<div data-color="#ff7c2a" class="item-3">
+								<div class="why__text">
+									<p class="why__subtitle">{% trans 'Exact specialization' %}</p>
+									<p class="why__desc">{% trans 'Every season we update our collections by 100%, our assortment always includes more than 1000 fashionable trendy new products' %}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="why__imgs-wrap">
+					<div class="why__imgs">
+						<div class="canvas-why">
+							<div class="canvas-why__wrap">
+								<div id="canvasWhy" class="canvas-why__content">
+									<input
+										name="frames-url-why"
+										type="hidden"
+										value="{% static 'custom/videos/block-why' %}/{% templatetag openvariable %}id{% templatetag closevariable %}.jpg"
+										data-frame-start="1"
+										data-frame-end="200"
+										data-frame-id-padding="3"
+									>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="why-end"></div>
+</section>
+
+{% for home_banner in home_banners %}
+<section class="home-banner-wrap container" id="{{ home_banner.section_id_selector }}">
+	<div class="home-banner block-scroll">
+		<div class="home-banner-block">
+			<div class="home-banner__inner">
+				<div class="home-banner__slide">
+					<div class="home-banner__left" style="background-image: url('{{ home_banner.image_left.url }}');">
+					</div>
+					<div class="home-banner__right" style="background-image: url('{{ home_banner.image_right.url }}');">
+						<div class="home-banner__desc">
+							<div class="block-scroll__content">
+								<div class="item-0">
+									<p class="home-banner__title">{{ home_banner.description }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endfor %}
+
+<section class="video">
+	<div class="container">
+		<div class="video__player" data-video="https://youtu.be/-m2xModhp0A">
+			<img src="#" alt="video">
+			<button class="video__btn"></button>
+		</div>
+	</div>
+</section>
+
+<section class="collection">
+	<div class="container">
+		<h2 class="collection__title">{% trans 'new collection' %}</h2>
+
+		<div class="collection__content">
+			<div class="collection__item">
+				<div class="collection__img">
+					<img src="{% static 'custom/build/img/collection-1.jpg' %}" alt="image" />
+				</div>
+				<a href="{% url 'interview:start' %}" class="collection__btn btn btn-white">{% trans "Children's choice" %}</a>
+			</div>
+
+			<div class="collection__item">
+				<div class="collection__img">
+					<img src="{% static 'custom/build/img/collection-2.jpg' %}" alt="image" />
+				</div>
+				<a href="{% url 'catalogue:index' %}" class="collection__btn btn btn-orange">{% trans 'Parents choose' %}</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% include 'partials/countries-stripe.html' %}
+
+{% endblock content_wrapper %}
+
+{% block preloader %}
+<div class="preloader">
+	<div class="sk-chase">
+		<div class="sk-chase-dot"></div>
+		<div class="sk-chase-dot"></div>
+		<div class="sk-chase-dot"></div>
+		<div class="sk-chase-dot"></div>
+		<div class="sk-chase-dot"></div>
+		<div class="sk-chase-dot"></div>
+	</div>
+</div>
+{% endblock %}
+
+{% block onbodyload %}
+	{{ block.super	}}
+	$(document).on('scroll', function() {
+		// function from block-scroll.js
+		{% for home_banner in home_banners %}
+			show_text_on_home_banner('#{{ home_banner.section_id_selector }}');
+		{% endfor %}
+	})
+{% endblock %}

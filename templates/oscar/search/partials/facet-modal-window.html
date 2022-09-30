@@ -1,0 +1,126 @@
+{% load i18n %}
+{% load catalogue_filters %}
+
+<div class="modal-select"> {# Facet and sort modal window on desktop #}
+    <div class="modal-select__bg"></div>
+    <div class="modal-select__content">
+        <div class="shop__filter-content show">
+            {% for field, data in facet_data.items %}
+                {% if data.results %}
+                    {% with is_color=field|is_color_facet %}
+                        <div class="shop__select{% if is_color %} shop__select-color{% endif %}">
+                            <div class="selectric-wrapper selectric-below" data-type="{{ data.name }}">
+                                <div class="selectric" data-type="{{ data.name }}">
+                                    <span class="label">{{ data.name }}</span>
+                                    <b class="button">
+                                        <svg width="10" height="7" viewBox="0 0 10 7" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L5 5L9 1" stroke="#FFF" stroke-width="2"></path>
+                                        </svg>
+                                    </b>
+                                </div>
+                                <div class="selectric-items" tabindex="-1" style="width: 156px;">
+                                    <div class="selectric-scroll">
+                                        <ul class="facet">
+                                            <li data-index="0" class="selected highlighted"></li>
+                                            {% include 'oscar/search/partials/facet-list.html' with items=data.results field=field is_color=is_color %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <form method="get">
+            {# Render other search params as hidden inputs #}
+            {% for value in selected_facets %}
+                <input type="hidden" name="selected_facets" value="{{ value }}" />
+            {% endfor %}
+            <input type="hidden" name="q" value="{{ search_form.q.value|default_if_none:"" }}" />
+
+            <div class="shop__filter-content show">
+                <div class="shop__select">
+                    <div class="selectric-wrapper selectric-below sort" data-type="Sort">
+                        <div class="selectric" data-type="Sort">
+                            <span class="label">{{ form|get_sort_button_title }}</span>
+                            <b class="button">
+                                <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1L5 5L9 1" stroke="#FFF" stroke-width="2"></path>
+                                </svg>
+                            </b>
+                        </div>
+                        <div class="selectric-items" tabindex="-1" style="width: 156px;">
+                            <div class="selectric-scroll">
+                                <ul class="sort">
+                                    <li data-index="0" class="selected highlighted"></li>
+                                    {% for value, title in form.fields.sort_by.choices %}
+                                        <li class="{% if form.sort_by.data == value %}active{% endif %}">
+                                            <label><input type="radio" name="sort_by" value="{{ value }}">{{ title }}</label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{# Faceting in mobile version #}
+<div class="modal-filter" data-modal="content-filter">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 11L1 1" stroke="black" stroke-width="1.5" />
+        <path d="M11 1.00049L1 11.0005" stroke="black" stroke-width="1.5" />
+    </svg>
+    <div class="modal__lists">
+        {% for field, data in facet_data.items %}
+            <div class="modal__list">
+                {% if data.results %}
+                <h2 class="color-{% cycle 'beige' 'teal' 'red' 'orange' %}">{{ data.name }}</h2>
+                <ul>
+                    {% with is_color=field|is_color_facet %}
+                        {% include 'oscar/search/partials/facet-list.html' with items=data.results field=field is_color=is_color %}
+                    {% endwith %}
+                </ul>
+            {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="modal__bottom">
+        <a href="{% url 'catalogue:index' %}">reset filter</a>
+    </div>
+</div>
+
+{# Sorting in mobile version #}
+<div class="modal-filter" data-modal="content-sort">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 11L1 1" stroke="black" stroke-width="1.5" />
+        <path d="M11 1.00049L1 11.0005" stroke="black" stroke-width="1.5" />
+    </svg>
+    <div class="modal__lists">
+        <div class="modal__list">
+            <h2>sort by</h2>
+            <form method="get">
+                {# Render other search params as hidden inputs #}
+                {% for value in selected_facets %}
+                    <input type="hidden" name="selected_facets" value="{{ value }}" />
+                {% endfor %}
+                <input type="hidden" name="q" value="{{ search_form.q.value|default_if_none:"" }}" />
+                <ul class="sort">
+                    {% for value, title in form.fields.sort_by.choices %}
+                        <li class="{% if form.sort_by.data == value %}active{% endif %}">
+                            <label><input type="radio" name="sort_by" value="{{ value }}">{{ title }}</label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+    </div>
+    <div class="modal__bottom">
+        <a href="{% url 'catalogue:index' %}">reset filter</a>
+    </div>
+</div>

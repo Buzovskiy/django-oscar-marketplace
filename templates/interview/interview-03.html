@@ -1,0 +1,14 @@
+{% extends "interview/interview-layout.html" %}
+{% load i18n %}
+{% load static %}
+{% load interview_tags %}
+
+
+{% block interview__content-class %}{% endblock %}
+
+{% block interview-title-color1 %}orange{% endblock %}
+{% block interview-title-color2 %}orange{% endblock %}
+
+{% block interview-form-action %}{% url 'interview:stage_04' %}{% endblock %}
+
+{% block go-back-button-href %}{% url 'interview:stage_02' %}?{{ get_query_str }}{% endblock %}

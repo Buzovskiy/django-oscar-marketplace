@@ -1,0 +1,27 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load meta_title_filter meta_keywords_filter meta_description_filter from common_filters %}
+
+{% block title %}{{ 'become-our-partner'|meta_title_filter }}{{ block.super }}{% endblock %}
+{% block description %}{% if 'become-our-partner'|meta_description_filter %}{{ 'become-our-partner'|meta_description_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block keywords %}{% if 'become-our-partner'|meta_keywords_filter %}{{ 'become-our-partner'|meta_keywords_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block become_our_partner_active %}active{% endblock %}
+
+{% block content_wrapper %}
+
+<section class="contacts section-top">
+    <div class="container">
+        <h1 class="contacts__title title color-orange">Become our partner</h1>
+        <div class="contacts__content">
+            {% include 'contacts/become-our-partner-form.html' %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+{% endblock %}

@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.apps import apps
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.contrib import admin
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
+from django.utils.translation import gettext_lazy as _
+from .sitemaps import sitemap_url_patterns
+
 
 urlpatterns = [
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
@@ -28,16 +32,31 @@ urlpatterns = [
     # Nonetheless, it's often useful for debugging.
 
     path('admin/', admin.site.urls),
+    path('captcha/', include('captcha.urls')),
     path('testmail/', include('testmail.urls')),
 
-    path('', include(apps.get_app_config('oscar').urls[0])),
+    # path('', include(apps.get_app_config('oscar').urls[0])),
+    path('', include(apps.get_app_config('oscar_routing').urls[0])),
 ]
 
+urlpatterns += sitemap_url_patterns
+
+urlpatterns += [url(r'^ckeditor/', include('ckeditor_uploader.urls'))]
+
+if 'rosetta' in settings.INSTALLED_APPS:
+    urlpatterns += [
+        re_path(r'^rosetta/', include('rosetta.urls'))
+    ]
 
 if 'debug_toolbar' in settings.INSTALLED_APPS:
     import debug_toolbar
-    urlpatterns += path('__debug__/', include(debug_toolbar.urls)),
 
+    urlpatterns += path('__debug__/', include(debug_toolbar.urls)),
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+admin.site.index_title = _('Administration panel')
+admin.site.site_header = settings.OSCAR_SHOP_NAME + ' - ' + settings.OSCAR_SHOP_TAGLINE + '. ' \
+                         + _('Brand site administration panel')
+admin.site.site_title = settings.OSCAR_SHOP_NAME + ' - ' + settings.OSCAR_SHOP_TAGLINE

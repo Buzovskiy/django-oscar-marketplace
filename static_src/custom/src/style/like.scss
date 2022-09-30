@@ -1,0 +1,13 @@
+.like {
+	margin-top: 60px;
+
+	&__swiper {
+		padding-bottom: 60px;
+	}
+
+	.shop__items {
+		@media (max-width: 1400px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+}

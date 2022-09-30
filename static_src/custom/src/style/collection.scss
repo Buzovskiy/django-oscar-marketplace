@@ -1,0 +1,145 @@
+.collection {
+	margin-top: 156px;
+
+	@media (max-width: 991px) {
+		margin-top: 90px;
+	}
+
+	&__title {
+		font-size: 120px;
+		font-weight: 700;
+		letter-spacing: -3px;
+		color: $color-orange;
+		text-transform: lowercase;
+
+		@media (max-width: 991px) {
+			font-size: 80px;
+		}
+
+		@media (max-width: 575px) {
+			font-size: 48px;
+			max-width: 270px;
+		}
+	}
+
+	&__content {
+		margin-top: 95px;
+		display: flex;
+		justify-content: space-between;
+		min-height: 950px;
+
+		@media (max-width: 1350px) {
+			min-height: 100%;
+			justify-content: center;
+		}
+
+		@media (max-width: 767px) {
+			flex-direction: column;
+		}
+
+		@media (max-width: 575px) {
+			margin-top: 20px;
+		}
+	}
+
+	&__item {
+		position: relative;
+
+		&:first-child {
+			@media (min-width: 992px) {
+				align-self: flex-start;
+			}
+		}
+
+		&:last-child {
+			align-self: flex-end;
+			margin-left: 20px;
+
+			@media (max-width: 1350px) {
+				align-self: flex-start;
+			}
+
+			@media (max-width: 767px) {
+				margin: 20px 0 0 0;
+			}
+		}
+	}
+
+	&__img {
+		width: 100%;
+		height: auto;
+		object-fit: contain;
+
+		@media (min-width: 576px) {
+			height: 530px;
+		}
+
+		@media (min-width: 768px) {
+			width: 335px;
+			height: 350px;
+		}
+
+		@media (min-width: 992px) {
+			width: 455px;
+			height: 472px;
+		}
+
+		@media (min-width: 1350px) {
+			width: 653px;
+			height: 678px;
+		}
+
+		img {
+			border-radius: 60px;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&__btn {
+		min-width: 296px;
+		height: 133px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		border-radius: 166px;
+		font-size: 20px;
+		padding: 0;
+
+		@media (max-width: 1350px) {
+			min-width: 220px;
+			height: 60px;
+			font-size: 16px;
+		}
+
+		@media (max-width: 575px) {
+			min-width: 170px;
+			font-size: 14px;
+		}
+
+		&.btn {
+
+			&-white {
+				color: #000;
+
+				&:hover {
+					color: $color-orange;
+					background-color: #fff;
+					border-color: transparent;
+				}
+			}
+
+			&-orange {
+				&:hover {
+					color: #000;
+					background-color: $color-orange;
+					border-color: transparent;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,105 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load meta_title_filter meta_keywords_filter meta_description_filter from common_filters %}
+
+{% block title %}{{ 'brand-of-the-year'|meta_title_filter }}{{ block.super }}{% endblock %}
+{% block description %}{% if 'brand-of-the-year'|meta_description_filter %}{{ 'brand-of-the-year'|meta_description_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block keywords %}{% if 'brand-of-the-year'|meta_keywords_filter %}{{ 'brand-of-the-year'|meta_keywords_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block brand_of_the_year_active %}active{% endblock %}
+
+{% block content_wrapper %}
+{% translate "In 2020, we were awarded in Poland with the Certificate of children\'s brand of the year. We\'ve already sold five million pairs in the world, and a million in Europe." as be_bigger_desc_0 %}
+{% translate "At the same time, the quality and price ratio of Weestep footwear is one of the best on the market." as be_bigger_desc_1 %}
+<section class="bigger-wrap">
+    <div id="be-bigger" class="be-bigger be-bigger__certificate block-scroll">
+        <div class="container">
+            <div class="be-bigger__content">
+                <div class="be-bigger__left">
+                    <div class="be-bigger__info">
+                        <h2 class="be-bigger__title color-teal">weestep be bigger</h2>
+                        <p class="item-0 be-bigger__desc element-show">{{be_bigger_desc_0}}</p>
+                        <p class="item-1 be-bigger__desc">{{be_bigger_desc_1}}</p>
+                        <div class="be-bigger__btns">
+                            <div class="item-0 element-show">
+                                <a href="shop.html" class="be-bigger__btn btn btn-orange" data-move="be-bigger__item-sandals,1,992">sandals</a>
+                            </div>
+                            <div class="item-1">
+                                <a href="shop.html" class="be-bigger__btn btn btn-orange" data-move="be-bigger__item-sneakers,1,992">sneakers</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="be-bigger__right">
+                    <div data-color="#115e67" class="be-bigger__item be-bigger__item-sandals" data-description-cls="item-desc-0">
+                        <div class="be-bigger__img">
+                            <img src="{% static 'custom/build/img/brand-of-the-year/cert-min.jpg' %}" alt="image" />
+                        </div>
+                    </div>
+                    <div data-color="#9d2b2e" class="be-bigger__item be-bigger__item-sneakers" data-description-cls="item-desc-1">
+                        <div class="be-bigger__img">
+                            <img src="{% static 'custom/build/img/brand-of-the-year/cert-boys-min.png' %}" alt="image" />
+                        </div>
+                    </div>
+                    <!-- <div data-color="#ff7c2a" class="be-bigger__item be-bigger__item-boots">
+                        <div class="be-bigger__img">
+                            <img src="{% static 'custom/build/img/be-bigger-3.jpg' %}" alt="image" />
+                        </div>
+                    </div>
+                    <div data-color="#d9b89a" class="be-bigger__item be-bigger__item-shoes">
+                        <div class="be-bigger__img">
+                            <img src="{% static 'custom/build/img/be-bigger-4.jpg' %}" alt="image" />
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="be-bigger-end"></div>
+</section>
+
+<section class="attract-wrap">
+    <div id="attract" class="attract block-scroll">
+        <div class="attract-block">
+            <div class="attract__content">
+                <div class="attract__inner">
+                    <div class="attract__img">
+                        <img src="{% static 'custom/build/img/brand-of-the-year/cert-girls-min.png' %}" alt="image" />
+                    </div>
+                    <div class="attract__desc">
+                        <div class="block-scroll__content">
+                            <div class="item-0 element-show">
+                                <h2 class="attract__title">
+                                    <p>attract</p>
+                                    <p>develop</p>
+                                    <p>surprise</p>
+                                </h2>
+                            </div>
+                            <div class="item-1">
+                                <p class="attract__text">
+                                    {% trans 'For us, the fact that children do not wear shoes as long as their parents do, does not mean that it should be approached differently.' %}
+                                    {% trans "We follow the trends in the world of adult fashion and transfer them to children's shoes." %}
+                                    {% trans 'A child can and should choose and wear what he or she likes.' %}
+                                    {% trans 'Because, after all, children are just small adults.' %}
+                                </p>
+                                <div class="attract__btn">
+                                    <a href="{% url 'django.contrib.flatpages.views.flatpage' 'about-us/' %}" class="btn btn-white">{% trans 'about us' %}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="attract-end"></div>
+</section>
+
+{% include 'partials/countries-stripe.html' %}
+
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+{% endblock %}

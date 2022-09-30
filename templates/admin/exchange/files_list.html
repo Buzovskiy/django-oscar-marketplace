@@ -1,0 +1,97 @@
+{% extends "admin/change_list.html" %}
+{% load i18n static admin_urls admin_list%}
+
+{% block extrahead %}
+{{ block.super }}
+<script src="{% static 'admin/js/actions.js' %}"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+
+{% endblock %}
+
+{% block object-tools %}
+
+{% endblock %}
+
+{% block search %}{% endblock %}
+
+{% block result_list %}
+<div class="actions">
+    {{ form.action.label_tag }}
+    {{ form.action }}
+    <input type="hidden" name="select_across" value="0" class="select-across">
+    <button type="submit" class="button" title="Run the selected action" name="index" value="0">Go</button>
+    <span class="action-counter" data-actions-icnt="{{ items_count }}"></span>
+</div>
+
+<div class="results">
+    <table id="result_list">
+        <thead>
+            <tr>
+                <th scope="col" class="action-checkbox-column">
+                    <div class="text"><span><input type="checkbox" id="action-toggle"></span></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col" class="column-__str__">
+                    <div class="text"><span>{% trans 'File' %}</span></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col" class="column-__str__">
+                    <div class="text"><span>{% trans 'Date created' %}</span></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col" class="column-__str__">
+                    <div class="text"><span>{% trans 'Size' %}</span></div>
+                    <div class="clear"></div>
+                </th>
+                {% comment %}
+                    <th scope="col" class="column-__str__">
+                        <div class="text"><span>{% trans 'Image' %}</span></div>
+                        <div class="clear"></div>
+                    </th>
+                {% endcomment %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for value, label in form.xml.field.widget.choices %}
+            <tr>
+                <td class="action-checkbox">
+                    <input
+                            type="{{ form.xml.field.widget.input_type }}"
+                            name="xml"
+                            value="{{ value }}"
+                            class="action-select"
+                            id="id_xml_{{ forloop.counter0 }}"
+                            {% if value in form.xml.data %} checked="checked" {% endif %}
+                    >
+                </td>
+                <th class="field-__str__"><a href="{% url 'admin:exchange-download-xml' value %}">{{ label.relative_path }}</a></th>
+                <th class="field-__str__">{{ label.date_created }}</th>
+                <th class="field-__str__">{{ label.size }}</th>
+                <th class="field-__str__"></th>
+            </tr>
+        {% endfor %}
+        {% for value, label in form.image.field.widget.choices %}
+            <tr>
+                <td class="action-checkbox">
+                    <input
+                            type="{{ form.image.field.widget.input_type }}"
+                            name="image"
+                            value="{{ value }}"
+                            class="action-select"
+                            id="id_image_{{ forloop.counter0 }}"
+                            {% if value in form.image.data %} checked="checked" {% endif %}
+                    >
+                </td>
+                <th class="field-__str__"><a href="{{ label.url }}">{{ label.relative_path }}</a></th>
+                <th class="field-__str__">{{ label.date_created }}</th>
+                <th class="field-__str__">{{ label.size }}</th>
+                {# <th><img src="{{ label.url }}" width="50px" alt=""></th> #}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block pagination %}{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "oscar/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v=13" />
+{% endblock %}
+
+{% block layout %}
+    <div class="wrapper">
+        <header id="header" class="header">
+            <div class="container">
+                {% block navigation %}
+                    <div class="header__content">
+                        <a href="{{ homepage_url }}" class="header__logo">
+                            <img src="{% static 'custom/build/img/logo.svg' %}" alt="logo-{{ shop_name }}">
+                        </a>
+                        <div class="header__right">
+                            <div class="header__menu menu">
+                                <div class="menu__icon"></div>
+                                <nav class="menu__body">
+                                    <div class="menu__container">
+                                        <ul class="menu__list">
+                                            <li>
+                                                <a href="{% url 'django.contrib.flatpages.views.flatpage' 'about-us/' %}" class="{% block about_us_active %}{% endblock %}">{% trans 'about us' %}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'catalogue:index' %}" class="{% block catalogue_active %}{% endblock %}">{% trans 'catalogue' %}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'partner:stores' %}" class="{% block stores_active %}{% endblock %}">{% trans 'Stores' %}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'contacts:become-our-partner' %}" class="{% block become_our_partner_active %}{% endblock %}">
+                                                    {% trans 'Become our partner' %}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'django.contrib.flatpages.views.flatpage' 'brand-of-the-year/' %}" class="{% block brand_of_the_year_active %}{% endblock %}">{% trans 'brand of the year' %}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'contacts:contacts' %}" class="{% block contacts_active %}{% endblock %}">{% trans 'Contacts' %}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'django.contrib.flatpages.views.flatpage' 'size-guide/' %}" class="{% block size_guide_active %}{% endblock %}">{% trans 'Find yor fit' %}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+
+<!--                            <div class="header-lang" data-move="menu__container,1,992">-->
+<!--                                <p class="header-lang__text">укр</p>-->
+<!--                                <ul class="header-lang__list">-->
+<!--                                    <li class="header-lang__item">-->
+<!--                                        <a class="header-lang__link" href="#">ру</a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+        </header>
+        <main class="main">
+            {% block content_wrapper %}Content{% endblock %}
+        </main>
+
+        {% block facet-modal-window %}{% endblock %}
+
+        {% include "oscar/partials/footer.html" %}
+        {% block edit_flat_page %}{% endblock %}
+    </div>
+    {% block preloader %}{% endblock %}
+{% endblock layout %}
+
+{# Local scripts #}
+{% block scripts %}
+    <!-- Jquery and custom template scripts -->
+    <script src="{% static 'custom/build/js/main.min.js' %}?v=11"></script>
+{% endblock %}
+
+{% block onbodyload %}{% endblock %}

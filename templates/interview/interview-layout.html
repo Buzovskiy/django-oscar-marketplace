@@ -1,0 +1,54 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load interview_tags %}
+{% load static %}
+
+
+{% block content_wrapper %}
+<section class="interview section-top">
+	<div class="container">
+		<div class="interview__content {% block interview__content-class %}interview__content-start{% endblock %}">
+			{% block back_to_catalogue %}<a href="{% url 'catalogue:index' %}" class="interview__link">{% trans "Go to the catalogue" %}</a>{% endblock %}
+            <div class="interview__inner">
+				{% block interview__inner %}
+					<div class="interview__left">
+						<h2 class="interview__title color-{% block interview-title-color1 %}orange{% endblock %}">perfect fit</h2>
+						<div class="interview__numbers color-{% block interview-title-color2 %}orange{% endblock %}">{{ stage_id }} / {{ stage_count }}</div>
+					</div>
+					{% if attribute_obj is not None %}
+						<form action="{% block interview-form-action %}{% endblock %}" class="interview__right">
+							{% csrf_token %}
+							<p class="interview__desc">{{ attribute_obj.question }}</p>
+							<div class="interview__radios {% block question-type %}answers{% endblock %}">
+								{% get_form_field_choices_list form attribute_obj.slug as choices %}
+								{% for value, label in choices %}
+									{% block interview-input-container %}
+										<label class="answers__label">
+											<input
+													{% print_checked form attribute_obj.slug value %}
+													type="radio"
+													class="answers__input"
+													name="{{ attribute_obj.slug }}"
+													value="{{ value }}">
+											<i class="answers__item">
+												<span>{{ label.title }}</span>
+											</i>
+										</label>
+									{% endblock %}
+								{% endfor %}
+								{% for hidden in form.hidden_fields %}
+									{{ hidden }}
+								{% endfor %}
+							</div>
+							<div class="interview__btn">
+								<input type="submit" class="btn btn-orange" name="submit-{{ attribute_obj.stage }}" value="{% trans "Choose" %}">
+								<a href="{% block go-back-button-href %}{% endblock %}" class="btn btn-orange--transparent">{% trans 'Back' %}</a>
+							</div>
+						</form>
+					{% endif %}
+				{% endblock interview__inner %}
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

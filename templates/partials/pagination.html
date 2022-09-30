@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load common_template_tags %}
+{% load display_tags %}
+
+{% get_parameters 'page' as parameters %}
+
+<ul class="pagination">
+    {% get_pagination_numbers page_obj=page_obj as page_numbers %}
+    {% if page_obj.has_previous %}
+        <li class="pagination__item">
+            {% if page_obj.previous_page_number == 1 %}
+                <a href="{{ request.path }}{% if parameters %}?{{ parameters }}{% endif %}" class="pagination__btn pagination__btn-left"></a>
+            {% else %}
+                <a href="?{% get_parameters 'page' %}page={{ page_obj.previous_page_number }}" class="pagination__btn pagination__btn-left"></a>
+            {% endif %}
+        </li>
+    {% endif %}
+    {% for page_number in page_numbers %}
+        {% if page_number == paginator.ELLIPSIS %}
+            <li class="pagination__item">
+                <span class="pagination__dots">{{ paginator.ELLIPSIS }}</span>
+            </li>
+        {% else %}
+            <li class="pagination__item">
+                <a href="{% if page_number|add:0 == 1 %}{{ request.path }}{% if parameters %}?{{ parameters }}{% endif %}{% else %}?{% get_parameters 'page' %}page={{ page_number }}{% endif %}"
+                   class="pagination__numbers {% if page_number|add:'0' == page_obj.number %}active{% endif %}">{{ page_number }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <li class="pagination__item">
+            <a href="{{ page_url }}?{% get_parameters 'page' %}page={{ page_obj.next_page_number }}" class="pagination__btn pagination__btn-right"></a>
+        </li>
+    {% endif %}
+</ul>

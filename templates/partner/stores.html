@@ -1,0 +1,137 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load meta_title_filter meta_keywords_filter meta_description_filter from common_filters %}
+
+{% block title %}{{ 'stores'|meta_title_filter }}{{ block.super }}{% endblock %}
+{% block description %}{% if 'stores'|meta_description_filter %}{{ 'stores'|meta_description_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block keywords %}{% if 'stores'|meta_keywords_filter %}{{ 'stores'|meta_keywords_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block stores_active %}active{% endblock %}
+
+{% block content_wrapper %}
+<section class="stores section-top">
+    <div class="container">
+        <h1 class="title color-orange">stores</h1>
+        <div class="stores__content">
+            <div class="stores__accordions-lists">
+                <div class="stores__accordions">
+                    {% for country in countries %}
+                        <div class="stores__accordion parent">
+                            <div class="stores__top parent">
+                                <h2 class="color-{% cycle 'beige' 'teal' 'red' 'orange' %}">{{country.printable_name}}</h2>
+                                <svg width="15" height="9" viewBox="0 0 15 9" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 8L7.5 2L14 8" stroke="black" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <div class="stores__bottom parent">
+                                <div class="stores__accordions">
+                                    {% for city in country.retailcity_set.all %}
+                                        <div class="stores__accordion child">
+                                            <div class="stores__top">
+                                                <h2>{{ city.title }}</h2>
+                                                <svg width="15" height="9" viewBox="0 0 15 9" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1 8L7.5 2L14 8" stroke="black" stroke-width="2"/>
+                                                </svg>
+                                            </div>
+                                            <div class="stores__bottom">
+                                                {% for address in city.retailaddress_set.all %}
+                                                    <div class="stores__list">
+                                                        <h3 id="retailaddress_id_{{ address.id }}">
+                                                            {{address.retail.title}} {% if address.short_description %}({{address.short_description}}){% endif %}
+                                                        </h3>
+                                                        {% if address.address %}<address>{{address.address}}</address>{% endif %}
+                                                        {% if address.shop_working_hours %}<p>{% trans 'Open hours' %} {{address.shop_working_hours}}</p>{% endif %}
+                                                        {% if address.website %}<address><a onclick="location.href = '{{address.website}}'" href="{{address.website}}">{% trans 'website' %}</a></address>{% endif %}
+                                                        {% if address.latitude and address.longitude %}
+                                                        <a class="descktop" href="#" data-lat="{{address.latitude|stringformat:'.10f'}}" data-lng="{{address.longitude|stringformat:'.10f'}}">{% trans 'On the map' %}</a>
+                                                        <a class="mobile" href="#" data-lat="{{address.latitude|stringformat:'.10f'}}" data-lng="{{address.longitude|stringformat:'.10f'}}">{% trans 'On the map' %}</a>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="stores__maps">
+                <div id="stores_map"></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content_wrapper %}
+
+{% block extrascripts %}
+{{ block.super }}
+<!-- карта -->
+<script>
+		// карта
+		$(".stores__top").on("click", function () {
+			$(this).toggleClass("active").next(".stores__bottom").slideToggle()
+		})
+
+		let map = L.map('stores_map').setView([50.073658, 14.418540], 4)
+
+		var myIcon = L.icon({
+			iconUrl: '{% static 'custom/build/img/mark.svg' %}',
+			iconSize: [38, 95],
+		});
+
+        // Обработчик нажатия на маркер
+        function marker_click_handler(e){
+            let target_child = $(`#retailaddress_id_${e.target.address_id}`);
+
+            let child_accordion = target_child.closest('.stores__accordion.child');
+            let child_element_top = child_accordion.find('.stores__top');
+            let child_element_bottom = child_accordion.find('.stores__bottom');
+            child_element_top.addClass('active');
+            child_element_bottom.slideDown();
+
+            let accordion = child_accordion.closest('.stores__accordion.parent');
+            let element_top = accordion.find('.stores__top.parent');
+            let element_bottom = accordion.find('.stores__bottom.parent');
+
+            element_top.addClass('active');
+            element_bottom.slideDown();
+
+            setTimeout(() => {
+                $('html, body').animate({
+                    scrollTop: target_child.offset().top - $('.header').outerHeight()
+                }, 500);
+            }, 500);
+        }
+
+        {% for store in address_objects %}
+            let marker_{{forloop.counter0}} = L.marker([{{store.latitude|stringformat:"f"}}, {{store.longitude|stringformat:"f"}}], {icon: myIcon});
+            marker_{{forloop.counter0}}.address_id = {{ store.id }};
+            marker_{{forloop.counter0}}.addTo(map);
+            marker_{{forloop.counter0}}.on('click', marker_click_handler);
+        {% endfor %}
+
+        // Обработчик нажатия на магазин в списке
+		$('.stores__list a').on('click', function (e) {
+			e.preventDefault()
+			map.setView([$(this).attr('data-lat'), $(this).attr('data-lng')], 18)
+		})
+
+        $('.stores__list a.mobile').on('click', function (e) {
+			e.preventDefault()
+            $('html, body').animate({
+                    scrollTop: 0
+                }, 500);
+		})
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+
+		$(".leaflet-control-zoom").css("visibility", "hidden");
+</script>
+{% endblock %}

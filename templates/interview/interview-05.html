@@ -1,0 +1,44 @@
+{% extends "interview/interview-layout.html" %}
+{% load i18n %}
+{% load static %}
+{% load interview_tags %}
+
+{% block interview__content-class %}{% endblock %}
+
+{% block interview__fit %}
+<div class="interview__fit" data-move="interview__right,1,1200">
+	<img src="{% static 'custom/build/img/fit.svg' %}" alt="fit" />
+</div>
+{% endblock %}
+
+{% block interview__inner %}
+	<div class="interview__left">
+		<h2 class="interview__title color-red">perfect fit</h2>
+		<div class="interview__numbers color-red">{{ stage_id }} / {{ stage_count }}</div>
+		<div class="interview__fit" data-move="interview__right,1,1200">
+			<img src="{% static 'custom/build/img/fit.svg' %}" alt="fit" />
+		</div>
+	</div>
+	{% if attribute_obj is not None %}
+		<form action="{% url 'interview:stage_05' %}" class="interview__right">
+			{% csrf_token %}
+			<p class="interview__desc">{{ attribute_obj.question }}</p>
+			<div class="interview__select">
+				{% get_form_field_choices_list form attribute_obj.slug as choices %}
+				<select name="{{ attribute_obj.slug }}">
+					<option value="choose size">{% trans 'Choose size' %}</option>
+					{% for value, label in choices %}
+						<option {% if value == form.size.data %}selected{% endif %} value="{{ value }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+				{% for hidden in form.hidden_fields %}
+					{{ hidden }}
+				{% endfor %}
+			</div>
+			<div class="interview__btn">
+				<input type="submit" class="btn btn-orange" name="submit-{{ attribute_obj.stage }}" value="{% trans "Choose" %}">
+				<a href="{% url 'interview:stage_04' %}?{{ get_query_str }}" class="btn btn-orange--transparent">{% trans 'Back' %}</a>
+			</div>
+		</form>
+	{% endif %}
+{% endblock interview__inner %}

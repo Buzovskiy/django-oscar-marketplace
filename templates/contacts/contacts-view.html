@@ -1,0 +1,36 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load meta_title_filter meta_keywords_filter meta_description_filter from common_filters %}
+
+{% block title %}{{ 'contacts'|meta_title_filter }}{{ block.super }}{% endblock %}
+{% block description %}{% if 'contacts'|meta_description_filter %}{{ 'contacts'|meta_description_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block keywords %}{% if 'contacts'|meta_keywords_filter %}{{ 'contacts'|meta_keywords_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block contacts_active %}active{% endblock %}
+
+{% block content_wrapper %}
+
+<section class="contacts section-top">
+    <div class="container">
+        <h1 class="contacts__title title color-orange">contacts</h1>
+        <div class="contacts__content">
+            <h2 class="contacts__subtitle">weestep sp. z o.o.</h2>
+            <div class="contacts__address">
+                <address>
+                    Ul. Nadrzeczna 16,Hala1, lok. C026. 05-552 Jablonowo. Poland.
+                </address>
+                <a href="tel:+48728888569">+48728888569</a>
+                (<a href="viber://chat?number=%2B48728888569">Viber</a>, <a href="https://api.whatsapp.com/send/?phone=48728888569">WhatsApp</a>)
+            </div>
+            <a href="mailto:sale@weestep.pl" class="contacts__mail">sale@weestep.pl</a>
+            {% include 'contacts/become-our-partner-form.html' %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+{% endblock %}

@@ -1,0 +1,43 @@
+.pagination {
+	margin-top: 50px;
+
+	&__list {
+		display: flex;
+		justify-content: center;
+
+		li+li {
+			margin-left: 15px;
+		}
+	}
+}
+
+.page-numbers {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 47px;
+	font-weight: 700;
+	font-size: 20px;
+	transition: all 0.1s ease;
+	color: #fff;
+	background-color: $sec;
+	padding: 0 10px;
+
+	&:first-child {
+		border-radius: 10px 0 0 10px;
+		padding-left: 25px;
+	}
+
+	&:last-child {
+		border-radius: 0 10px 10px 0;
+		padding-right: 25px;
+	}
+
+	&:hover {
+		color: $pr;
+	}
+
+	&.current {
+		color: $pr;
+	}
+}

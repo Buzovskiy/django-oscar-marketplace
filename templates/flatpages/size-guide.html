@@ -1,0 +1,57 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load meta_title_filter meta_keywords_filter meta_description_filter from common_filters %}
+
+{% block title %}{{ 'size-guide'|meta_title_filter }}{{ block.super }}{% endblock %}
+{% block description %}{% if 'size-guide'|meta_description_filter %}{{ 'size-guide'|meta_description_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block keywords %}{% if 'size-guide'|meta_keywords_filter %}{{ 'size-guide'|meta_keywords_filter }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block size_guide_active %}active{% endblock %}
+
+{% block content_wrapper %}
+
+<section class="size-guide section-top">
+    <div class="container">
+        <div class="size-guide__wrap">
+            <a href="{{ request.META.HTTP_REFERER }}" class="size-guide__link">{% trans 'Go back' %}</a>
+
+            <div class="size-guide__top">
+                <h1 class="title color-orange">size guide</h1>
+                <a href="{% static 'custom/files/size-guide.pdf' %}" download class="size-guide__btn btn btn-orange"
+                    data-move="size-guide__wrap,3,992">download pdf</a>
+            </div>
+
+            <div class="size-guide__body">
+                <div class="size-guide__content">
+                    <div class="size-guide__ruler">
+                        <img src="{% static 'custom/build/img/ruler.png' %}" alt="ruler-img" />
+                    </div>
+                    <div class="size-guide__center">
+                        <h4 class="size-guide__subtitle">perfect fit</h4>
+                        <p class="size-guide__desc">
+                            {% trans 'Take a piece of paper and ask an adult to trace the leg as shown in the example.' %}
+                            {% trans 'Measure together the length of the pattern with a ruler and select the appropriate option.' %}
+                        </p>
+                        <img src="{% static 'custom/build/img/foot.svg' %}" alt="foot-img" />
+                    </div>
+                    <div class="size-guide__table">
+                        {% include 'oscar/catalogue/partials/size-guide.html' %}
+                    </div>
+                </div>
+                <div class="size-guide__footer">
+                    <img src="{% static 'custom/build/img/logo-footer.svg' %}" alt="logo" />
+                    <p>IMPORTANT: To ensure that the right size, you should always measure the foot leaving 3 millimeters of
+                        comfort.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+{% endblock %}
