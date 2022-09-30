@@ -1,7 +1,9 @@
 #### К настройке solr:
 
 1. docker run --restart=always -d -v solr_volume:/opt/solr -p 8983:8983 --name solr-container solr:6.6.6-alpine
-2. docker exec -it solr-container solr create_core -c weestepstore.pl
+2. Create core 
+```docker exec -it solr-container solr create -c weestepstore.pl -n basic_config``` or  
+```docker exec -it solr-container solr create_core -c weestepstore.pl```
 3. python manage.py build_solr_schema --configure-directory=/var/www/weestepuser/data/www/weestepstore.pl/project/solr_config
 4. docker exec -it solr-container rm /opt/solr/server/solr/weestepstore.pl/conf/schema.xml -f
 5. docker exec -it solr-container rm /opt/solr/server/solr/weestepstore.pl/conf/solrconfig.xml -f
