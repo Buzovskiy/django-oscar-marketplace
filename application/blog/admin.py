@@ -22,7 +22,7 @@ class PostAdmin(SortableAdminMixin, admin.ModelAdmin):
     def get_image_preview(self, obj):
         return obj.admin_image_preview
 
-    @admin.display(description=_(''))
+    @admin.display()
     def get_image_preview(self, obj):
         return obj.admin_image_preview
 

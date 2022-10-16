@@ -9,16 +9,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-17 02:44+0300\n"
-"PO-Revision-Date: 2022-01-26 18:22+0000\n"
+"PO-Revision-Date: 2022-10-14 02:55+0000\n"
 "Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.7\n"
 
 #: .\application\blog\admin.py:21
@@ -36,7 +36,7 @@ msgstr ""
 #: .\application\blog\models.py:22 .\application\partner\models.py:10
 #: .\application\partner\models.py:26
 msgid "Title"
-msgstr "Название"
+msgstr ""
 
 #: .\application\blog\models.py:30
 msgid "Manage Popularity"
@@ -52,40 +52,32 @@ msgid "Code in 1c"
 msgstr ""
 
 #: .\application\catalogue\models.py:61
-#, fuzzy
-#| msgid "Short description"
 msgid "Product description"
-msgstr "Короткое описание"
+msgstr ""
 
 #: .\application\catalogue\models.py:64
 msgid "Enter product description that is to display on product page"
 msgstr ""
 
 #: .\application\catalogue\models.py:67
-#, fuzzy
-#| msgid "Short description"
 msgid "Product long description"
-msgstr "Короткое описание"
+msgstr ""
 
 #: .\application\catalogue\models.py:70
 msgid "Enter product long description that is to display on product page"
 msgstr ""
 
 #: .\application\catalogue\models.py:73
-#, fuzzy
-#| msgid "Short description"
 msgid "Product design description"
-msgstr "Короткое описание"
+msgstr ""
 
 #: .\application\catalogue\models.py:76
 msgid "Enter product design description that is to display on product page"
 msgstr ""
 
 #: .\application\catalogue\models.py:79
-#, fuzzy
-#| msgid "Short description"
 msgid "Product benefits description"
-msgstr "Короткое описание"
+msgstr ""
 
 #: .\application\catalogue\models.py:82
 msgid "Enter product benefits description that is to display on product page"
@@ -133,7 +125,7 @@ msgstr ""
 
 #: .\application\contacts\forms.py:33
 msgid "Country"
-msgstr "Страна"
+msgstr ""
 
 #: .\application\contacts\forms.py:38
 msgid "City"
@@ -227,38 +219,26 @@ msgid "Enter question on the interview page"
 msgstr ""
 
 #: .\application\interview\models.py:14
-#, fuzzy
-#| msgid ""
-#| "Enter short description which will be displayed in parenthesis near title "
-#| "or leave field empty"
 msgid ""
 "Enter the number of the question which is to be displayed on the interview "
 "page, e.g. 01"
 msgstr ""
-"Введите короткое описание, которое будет показано в списке магазинов в "
-"скобках или оставьте поле пустым"
 
 #: .\application\interview\models.py:21
 msgid "Should be the same as key name value in OSCAR_SEARCH_FACETS settings"
 msgstr ""
 
 #: .\application\interview\models.py:31
-#, fuzzy
-#| msgid "Filter stores by countries"
 msgid "Filter for the interview"
-msgstr "Отфильтровать магазины по странам"
+msgstr ""
 
 #: .\application\interview\models.py:32
-#, fuzzy
-#| msgid "Filter stores by countries"
 msgid "Filters for the interview"
-msgstr "Отфильтровать магазины по странам"
+msgstr ""
 
 #: .\application\interview\models.py:39
-#, fuzzy
-#| msgid "Enter the title of retail partner stores"
 msgid "Enter the title of the filter on interview page"
-msgstr "Введите название магазина розничного партнера"
+msgstr ""
 
 #: .\application\interview\models.py:47
 msgid "Filter value for the interview"
@@ -269,64 +249,58 @@ msgid "Filter values for the interview"
 msgstr ""
 
 #: .\application\partner\admin.py:20
-#, fuzzy
-#| msgid "Filter stores by countries"
 msgid "Filter cities by countries"
-msgstr "Отфильтровать магазины по странам"
+msgstr ""
 
 #: .\application\partner\admin.py:63
 msgid "The number of addresses"
-msgstr "Количество адресов"
+msgstr ""
 
 #: .\application\partner\models.py:14
 msgid "Enter the title of retail partner stores"
-msgstr "Введите название магазина розничного партнера"
+msgstr ""
 
 #: .\application\partner\models.py:18
 msgid "Retail shop partner"
-msgstr "Партнер розничный"
+msgstr ""
 
 #: .\application\partner\models.py:19
 msgid "Retail shop partners"
-msgstr "Партнеры розничные"
+msgstr ""
 
 #: .\application\partner\models.py:33
 msgid "Retail city"
 msgstr ""
 
 #: .\application\partner\models.py:34
-#, fuzzy
-#| msgid "Retail shop partners"
 msgid "Retail cities"
-msgstr "Партнеры розничные"
+msgstr ""
 
 #: .\application\partner\models.py:41
 msgid "Short description"
-msgstr "Короткое описание"
+msgstr ""
 
 #: .\application\partner\models.py:45
 msgid ""
 "Enter short description which will be displayed in parenthesis near title or "
 "leave field empty"
 msgstr ""
-"Введите короткое описание, которое будет показано в списке магазинов в "
-"скобках или оставьте поле пустым"
 
 #: .\application\partner\models.py:48 .\application\partner\models.py:77
 msgid "Address"
-msgstr "Адрес"
+msgstr ""
 
 #: .\application\partner\models.py:50
 msgid "Enter address of the retail partner store"
-msgstr "Введите название магазина розничного партнера"
+msgstr ""
 
 #: .\application\partner\models.py:53
 msgid "Store working hours"
-msgstr "Часы работы магазина"
+msgstr ""
 
 #: .\application\partner\models.py:56
 msgid "Enter store working hours"
-msgstr "Введите часы работы магазина"
+msgstr ""
 
 #: .\application\partner\models.py:58
 msgid "Web site"
@@ -338,32 +312,30 @@ msgstr ""
 
 #: .\application\partner\models.py:60
 msgid "Latitude"
-msgstr "Широта"
+msgstr ""
 
 #: .\application\partner\models.py:63
 msgid ""
 "Enter latitude coordinate in decimal format, for example 46.43143143569561"
 msgstr ""
-"Введите координату долготы в десятичном формате, например 46.43143143569561"
 
 #: .\application\partner\models.py:66
 msgid "longitude"
-msgstr "Долгота"
+msgstr ""
 
 #: .\application\partner\models.py:69
 msgid ""
 "Enter longitude coordinate in decimal format, for example 30.724300888157735"
 msgstr ""
-"Введите координату долготы в десятичном формате, например 30.724300888157735"
 
 #: .\application\partner\models.py:78
 msgid "Addresses"
-msgstr "Адреса"
+msgstr ""
 
 #: .\application\search\forms.py:40 .\application\search\forms.py:42
 #: .\templates\oscar\layout.html:33 .\templates\oscar\search\results.html:18
 msgid "Search"
-msgstr ""
+msgstr "Szukanie"
 
 #: .\application\search\forms.py:57
 msgid "Relevancy"
@@ -395,10 +367,8 @@ msgid "Meta title"
 msgstr ""
 
 #: .\application\search_optimisation_fields\models.py:8
-#, fuzzy
-#| msgid "Short description"
 msgid "Meta description"
-msgstr "Короткое описание"
+msgstr ""
 
 #: .\application\search_optimisation_fields\models.py:9
 msgid "Meta keywords"
@@ -489,10 +459,8 @@ msgstr ""
 
 #: .\templates\admin\app_list.html:24
 #: .\templates\admin\exchange\custom_app_list.html:17
-#, fuzzy
-#| msgid "Address"
 msgid "Add"
-msgstr "Адрес"
+msgstr ""
 
 #: .\templates\admin\app_list.html:31
 #: .\templates\admin\exchange\custom_app_list.html:24
@@ -845,10 +813,8 @@ msgid "Variants:"
 msgstr ""
 
 #: .\templates\oscar\catalogue\detail.html:252
-#, fuzzy
-#| msgid "Short description"
 msgid "Product Description"
-msgstr "Короткое описание"
+msgstr ""
 
 #: .\templates\oscar\catalogue\detail.html:260
 msgid "Product Information"
@@ -879,10 +845,8 @@ msgid "Availability"
 msgstr ""
 
 #: .\templates\oscar\catalogue\detail.html:298
-#, fuzzy
-#| msgid "The number of addresses"
 msgid "Number of reviews"
-msgstr "Количество адресов"
+msgstr ""
 
 #: .\templates\oscar\catalogue\detail.html:310
 msgid "See all reviews"
@@ -911,43 +875,43 @@ msgstr ""
 
 #: .\templates\oscar\layout.html:17
 msgid "For children as for adults. even better."
-msgstr ""
+msgstr "Dla dzieci jak dorośli. nawet lepiej."
 
 #: .\templates\oscar\layout.html:39
 msgid "personal account"
-msgstr ""
+msgstr "konto osobiste"
 
 #: .\templates\oscar\layout.html:40
 msgid "log out"
-msgstr ""
+msgstr "Wyloguj się"
 
 #: .\templates\oscar\layout.html:46
 msgid "wish list"
-msgstr ""
+msgstr "lista życzeń"
 
 #: .\templates\oscar\layout.html:69
 msgid "catalogue"
-msgstr ""
+msgstr "katalog"
 
 #: .\templates\oscar\layout.html:74 .\templates\oscar\partials\footer.html:24
 msgid "Stores"
-msgstr ""
+msgstr "Sklepy"
 
 #: .\templates\oscar\layout.html:84
 msgid "brand of the year"
-msgstr ""
+msgstr "marka roku"
 
 #: .\templates\oscar\layout.html:89 .\templates\oscar\partials\footer.html:27
 msgid "Contacts"
-msgstr ""
+msgstr "Łączność"
 
 #: .\templates\oscar\layout.html:94 .\templates\oscar\partials\footer.html:30
 msgid "Find yor fit"
-msgstr ""
+msgstr "Znajdź swój krój"
 
 #: .\templates\oscar\partials\footer.html:17
 msgid "Become our partner"
-msgstr ""
+msgstr "Zostań naszym partnerem"
 
 #: .\templates\oscar\search\results.html:27
 msgid "Refine your search"
@@ -982,8 +946,6 @@ msgid_plural ""
 "                "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
 
 #: .\templates\oscar\search\results.html:69
 msgid "Found <strong>0</strong> results."

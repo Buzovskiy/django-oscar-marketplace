@@ -43,5 +43,6 @@
 //= files/selectric.js
 // files/tabs.js
 //= files/block-scroll.js
+//= files/language-switcher.js
 
 //= my.js

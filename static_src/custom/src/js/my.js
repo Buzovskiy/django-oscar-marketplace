@@ -14,31 +14,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	}); 
   });
 
-// смена языка
-// let lang_textHeader = document.querySelector('.header-lang__text');
-// let lang_bodyHeader = document.querySelector('.header-lang');
-// lang_textHeader.addEventListener("click", function (e) {
-// 	lang_bodyHeader.classList.toggle('is-active');
-// });
-// document.documentElement.addEventListener("click", function (e) {
-// 	if (!e.target.closest('.header-lang')) {
-// 		lang_bodyHeader.classList.remove('is-active');
-// 	}
-// });
-
-// if (document.querySelector('.footer')) {
-// 	let lang_textFooter = document.querySelector('.header-lang__text-footer');
-// 	let lang_bodyFooter = document.querySelector('.header-lang-footer');
-// 	lang_textFooter.addEventListener("click", function (e) {
-// 		lang_bodyFooter.classList.toggle('is-active');
-// 	});
-// 	document.documentElement.addEventListener("click", function (e) {
-// 		if (!e.target.closest('.header-lang-footer')) {
-// 			lang_bodyFooter.classList.remove('is-active');
-// 		}
-// 	});
-// }
-
 //бегущая строка
 $(function ($, undefined) {
 	$('.country__content--top').eocjsNewsticker({
@@ -143,6 +118,11 @@ $(document).ready(function () {
 		return false;
 	});
 });
+
+$(document).ready(function(){
+	languageSwitcher.init_header();
+	languageSwitcher.init_footer();
+})
 
 // моб версия-поиск
 if (document.querySelector('.menu__item-search')) {
@@ -261,3 +241,5 @@ if (document.querySelector('.paint')) {
 		}
 	}
 }
+
+

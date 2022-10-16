@@ -18,6 +18,7 @@ from django.urls import include, path, re_path
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
 from django.utils.translation import gettext_lazy as _
@@ -34,10 +35,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('captcha/', include('captcha.urls')),
     path('testmail/', include('testmail.urls')),
+    path('1c_exchange/', include(apps.get_app_config('exchange').urls[0]))
 
     # path('', include(apps.get_app_config('oscar').urls[0])),
-    path('', include(apps.get_app_config('oscar_routing').urls[0])),
 ]
+
+urlpatterns += i18n_patterns(
+    path('', include(apps.get_app_config('oscar_routing').urls[0])),
+)
 
 urlpatterns += sitemap_url_patterns
 

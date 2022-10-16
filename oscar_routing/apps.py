@@ -1,5 +1,6 @@
 from oscar import config
 from django.urls import path, reverse_lazy, include
+from django.conf.urls.i18n import i18n_patterns
 from django.apps import apps
 
 
@@ -29,7 +30,6 @@ class OscarRoutingConfig(config.Shop):
             path('', self.partner_app.urls),  # stores page
             path('', self.blog_app.urls),
             path('interview/', self.interview_app.urls),
-            path('1c_exchange/', self.exchange_app.urls),
             path('contacts/', self.contacts_app.urls),
             path('pages/', self.flatpages_app),
             path('catalogue/', self.catalogue_app.urls),
