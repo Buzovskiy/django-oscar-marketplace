@@ -1,4 +1,6 @@
+from datetime import datetime
 from django import template
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from application.search_optimisation_fields.models import SearchOptimisationFields
 
@@ -47,3 +49,18 @@ def meta_keywords_filter(page_name):
     except ObjectDoesNotExist:
         content = ''
     return content
+
+
+@register.filter
+def static_url_param(value):
+    """
+    Filter that returns get parameter for static file link.
+    Is used on order to get link like app.min.js?v=1667696353.474667 if DEBUG is True or
+    app.min.js?v=16 if DEBUG is False where 16 is value
+    :param value: value of a parameter
+    :return: value of a parameter
+    """
+    if settings.DEBUG:
+        return datetime.timestamp(datetime.now())
+    else:
+        return value

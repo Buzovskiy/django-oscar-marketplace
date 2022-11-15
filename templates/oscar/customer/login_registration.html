@@ -1,0 +1,65 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% trans 'Login' %} | {{ block.super }}
+{% endblock %}
+
+{% block content_wrapper %}
+    <section class="auth section-top">
+        <div class="container">
+            <div class="auth__content">
+                <div class="auth__info">
+                    <h1 class="title color-orange">login</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
+                        <li>{% trans 'Log In' %}</li>
+                    </ul>
+
+                    <form action="{{ request.get_full_path }}" method="post" class="auth__form">
+                        {% csrf_token %}
+                        {% if login_form.is_bound and not login_form.is_valid %}
+                            <div class="alert alert-danger">
+                                <strong>{% trans "Oops! We found some errors" %}</strong>
+                                - {% trans "please check the error messages below and try again" %}
+                            </div>
+                        {% endif %}
+                        {% if login_form.non_field_errors %}
+                            {% for error in login_form.non_field_errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        {% for field in login_form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                            {% render_field field class+="input" %}
+                        {% endfor %}
+{#                        <div class="auth__holder">#}
+{#                            <div class="order__address">#}
+{#                                <label class="order__label">#}
+{#                                    <input type="checkbox" name="remember me">#}
+{#                                    <span></span>#}
+{#                                    <i>Запомните меня</i>#}
+{#                                </label>#}
+{#                            </div>#}
+{#                            <a href="password-1.html" class="auth__link">Забыли пароль?</a>#}
+{#                        </div>#}
+                        <button name="login_submit" type="submit" value="Log In" class="btn btn-orange" data-loading-text="{% trans "Logging in..." %}">{% trans 'Log In' %}</button>
+
+                        <div class="auth__box">
+                            <p>{% trans "Need an account?" %}</p>
+                            <a href="{% url 'customer:register' %}" class="auth__link">{% trans "Sign up" %}</a>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="auth__img">
+                    <img src="{% static 'custom/build/img/collection-2.jpg' %}" alt="image">
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

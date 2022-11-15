@@ -22,17 +22,26 @@ var path_to_src = 'static_src/custom/src';
 за изменениями которых нужно наблюдать (watch) */
 var path = {
     build: {
-        js: `${path_to_build}/js/`,
+        js: {
+            app: `${path_to_build}/js/`,
+            libs: `${path_to_build}/js/`
+        },
         css: `${path_to_build}/css/`,
         img: `${path_to_build}/img/`,
     },
     src: {
-        js: `${path_to_src}/js/main.js`,
+        js: {
+            app: `${path_to_src}/js/app/app.js`,
+            libs: `${path_to_src}/js/libs/libs.js`
+        },
         style: `${path_to_src}/style/main.scss`,
         img: `${path_to_src}/img/**/*.*`,
     },
     watch: {
-        js: `${path_to_src}/js/**/*.js`,
+        js: {
+            app: `${path_to_src}/js/app/*.js`,
+            libs: `${path_to_src}/js/libs/*.js`,
+        },
         css: `${path_to_src}/style/**/*.scss`,
         img: `${path_to_src}/img/**/*.*`,
     },
@@ -56,19 +65,33 @@ function cssBuild(){
     .pipe(gulp.dest(path.build.css)) // выгружаем в build
 }
 
-// сбор js
-function jsBuild(){
-    return gulp.src(path.src.js) // получим файл main.js
+// сбор js библиотек
+function jsLibsBuild(){
+    return gulp.src(path.src.js.libs) // получим файл libs.js
     .pipe(plumber()) // для отслеживания ошибок
-    .pipe(rigger()) // импортируем все указанные файлы в main.js
-    .pipe(gulp.dest(path.build.js))
+    .pipe(rigger()) // импортируем все указанные файлы в libs.js
+    .pipe(gulp.dest(path.build.js.libs))
     .pipe(rename({ suffix: '.min' }))
     .pipe(sourcemaps.init()) //инициализируем sourcemap
-    //  .pipe(uglify()) // минимизируем js
+     // .pipe(uglify()) // минимизируем js
     .pipe(sourcemaps.write('./')) //  записываем sourcemap
-    .pipe(gulp.dest(path.build.js)) // положим готовый файл
+    .pipe(gulp.dest(path.build.js.libs)) // положим готовый файл
     .pipe(gulp.src(`${path_to_src}/js/libs/model-viewer.min.js`))
-    .pipe(gulp.dest(path.build.js))
+    .pipe(gulp.dest(path.build.js.libs))
+}
+
+// сбор js приложения
+function jsAppBuild(){
+    return gulp.src(path.src.js.app) // получим файл app.js
+    .pipe(plumber()) // для отслеживания ошибок
+    .pipe(rigger()) // импортируем все указанные файлы в app.js
+    .pipe(gulp.dest(path.build.js.app))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(sourcemaps.init()) //инициализируем sourcemap
+     // .pipe(uglify()) // минимизируем js
+    .pipe(sourcemaps.write('./')) //  записываем sourcemap
+    .pipe(gulp.dest(path.build.js.app)) // положим готовый файл
+    .pipe(gulp.dest(path.build.js.app))
 }
 
 // обработка картинок
@@ -88,6 +111,7 @@ function imageBuild(){
 }
 
 module.exports.cssBuild = cssBuild;
-module.exports.jsBuild = jsBuild;
+module.exports.jsLibsBuild = jsLibsBuild;
+module.exports.jsAppBuild = jsAppBuild;
 module.exports.imageBuild = imageBuild;
 module.exports.path = path;

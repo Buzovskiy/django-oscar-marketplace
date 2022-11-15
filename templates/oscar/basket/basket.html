@@ -1,0 +1,28 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Basket' %} - {{ block.super }}{% endblock %}
+
+{% block content_wrapper %}
+<section class="order section-top">
+    <div class="container">
+        <h1 class="title color-orange">{% trans 'Basket' %}</h1>
+        <ul class="breadcrumb">
+            <li><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
+            <li>{% trans "Basket" %}</li>
+        </ul>
+
+        {# Use a partial template so that AJAX can be used to re-render basket #}
+        <div id="content_inner">{% include 'oscar/basket/partials/basket_content.html' %}</div>
+    </div>
+</section>
+{% endblock %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    {# We pass in the URL to send AJAX requests to #}
+    var options = {
+        'basketURL': '{% url 'basket:summary' %}'
+    };
+    oscar.basket.init(options);
+{% endblock %}

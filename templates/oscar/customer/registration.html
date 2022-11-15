@@ -1,0 +1,59 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% trans 'Register' %} | {{ block.super }}
+{% endblock %}
+
+
+{% block content_wrapper %}
+    <section class="auth section-top">
+        <div class="container">
+            <div class="auth__content">
+                <div class="auth__info">
+                    <h1 class="title color-orange">registration</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
+                        <li>{% trans 'Register' %}</li>
+                    </ul>
+
+                    <form id="register_form" method="post" class="auth__form">
+                        {% csrf_token %}
+{#                        <input type="text" class="input" placeholder="Ваше имя">#}
+{#                        <input type="text" class="input" placeholder="Ваша фамилия">#}
+                        {% if form.is_bound and not form.is_valid %}
+                            <div class="alert alert-danger">
+                                <strong>{% trans "Oops! We found some errors" %}</strong>
+                                - {% trans "please check the error messages below and try again" %}
+                            </div>
+                        {% endif %}
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                            {% render_field field class+="input" %}
+                        {% endfor %}
+                        <button name="registration_submit" type="submit" value="Register" class="btn btn-orange" data-loading-text="{%trans 'Registering...' %}">{% trans 'Register' %}</button>
+
+                        <div class="auth__box">
+                            <p>{% trans "Already have an account?" %}</p>
+                            <a href="{% url "customer:login" %}" class="auth__link">{% trans "Sign In" %}</a>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="auth__img">
+                    <img src="{% static "custom/build/img/be-bigger-1.jpg" %}" alt="image"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

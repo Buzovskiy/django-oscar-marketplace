@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load currency_filters %}
+{% load shipping_tags %}
+
+
+<div class="order__total">
+    {% trans "Totals" %}:
+    <span>
+        {% if order_total.is_tax_known %}
+            {{ order_total.incl_tax|currency:basket.currency }}
+        {% else %}
+            {{ order_total.excl_tax|currency:basket.currency }}
+        {% endif %}
+    </span>
+</div>

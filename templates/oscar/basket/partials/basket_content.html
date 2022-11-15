@@ -1,0 +1,123 @@
+{% load i18n %}
+{% load image_tags %}
+{% load currency_filters %}
+{% load purchase_info_tags %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% if basket_warnings %}
+    <h5>{% trans "Important messages about items in your basket" %}</h5>
+    {% for warning in basket_warnings %}
+        <div class="alert alert-warning">{{ warning }}</div>
+    {% endfor %}
+{% endif %}
+
+{% if upsell_messages %}
+    <div class="card card-body">
+        <h3>{% trans "You could be missing out on offers!" %}</h3>
+        {% for upsell in upsell_messages %}
+            {% blocktrans with message=upsell.message url=upsell.offer.get_absolute_url offer_name=upsell.offer.name %}
+                <div class="warning">{{ message }} to qualify for the <a href="{{ url }}">{{ offer_name }}</a> special offer</div>
+            {% endblocktrans %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if not basket.is_empty %}
+    {% block basket_form_main %}
+        <form method="post" class="order__basket" id="basket_formset">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <div class="order__items">
+                {% for form in formset %}
+                    {% with line=form.instance product=form.instance.product %}
+                        {% purchase_info_for_line request line as session %}
+                        <div class="order__item">
+                            <div class="order__img">
+                                {{ form.id }}
+                                {% with image=product.primary_image %}
+                                    {% oscar_thumbnail image.original "100x100" upscale=False as thumb %}
+                                    <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">
+                                        <img class="img-thumbnail w-auto mx-auto my-0" src="{{ thumb.url }}" alt="{{ product.get_title }}"/>
+                                    </a>
+                                {% endwith %}
+                            </div>
+                            <div class="order__holder">
+                                <div class="order-shoes">
+                                    <div class="order-shoes__desc">weestep shoes</div>
+                                    <div class="order-shoes__item">
+                                        <div class="order-shoes__color">
+                                            {% trans 'color' %}
+                                            <span style="background-color: {{ product.attr.color_hex_code }};"></span>
+                                        </div>
+                                        <div class="order-shoes__size">
+                                            {% trans 'Size' %}
+                                            <span>{{ product.attr.size }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-seller">
+                                    <div class="order-seller__desc">{% trans 'Choose seller' %}</div>
+                                    <select name="form[]" class="order-seller__select">
+                                        <option value="1" selected="selected">Магазин «Ромашка» 1</option>
+                                        <option value="2">Магазин «Ромашка» 2</option>
+                                    </select>
+                                </div>
+                                <div class="order__box">
+                                    <div class="order-count">
+                                        <span data-counter="minus" class="order-count__minus"></span>
+                                        {#type="number" in form class class#}
+                                        {% render_field form.quantity type="input" class+="order-count__number" %}
+                                        <span data-counter="plus" class="order-count__plus"></span>
+                                        {% for field_errors in form.errors.values %}
+                                            {% for error in field_errors %}
+                                                <span class="error-block"><i
+                                                        class="fas fa-exclamation"></i> {{ error }}</span>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="order__price">
+                                        <p>
+                                            {% if not line.line_price_incl_tax and not line_price_excl_tax %}
+                                                &mdash;
+                                            {% else %}
+                                                {% if line.is_tax_known %}
+                                                    {{ line.line_price_incl_tax|currency:line.price_currency }}
+                                                {% else %}
+                                                    {{ line.line_price_excl_tax|currency:line.price_currency }}
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <a href="#" class="order__close" data-id="{{ forloop.counter0 }}" data-behaviours="remove">
+                                        <img src="{% static "custom/build/img/close-2.svg" %}" alt="icon" />
+                                    </a>
+                                    <div style="display:none">
+                                        {{ form.move_to_basket }}
+                                        {{ form.DELETE }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+            <div class="order__bottom">
+                {% include 'oscar/basket/partials/basket_totals.html' %}
+                <div class="order__buttons">
+                    <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-orange--transparent">{% trans "Continue shopping" %}</a>
+                    <a href="{% url 'checkout:index' %}" class="btn btn-orange">{% trans "Proceed to checkout" %}</a>
+                </div>
+            </div>
+        </form>
+    {% endblock %}
+
+{% else %}
+    {% block emptybasket %}
+        <p class="order__basket">
+            {% trans "Your basket is empty." %}
+            <a href="{{ homepage_url }}">{% trans "Continue shopping" %}</a>
+        </p>
+    {% endblock %}
+{% endif %}
+

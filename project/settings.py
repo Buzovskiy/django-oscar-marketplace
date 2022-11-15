@@ -55,21 +55,16 @@ INSTALLED_APPS = [
     'oscar.apps.checkout.apps.CheckoutConfig',
     'oscar.apps.address.apps.AddressConfig',
     'oscar.apps.shipping.apps.ShippingConfig',
-    # 'oscar.apps.catalogue.apps.CatalogueConfig',
     'application.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
-    # 'oscar.apps.partner.apps.PartnerConfig',
     'application.partner.apps.PartnerConfig',
     'oscar.apps.basket.apps.BasketConfig',
     'oscar.apps.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',
     'oscar.apps.order.apps.OrderConfig',
-    'oscar.apps.customer.apps.CustomerConfig',
-
-
-    # 'oscar.apps.search.apps.SearchConfig',  # oscar
-    'application.search.apps.SearchConfig',  # application
+    'application.customer.apps.CustomerConfig',
+    'application.search.apps.SearchConfig',
 
 
     'oscar.apps.voucher.apps.VoucherConfig',
@@ -201,15 +196,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -372,3 +367,6 @@ OSCAR_SEARCH_FACETS = {
         #  }),
     ]),
 }
+
+LOGIN_REDIRECT_URL = reverse_lazy('catalogue:index')
+

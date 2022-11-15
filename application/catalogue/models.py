@@ -51,6 +51,19 @@ class Product(AbstractProduct):
             self.slug = slugify(self.get_title())
         super(AbstractProduct, self).save(*args, **kwargs)
 
+    @property
+    def children_ordered_by_size(self):
+        """
+        Getter that returns the list of products sorted by size
+        :return: list
+        """
+        children = list(self.children.all())
+        try:
+            children.sort(key=lambda el: el.attributes_container.size['value'], reverse=False)
+        except AttributeError as e:
+            pass
+        return children
+
 
 class Category(AbstractCategory):
 

@@ -22,6 +22,12 @@ body.lock {
 	@media (min-width: 992px) {
 		margin: 125px 0 25px;
 	}
+
+	&.cart{
+		@media (min-width: 992px) {
+			margin: 150px 0 25px;
+		}
+	}
 }
 
 input {

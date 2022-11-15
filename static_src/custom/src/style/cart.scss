@@ -1,5 +1,16 @@
 .cart {
 
+	.price_color, .availability{
+		padding: 10px 0;
+		font-size: 26px;
+		font-weight: bold;
+		text-transform: lowercase;
+	}
+
+	.available{
+		color: green;
+	}
+
 	&__content {
 		@media (min-width: 1200px) {
 			display: flex;
@@ -150,38 +161,16 @@
 		&__numbers {
 			display: flex;
 			margin-left: 40px;
+			text-align: center;
+			position: relative;
 
 			@media (min-width: 1250px) {
 				margin-left: 70px;
 			}
-		}
 
-		&__control {
-			transition: all ease 250ms;
-
-			&:not(:last-child) {
-				margin-right: 13px;
-			}
-
-			input {
-				display: none;
-
-				&:checked+.cart-size__input span {
-					color: #000;
-					opacity: 1;
-					transition: opacity ease 250ms;
-				}
-			}
-		}
-
-		&__input {
-			text-align: center;
-			cursor: pointer;
-			position: relative;
-			transition: all ease 250ms;
-			font-style: normal;
-
-			span {
+			a, span{
+				transition: all ease 250ms;
+				font-style: normal;
 				letter-spacing: 1px;
 				font-size: 14px;
 				display: block;
@@ -190,6 +179,14 @@
 				@media (min-width: 576px) {
 					font-size: 20px;
 				}
+
+				&:not(:last-child){
+					margin-right: 13px;
+				}
+			}
+
+			a:hover{
+				color: black;
 			}
 		}
 

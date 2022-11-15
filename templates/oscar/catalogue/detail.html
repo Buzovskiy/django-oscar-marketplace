@@ -37,6 +37,9 @@
 				<div class="cart__top">
 					<div class="cart__numbers">{{ product.upc }}</div>
 					<h2 class="cart__subtitle">weestep shoes</h2>
+                    {% block product_stock_record %}
+                        {% include "oscar/catalogue/partials/stock_record.html" with verbose=1 %}
+                    {% endblock %}
 					<div class="cart__more">
 						<div class="cart__more-text">
 							<p>{{ product.categories.first.product_description }}</p>
@@ -71,24 +74,24 @@
 						<div class="cart-size">
 							<p class="cart-size__name">size</p>
 							<div class="cart-size__numbers">
-								{% get_child_products_sizes product.children.all as sizes %}
-								{% for size in sizes %}
-									<span></span>
-									<label class="cart-size__control">
-										<input type="radio" name="size" value="{{ size }}" />
-										<i class="cart-size__input">
-											<span>{{ size }}</span>
-										</i>
-									</label>
-								{% endfor %}
+                                {% if product.is_parent %}
+                                    {% for child in product.children_ordered_by_size %}
+                                        <a href="{{ child.get_absolute_url }}">{{ child.attributes_container.size.value }}</a>
+                                    {% endfor %}
+                                {% else %}
+                                    <span>{{ product.attributes_container.size.value }}</span>
+                                {% endif %}
 							</div>
-
 							<div class="cart-size__guide" data-move="cart__form,2,576" data-toggle="modal"
 								 data-target="#sizeGuide">
 								Size guide
 							</div>
 						</div>
-						<a class="cart__btn btn btn-orange" href="{% url 'partner:stores' %}">Availability in store</a>
+                        {% if not product.is_parent %}
+                            {% block product_basket_form %}
+                                {% include "oscar/catalogue/partials/add_to_basket_form.html" %}
+                            {% endblock %}
+                        {% endif %}
 					</div>
 				</div>
 
@@ -195,165 +198,6 @@
 	</div>
 </section>
 {% endblock %}
-
-{% block content %}
-
-<article class="product_page"><!-- Start of product page -->
-
-    <div class="row">
-
-        {% block product_main %}
-        <div class="col-sm-6 product_main">
-            {% comment %}
-                This is a bit clunky here.  Better to have some kind of JS-driven dashboard menu that
-                pops out when clicked.  A bit like the Django-Debug-Toolbar button
-            {% endcomment %}
-            {% if user.is_staff %}
-                <a class="float-right d-none d-md-block" href="{% url 'dashboard:catalogue-product' pk=product.id %}">
-                    <small><i class="fas fa-pencil-alt"></i> {% trans "Edit this product" %}</small>
-                </a>
-            {% endif %}
-            <h1>{{ product.get_title }}</h1>
-
-            {% block product_stock_record %}
-                {% include "oscar/catalogue/partials/stock_record.html" with verbose=1 %}
-            {% endblock %}
-
-            {% iffeature "reviews" %}
-                {% include "oscar/catalogue/reviews/partials/review_stars.html" %}
-            {% endiffeature %}
-
-            <hr/>
-
-            {% if not product.is_parent %}
-                {% block product_basket_form %}
-                    {% include "oscar/catalogue/partials/add_to_basket_form.html" %}
-                {% endblock %}
-            {% else %}
-                {% block variants %}
-                    <h2>{% trans 'Variants:' %}</h2>
-                    {% for child in product.children.public %}
-                        {% purchase_info_for_product request child as child_session %}
-                        {% if child_session.availability.is_available_to_buy %}
-                            <a href="{{ child.get_absolute_url }}">{{ child.get_title }}</a><br>
-                        {% endif %}
-                    {% endfor %}
-                {% endblock %}
-            {% endif %}
-        </div><!-- /col-sm-6 -->
-        {% endblock %}
-
-    </div><!-- /row -->
-
-    {% block product_description %}
-        {% if product.description %}
-        <div id="product_description" class="sub-header">
-            <h2>{% trans "Product Description" %}</h2>
-        </div>
-        <p>{{ product.description|safe }}</p>
-        {% endif %}
-    {% endblock %}
-
-    {% block product_info %}
-    <div class="sub-header">
-        <h2>{% trans "Product Information" %}</h2>
-    </div>
-    <table class="table table-striped">
-        {% if product.upc %}
-        <tr>
-            <th>{% trans "UPC" %}</th><td>{{ product.upc }}</td>
-        </tr>
-        {% endif %}
-        <tr>
-            <th>{% trans "Product Type" %}</th><td>{{ product.get_product_class.name }}</td>
-        </tr>
-
-        {% purchase_info_for_product request product as session %}
-        {% if session.price.exists %}
-            <tr>
-                <th>{% trans "Price (excl. tax)" %}</th><td>{{ session.price.excl_tax|currency:session.price.currency }}</td>
-            </tr>
-            {% if session.price.is_tax_known %}
-                <tr>
-                    <th>{% trans "Price (incl. tax)" %}</th><td>{{ session.price.incl_tax|currency:session.price.currency }}</td>
-                </tr>
-                <tr>
-                    <th>{% trans "Tax" %}</th><td>{{ session.price.tax|currency:session.price.currency }}</td>
-                </tr>
-            {% endif %}
-            <tr>
-                <th>{% trans "Availability" %}</th>
-                <td>{{ session.availability.message }}</td>
-            </tr>
-        {% endif %}
-        {% for av in product.get_attribute_values %}
-            <tr>
-                <th>{{ av.attribute.name }}</th>
-                <td>{{ av.value_as_html }}</td>
-            </tr>
-        {% endfor %}
-        {% iffeature "reviews" %}
-            <tr>
-                <th>{% trans "Number of reviews" %}</th>
-                <td>{{ product.num_approved_reviews }}</td>
-            </tr>
-        {% endiffeature %}
-    </table>
-    {% endblock %}
-
-    {% iffeature "reviews" %}
-        {% block product_review %}
-        <section>
-            <div id="reviews" class="sub-header">
-                {% if product.num_approved_reviews > 3 %}
-                    <a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}" class="btn float-right">{% trans "See all reviews" %}</a>
-                {% endif %}
-                <h2>{% trans "Customer Reviews" %}</h2>
-            </div>
-
-            {% if product.num_approved_reviews == 0 %}
-                <p>
-                    {% if product|is_review_permitted:user %}
-                        {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
-                            {% blocktrans %}This product does not have any reviews yet -
-                            <a href="{{ add_review_url }}#addreview">be the first to write one</a>.
-                        {% endblocktrans %}
-                    {% else %}
-                        {% trans "This product does not have any reviews yet" %}.
-                    {% endif %}
-                </p>
-            {% else %}
-                <ol class="list-unstyled review-list">
-                    {% for review in product.reviews.approved.all|slice:":3" %}
-                        <li>
-                        {% include 'oscar/catalogue/partials/review.html' %}
-                        </li>
-                    {% endfor %}
-                </ol>
-            {% endif %}
-        </section>
-        {% endblock product_review %}
-    {% endiffeature %}
-
-    {% with recommended_products=product.sorted_recommended_products|slice:":6" %}
-        {% if recommended_products %}
-            <div class="sub-header">
-                <h2>{% trans "Recommended items" %}</h2>
-            </div>
-            <ul class="row list-unstyled mx-0">
-                {% for product in recommended_products %}
-                <li class="col-sm-4 col-md-3 col-lg-3">
-                    {% render_product product %}
-                </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-
-    {% recently_viewed_products current_product=product %}
-
-</article><!-- End of product page -->
-{% endblock content %}
 
 {% block extrascripts %}
     {{ block.super }}

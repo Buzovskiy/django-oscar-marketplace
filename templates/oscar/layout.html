@@ -1,9 +1,10 @@
 {% extends "oscar/base.html" %}
 {% load static %}
 {% load i18n %}
+{% load static_url_param from common_filters %}
 
 {% block styles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v=14" />
+    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v={{ '15'|static_url_param }}" />
 {% endblock %}
 
 {% block layout %}
@@ -34,26 +35,14 @@
                                             </form>
 
                                             <div class="menu__item">
-                                                <img src="{% static 'custom/build/img/user.svg' %}" alt="icon">
-                                                <div class="menu__link">
-                                                    <a href="#">{% trans 'personal account' %}</a>
-                                                    <a href="login.html"><span>{% trans 'log out' %}</span></a>
-                                                </div>
+                                                {% include 'oscar/partials/nav_accounts.html' %}
                                             </div>
 
                                             <a href="wish-list.html" class="menu__item">
                                                 <img src="{% static 'custom/build/img/heart.svg' %}" alt="icon">
                                                 {% trans 'wish list' %}
                                             </a>
-
-                                            <a href="basket.html" class="menu__item menu__item-basket"
-                                               data-move="header__right,1,992">
-                                                <img src="{% static 'custom/build/img/shopping-bag.svg' %}" alt="icon">
-                                                <span>980</span>
-                                                <i>грн</i>
-                                                <p>2</p>
-                                            </a>
-
+                                            {% block mini_basket %}{% include "oscar/partials/mini_basket.html" %}{% endblock %}
                                             <a href="tel:48728888569" class="menu__item menu__item-tel">+4 872 88 88
                                                 569 </a>
                                             {% include "partials/language-switcher-header.html" %}
@@ -118,7 +107,8 @@
 {# Local scripts #}
 {% block scripts %}
     <!-- Jquery and custom template scripts -->
-    <script src="{% static 'custom/build/js/main.min.js' %}?v=12"></script>
+    <script src="{% static 'custom/build/js/libs.min.js' %}?v=15"></script>
+    <script src="{% static 'custom/build/js/app.min.js' %}?v={{ '15'|static_url_param }}"></script>
 {% endblock %}
 
 {% block onbodyload %}{% endblock %}

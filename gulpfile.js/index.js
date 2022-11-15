@@ -6,51 +6,19 @@ const custom = require('./custom');
 
 /* подключаем gulp и плагины */
 var gulp = require('gulp'),  // подключаем Gulp
-    plumber = require('gulp-plumber'), // модуль для отслеживания ошибок
-    rigger = require('gulp-rigger'), // модуль для импорта содержимого одного файла в другой
-    sourcemaps = require('gulp-sourcemaps'), // модуль для генерации карты исходных файлов
-    sass = require('gulp-sass'), // модуль для компиляции SASS (SCSS) в CSS
-    autoprefixer = require('gulp-autoprefixer'), // модуль для автоматической установки автопрефиксов
-    cleanCSS = require('gulp-clean-css'), // плагин для минимизации CSS
-    uglify = require('gulp-uglify'), // модуль для минимизации JavaScript
     cache = require('gulp-cache'), // модуль для кэширования
-    imagemin = require('gulp-imagemin'), // плагин для сжатия PNG, JPEG, GIF и SVG изображений
-    jpegrecompress = require('imagemin-jpeg-recompress'), // плагин для сжатия jpeg	
-    pngquant = require('imagemin-pngquant'), // плагин для сжатия png
-    del = require('del'), // плагин для удаления файлов и каталогов
-    rename = require('gulp-rename');
+    del = require('del'); // плагин для удаления файлов и каталогов
 
-
-//     var path_to_build = 'static_src/custom/build';
-//     var path_to_src = 'static_src/custom/src'; 
-    
-// /* пути к исходным файлам (src), к готовым файлам (build), а также к тем, за изменениями которых нужно наблюдать (watch) */
-// var path = {
-//     build: {
-//         js: `${path_to_build}/js/`,
-//         css: `${path_to_build}/css/`,
-//         img: `${path_to_build}/img/`,
-//     },
-//     src: {
-//         js: `${path_to_src}/js/main.js`,
-//         style: `${path_to_src}/style/main.scss`,
-//         img: `${path_to_src}/img/**/*.*`,
-//     },
-//     watch: {
-//         js: `${path_to_src}/js/**/*.js`,
-//         css: `${path_to_src}/style/**/*.scss`,
-//         img: `${path_to_src}/img/**/*.*`,
-//     },
-//     clean: `./${path_to_build}/*`
-// };
-
-// /* задачи */
+/* задачи */
 
 // сбор стилей
 gulp.task('css:build', custom.cssBuild);
 
-// сбор js
-gulp.task('js:build', custom.jsBuild);
+// сбор js библиотек
+gulp.task('js:libs:build', custom.jsLibsBuild);
+
+// сбор js приложения
+gulp.task('js:app:build', custom.jsAppBuild);
 
 // очистка кэша
 gulp.task('cache:clear', function () {
@@ -75,7 +43,8 @@ gulp.task('build',
         'clean:build',
         gulp.parallel(
             'css:build',
-            'js:build',
+            'js:libs:build',
+            'js:app:build',
             'image:build'
         )
     )
@@ -86,7 +55,8 @@ gulp.task('oscar:css:build', oscar.cssBuild);
 // запуск задач при изменении файлов
 gulp.task('watch', function () {
     gulp.watch(custom.path.watch.css, gulp.series('css:build'));
-    gulp.watch(custom.path.watch.js, gulp.series('js:build'));
+    gulp.watch(custom.path.watch.js.libs, gulp.series('js:libs:build'));
+    gulp.watch(custom.path.watch.js.app, gulp.series('js:app:build'));
     gulp.watch(custom.path.watch.img, gulp.series('image:build'));
     gulp.watch(oscar.path.watch.css, gulp.series('oscar:css:build'));
 });
@@ -97,8 +67,12 @@ gulp.task('watch:css', function(){
 });
 
 // запуск задач при изменении файлов
-gulp.task('watch:js', function(){
-    gulp.watch(custom.path.watch.js, gulp.series('js:build'));
+gulp.task('watch:js:libs', function(){
+    gulp.watch(custom.path.watch.js.libs, gulp.series('js:libs:build'));
+});
+
+gulp.task('watch:js:app', function(){
+    gulp.watch(custom.path.watch.js.app, gulp.series('js:app:build'));
 });
 
 // задача по умолчанию

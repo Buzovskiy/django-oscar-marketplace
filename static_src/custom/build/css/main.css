@@ -1328,6 +1328,9 @@ body.lock {
   @media (min-width: 992px) {
     .section-top {
       margin: 125px 0 25px; } }
+  @media (min-width: 992px) {
+    .section-top.cart {
+      margin: 150px 0 25px; } }
 
 input {
   display: block;
@@ -5605,6 +5608,21 @@ body.lock .header__logo-order p {
         height: auto !important;
         overflow: hidden !important; } }
 
+.alert {
+  line-height: 22px;
+  margin-bottom: 19px; }
+  .alert-danger {
+    color: red; }
+
+.cart .price_color, .cart .availability {
+  padding: 10px 0;
+  font-size: 26px;
+  font-weight: bold;
+  text-transform: lowercase; }
+
+.cart .available {
+  color: green; }
+
 @media (min-width: 1200px) {
   .cart__content {
     display: flex; } }
@@ -5716,34 +5734,26 @@ body.lock .header__logo-order p {
         font-size: 26px; } }
   .cart-size__numbers {
     display: flex;
-    margin-left: 40px; }
+    margin-left: 40px;
+    text-align: center;
+    position: relative; }
     @media (min-width: 1250px) {
       .cart-size__numbers {
         margin-left: 70px; } }
-  .cart-size__control {
-    transition: all ease 250ms; }
-    .cart-size__control:not(:last-child) {
-      margin-right: 13px; }
-    .cart-size__control input {
-      display: none; }
-      .cart-size__control input:checked + .cart-size__input span {
-        color: #000;
-        opacity: 1;
-        transition: opacity ease 250ms; }
-  .cart-size__input {
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    transition: all ease 250ms;
-    font-style: normal; }
-    .cart-size__input span {
+    .cart-size__numbers a, .cart-size__numbers span {
+      transition: all ease 250ms;
+      font-style: normal;
       letter-spacing: 1px;
       font-size: 14px;
       display: block;
       color: #9B9598; }
       @media (min-width: 576px) {
-        .cart-size__input span {
+        .cart-size__numbers a, .cart-size__numbers span {
           font-size: 20px; } }
+      .cart-size__numbers a:not(:last-child), .cart-size__numbers span:not(:last-child) {
+        margin-right: 13px; }
+    .cart-size__numbers a:hover {
+      color: black; }
   .cart-size__guide {
     margin-left: auto;
     font-size: 14px;
