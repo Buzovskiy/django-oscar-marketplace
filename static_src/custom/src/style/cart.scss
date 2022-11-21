@@ -11,7 +11,12 @@
 		color: green;
 	}
 
+	.instock{
+		color: green;
+	}
+
 	&__content {
+		margin-top: 30px;
 		@media (min-width: 1200px) {
 			display: flex;
 		}
@@ -48,9 +53,7 @@
 	}
 
 	&__right {
-		@media (max-width: 1200px) {
-			margin-top: 50px;
-		}
+		margin-top: 40px;
 
 		@media (min-width: 1200px) {
 			padding-left: 110px;
@@ -204,7 +207,7 @@
 
 			@media (max-width: 575px) {
 				text-align: center;
-				margin-bottom: 20px;
+				margin-top: 10px;
 			}
 
 			&:hover {

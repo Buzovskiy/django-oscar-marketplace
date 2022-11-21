@@ -3,7 +3,7 @@
 
 {% with all_images=product.get_all_images %}
     {# use length rather then count as the images get queried anyways #}
-    {% if all_images|length > 1 %}
+    {% if all_images|length > 0 %}
         <div class="swiper cart__swiper">
             <div class="swiper-wrapper cart__wrapper">
                 {% for image in all_images %}

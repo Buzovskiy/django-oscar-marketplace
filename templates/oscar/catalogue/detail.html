@@ -26,7 +26,17 @@
 {% block content_wrapper %}
 <section class="cart section-top">
 	<div class="container">
-		<div class="cart__content">
+        <ul class="breadcrumb">
+            <li><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
+            {% if product.is_child %}
+                <li><a href="{{ product.parent.get_absolute_url }}">{{ product.parent.upc }}</a></li>
+                <li>{{ product.upc }}</li>
+            {% else %}
+                <li>{{ product.upc }}</li>
+            {% endif %}
+        </ul>
+        {% include "oscar/partials/alert_messages.html" %}
+        <div class="cart__content">
 			<div class="cart__left">
                 {% block product_gallery %}
                     {% include "oscar/catalogue/partials/gallery.html" %}
@@ -40,27 +50,28 @@
                     {% block product_stock_record %}
                         {% include "oscar/catalogue/partials/stock_record.html" with verbose=1 %}
                     {% endblock %}
-					<div class="cart__more">
-						<div class="cart__more-text">
-							<p>{{ product.categories.first.product_description }}</p>
-							<p class="cart__more-text--hide">{{ product.categories.first.product_long_description }}</p>
-						</div>
-						<div class="cart__more-btn" data-show="{% trans 'show more' %}" data-hide="{% trans 'hide' %}">
-							{% trans "show more" %}
-						</div>
-					</div>
+                    <div class="cart__more">
+                        <div class="cart__more-text">
+                            <p>{{ product.get_parent.category_first.product_description }}</p>
+                            <p class="cart__more-text--hide">{{ product.categories.first.product_long_description }}</p>
+                        </div>
+                        {% if product.is_parent %}
+                            <div class="cart__more-btn" data-show="{% trans 'show more' %}"
+                                 data-hide="{% trans 'hide' %}">
+                                {% trans "show more" %}
+                            </div>
+                        {% endif %}
+                    </div>
 					<div class="cart__form">
 						{% csrf_token %}
 						<div class="color-select">
 							<p class="color-select__selected">Color <span></span></p>
 							<ul class="color-select__list">
 								<li class="color-select__item">
-									<a href="{{product.get_absolute_url}}" title="{{product.upc}}" onclick="location.href = '{{product.get_absolute_url}}';">
-										<i class="color-select__btn btn-reset color-select__btn--active" data-color="black"
-										   style="background-color: {{ product.attributes_container.color_hex_code.value }};"></i>
-									</a>
+                                    <i class="color-select__btn btn-reset color-select__btn--active" data-color="black"
+                                       style="background-color: {{ product.get_parent.attributes_container.color_hex_code.value }};"></i>
 								</li>
-								{% for recommended_product in product.recommended_products.all %}
+								{% for recommended_product in product.get_parent.recommended_products.all %}
 								<li class="color-select__item">
 									<a href="{{recommended_product.get_absolute_url}}" title="{{recommended_product.upc}}" onclick="location.href = '{{recommended_product.get_absolute_url}}';">
 										<i class="color-select__btn btn-reset" data-color="black"
@@ -98,19 +109,19 @@
 				<div class="cart__bottom">
 					<div class="cart__info">
 						<h3 class="cart__desc">design</h3>
-						<p class="cart__text">{{ product.categories.first.product_design_description }}</p>
+						<p class="cart__text">{{ product.get_parent.categories.first.product_design_description }}</p>
 					</div>
 
 					<div class="cart__info">
 						<h3 class="cart__desc">material</h3>
 						<ul class="cart__list">
-							<li>{{ product.attributes_container.material_verkha.value }}</li>
+							<li>{{ product.get_parent.attributes_container.material_verkha.value }}</li>
 						</ul>
 					</div>
 
 					<div class="cart__info">
 						<h3 class="cart__desc">benefits</h3>
-						{{ product.categories.first.product_benefits_description | safe }}
+						{{ product.get_parent.categories.first.product_benefits_description | safe }}
 					</div>
 				</div>
 			</div>
@@ -141,7 +152,7 @@
 
 		<div class="swiper like__swiper">
 			<div class="swiper-wrapper shop__items">
-				{% for recommended_product in product.recommended_products.all %}
+				{% for recommended_product in product.get_parent.recommended_products.all %}
 				<div class="swiper-slide">
 					<a href="{{ recommended_product.get_absolute_url }}" class="shop__item" title="{{ recommended_product.title }}">
 						<div class="shop__img">

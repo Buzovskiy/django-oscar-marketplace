@@ -931,26 +931,43 @@ var languageSwitcher = {
     };
 
     // Replicate Django's flash messages so they can be used by AJAX callbacks.
-    // o.messages = {
-    //     addMessage: function(tag, msg) {
-    //         var msgHTML = '<div class="alert alert-dismissible fade show alert-' + tag + '">' +
-    //             '<a href="#" class="close" data-dismiss="alert">&times;</a>'  + msg +
-    //             '</div>';
-    //         $('#messages').append($(msgHTML));
-    //     },
-    //     debug: function(msg) { o.messages.addMessage('debug', msg); },
-    //     info: function(msg) { o.messages.addMessage('info', msg); },
-    //     success: function(msg) { o.messages.addMessage('success', msg); },
-    //     warning: function(msg) { o.messages.addMessage('warning', msg); },
-    //     error: function(msg) { o.messages.addMessage('danger', msg); },
-    //     clear: function() {
-    //         $('#messages').html('');
-    //     },
-    //     scrollTo: function() {
-    //         $('html').animate({scrollTop: $('#messages').offset().top});
-    //     }
-    // };
+    o.messages = {
+        // addMessage: function(tag, msg) {
+        //     var msgHTML = '<div class="alert alert-dismissible fade show alert-' + tag + '">' +
+        //         '<a href="#" class="close" data-dismiss="alert">&times;</a>'  + msg +
+        //         '</div>';
+        //     $('#messages').append($(msgHTML));
+        // },
+        // debug: function(msg) { o.messages.addMessage('debug', msg); },
+        // info: function(msg) { o.messages.addMessage('info', msg); },
+        // success: function(msg) { o.messages.addMessage('success', msg); },
+        // warning: function(msg) { o.messages.addMessage('warning', msg); },
+        // error: function(msg) { o.messages.addMessage('danger', msg); },
+        // clear: function() {
+        //     $('#messages').html('');
+        // },
+        // scrollTo: function() {
+        //     $('html').animate({scrollTop: $('#messages').offset().top});
+        // }
+        closeAlert: function(e){
+            $('a.close').on('click', function(e){
+                e.preventDefault();
+                $(this).closest('.alert').remove();
+            })
+        },
+        init: function(){
+            o.messages.closeAlert();
+        }
+    };
+
+    o.init = function(){
+        o.messages.init();
+    }
 })(window.oscar = window.oscar || {}, jQuery);
+
+$(document).ready(function() {
+    oscar.init();
+});
 
 // fix header
 document.addEventListener("DOMContentLoaded", function(event) {

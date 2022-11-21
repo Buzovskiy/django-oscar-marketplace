@@ -21,5 +21,13 @@ class ProductDetailView(CoreProductDetailView):
             Prefetch('recommended_products__children__attributes', queryset=queryset_attributes),
             Prefetch('recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
             Prefetch('recommended_products__recommended_products__attributes', queryset=queryset_attributes),
+
+            Prefetch('parent'),
+            Prefetch('parent__attributes', queryset=queryset_attributes),
+            Prefetch('parent__recommended_products'),
+            Prefetch('parent__recommended_products__attributes', queryset=queryset_attributes),
+            Prefetch('parent__recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
+            Prefetch('parent__recommended_products__recommended_products__attributes', queryset=queryset_attributes),
         )
+
         return qs

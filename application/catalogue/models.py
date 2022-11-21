@@ -64,6 +64,21 @@ class Product(AbstractProduct):
             pass
         return children
 
+    @property
+    def category_first(self):
+        """Getter that returns product category"""
+        if self.is_child:
+            return self.parent.categories.first()
+        else:
+            return self.categories.first()
+
+    def get_parent(self):
+        """Get parent of a product"""
+        if self.is_child:
+            return self.parent
+        else:
+            return self
+
 
 class Category(AbstractCategory):
 

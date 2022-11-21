@@ -1,5 +1,5 @@
 .header {
-
+	background: white;
 	padding-top: 30px;
 	padding-bottom: 30px;
 	position: fixed;
@@ -334,6 +334,7 @@ body.lock .header__logo-order p {
 				font-weight: 700;
 				text-transform: lowercase;
 				transition: all 0.3s ease;
+				background: #ffffff;
 
 				&:hover {
 					color: #000 !important;
