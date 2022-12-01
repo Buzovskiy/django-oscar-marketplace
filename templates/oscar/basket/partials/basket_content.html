@@ -32,11 +32,16 @@
                 {% for form in formset %}
                     {% with line=form.instance product=form.instance.product %}
                         {% purchase_info_for_line request line as session %}
+                        {% for field_errors in form.errors.values %}
+                            {% for error in field_errors %}
+                                <div class="alert alert-danger"><i class="fas fa-exclamation"></i> {{ error }}</div>
+                            {% endfor %}
+                        {% endfor %}
                         <div class="order__item">
                             <div class="order__img">
                                 {{ form.id }}
                                 {% with image=product.primary_image %}
-                                    {% oscar_thumbnail image.original "100x100" upscale=False as thumb %}
+                                    {% oscar_thumbnail image.original "300x300" upscale=False as thumb %}
                                     <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">
                                         <img class="img-thumbnail w-auto mx-auto my-0" src="{{ thumb.url }}" alt="{{ product.get_title }}"/>
                                     </a>
@@ -69,12 +74,6 @@
                                         {#type="number" in form class class#}
                                         {% render_field form.quantity type="input" class+="order-count__number" %}
                                         <span data-counter="plus" class="order-count__plus"></span>
-                                        {% for field_errors in form.errors.values %}
-                                            {% for error in field_errors %}
-                                                <span class="error-block"><i
-                                                        class="fas fa-exclamation"></i> {{ error }}</span>
-                                            {% endfor %}
-                                        {% endfor %}
                                     </div>
                                     <div class="order__price">
                                         <p>

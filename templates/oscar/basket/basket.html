@@ -12,6 +12,8 @@
             <li>{% trans "Basket" %}</li>
         </ul>
 
+        {% include "oscar/partials/alert_messages.html" %}
+
         {# Use a partial template so that AJAX can be used to re-render basket #}
         <div id="content_inner">{% include 'oscar/basket/partials/basket_content.html' %}</div>
     </div>

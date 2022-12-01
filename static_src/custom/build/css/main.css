@@ -6328,7 +6328,8 @@ body.lock .header__logo-order p {
 .order__item {
   display: flex;
   border-bottom: 2px solid #F3F1F2;
-  padding-bottom: 80px; }
+  padding-bottom: 80px;
+  align-items: center; }
   @media (max-width: 1200px) {
     .order__item {
       flex-direction: column; } }

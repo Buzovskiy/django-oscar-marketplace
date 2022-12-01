@@ -42,7 +42,11 @@
                                                 <img src="{% static 'custom/build/img/heart.svg' %}" alt="icon">
                                                 {% trans 'wish list' %}
                                             </a>
-                                            {% block mini_basket %}{% include "oscar/partials/mini_basket.html" %}{% endblock %}
+                                            <div class="mini-basket-ajax">
+                                                {% block mini_basket %}
+                                                    {% include "oscar/partials/mini_basket.html" %}
+                                                {% endblock %}
+                                            </div>
                                             <a href="tel:48728888569" class="menu__item menu__item-tel">+4 872 88 88
                                                 569 </a>
                                             {% include "partials/language-switcher-header.html" %}
