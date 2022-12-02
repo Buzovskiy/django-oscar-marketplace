@@ -2,7 +2,7 @@
 {% load i18n static %}
 
 <a href="{% url 'basket:summary' %}" class="menu__item menu__item-basket"
-   data-move="header__right,1,992" alt="{% trans "Basket total:" %}">
+   alt="{% trans "Basket total:" %}">
     <img src="{% static 'custom/build/img/shopping-bag.svg' %}" alt="icon">
     <span>
         {% if request.basket.is_tax_known %}

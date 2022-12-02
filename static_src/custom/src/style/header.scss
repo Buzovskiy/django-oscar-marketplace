@@ -665,7 +665,10 @@ body.lock .header__logo-order p {
 			}
 		}
 	}
+}
 
+.mini-basket-ajax.mobile {
+	display: none;
 }
 
 @media (max-width: 991px) {
@@ -716,5 +719,8 @@ body.lock .header__logo-order p {
 	.menu__icon.active::after {
 		bottom: 50%;
 		transform: rotate(45deg) translate(0px, 50%);
+	}
+	.mini-basket-ajax.mobile{
+		display: block;
 	}
 }

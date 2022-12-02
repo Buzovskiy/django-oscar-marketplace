@@ -3636,6 +3636,9 @@ body.lock .header__logo-order p {
       margin-right: 20px;
       cursor: pointer; } }
 
+.mini-basket-ajax.mobile {
+  display: none; }
+
 @media (max-width: 991px) {
   .menu__icon {
     z-index: 5;
@@ -3669,7 +3672,9 @@ body.lock .header__logo-order p {
     transform: rotate(-45deg) translate(0px, -50%); }
   .menu__icon.active::after {
     bottom: 50%;
-    transform: rotate(45deg) translate(0px, 50%); } }
+    transform: rotate(45deg) translate(0px, 50%); }
+  .mini-basket-ajax.mobile {
+    display: block; } }
 
 .intro {
   position: relative;

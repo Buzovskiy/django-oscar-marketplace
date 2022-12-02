@@ -4,7 +4,7 @@
 {% load static_url_param from common_filters %}
 
 {% block styles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v={{ '16'|static_url_param }}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v={{ '17'|static_url_param }}" />
 {% endblock %}
 
 {% block layout %}
@@ -20,6 +20,9 @@
                         <div class="header__right">
                             <div class="menu__search-icon">
                                 <img src="{% static 'custom/build/img/search.svg' %}" alt="icon">
+                            </div>
+                            <div class="mini-basket-ajax mobile">
+                                {% include "oscar/partials/mini_basket.html" %}
                             </div>
                             <div class="header__menu menu">
                                 <div class="menu__icon"></div>
