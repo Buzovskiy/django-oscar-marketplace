@@ -1,0 +1,337 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Checkout' %} - {{ block.super }}{% endblock %}
+
+{% block content_wrapper %}
+<section class="order section-top">
+    <div class="container">
+        <h1 class="title color-orange">{% trans 'Checkout' %}</h1>
+        <ul class="breadcrumb">
+            <li><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
+            <li><a href="{% url 'basket:summary' %}">{% trans "Basket" %}</a></li>
+            <li>{% trans 'Checkout' %}</li>
+        </ul>
+
+        {% include "oscar/partials/alert_messages.html" %}
+
+        <form action="confirm.html" class="order__form">
+            <div class="order__left">
+                <div class="order-info">
+                    <p class="order__title">Информация о получателе:</p>
+                    <div class="order-info__inputs">
+                        <div class="order-info__input">
+                            <input type="text" placeholder="Имя *" name="form[]" class="input" required/>
+                        </div>
+                        <div class="order-info__input">
+                            <input type="text" placeholder="Фамилия *" name="form[]" class="input" required/>
+                        </div>
+                        <div class="order-info__input">
+                            <input type="tel" placeholder="Телефон *" name="form[]" class="input" required/>
+                        </div>
+                        <div class="order-info__input">
+                            <input type="email" placeholder="Адрес електронной почты *" name="form[]" class="input"
+                                   required/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-booking">
+                    <div class="order-booking__title">
+                        <p>Заказ 1</p>
+                        <p>Магазин «Ромашка»</p>
+                    </div>
+                    <div class="order__items">
+                        <div class="order__item">
+                            <div class="order__img">
+                                <img src="img/shop/item-1.png" alt="image"/>
+                            </div>
+
+                            <div class="order__holder">
+                                <div class="order-shoes">
+                                    <div class="order-shoes__desc">weestep shoes</div>
+                                    <div class="order-shoes__item">
+                                        <div class="order-shoes__color">
+                                            Цвет
+                                            <span style="background-color: #000;"></span>
+                                        </div>
+                                        <div class="order-shoes__size">
+                                            Размер
+                                            <span>26</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order__box">
+                                    <div class="order-count">
+                                        <p>1</p> <i>шт</i>
+                                    </div>
+                                    <div class="order__price">
+                                        <p>240</p> <i>грн</i>
+                                    </div>
+                                    <a href="#" class="order__close">
+                                        <img src="img/close-2.svg" alt="icon"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order__item">
+                            <div class="order__img">
+                                <img src="img/shop/item-2.png" alt="image"/>
+                            </div>
+
+                            <div class="order__holder">
+                                <div class="order-shoes">
+                                    <div class="order-shoes__desc">weestep shoes</div>
+                                    <div class="order-shoes__item">
+                                        <div class="order-shoes__color">
+                                            Цвет
+                                            <span style="background-color: #000;"></span>
+                                        </div>
+                                        <div class="order-shoes__size">
+                                            Размер
+                                            <span>26</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order__box">
+                                    <div class="order-count">
+                                        <p>1</p> <i>шт</i>
+                                    </div>
+                                    <div class="order__price">
+                                        <p>240</p> <i>грн</i>
+                                    </div>
+                                    <a href="#" class="order__close">
+                                        <img src="img/close-2.svg" alt="icon"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-booking__total">
+                        <p>Всего:</p>
+                        <p><span>740</span> <i>грн</i></p>
+                    </div>
+                </div>
+
+                <div class="order__payment">
+                    <p class="order__title">Способ оплаты:</p>
+                    <select name="form[]" class="select">
+                        <option value="1" selected="selected">Выберите способы оплаты</option>
+                        <option value="2">По реквезитам</option>
+                        <option value="3">Налоданный платеж</option>
+                    </select>
+                </div>
+
+                <div class="order__delivery">
+                    <p class="order__title">Способ доставки:</p>
+                    <div class="order__radio">
+                        <label class="order__label">
+                            <input type="radio" name="radio" checked>
+                            <span></span>
+                            <img src="img/delivery-1.png" alt="image"/>
+                        </label>
+                        <label class="order__label">
+                            <input type="radio" name="radio">
+                            <span></span>
+                            <img src="img/delivery-2.png" alt="image"/>
+                        </label>
+                    </div>
+
+                    <div class="order__select">
+                        <select name="form[]" class="select">
+                            <option value="1" selected="selected">Выберите область</option>
+                            <option value="2">Пункт №1</option>
+                            <option value="3">Пункт №2</option>
+                            <option value="4">Пункт №3</option>
+                        </select>
+
+                        <select name="form[]" class="select">
+                            <option value="1" selected="selected">Выберите город</option>
+                            <option value="2">Пункт №1</option>
+                            <option value="3">Пункт №2</option>
+                            <option value="4">Пункт №3</option>
+                        </select>
+
+                        <select name="form[]" class="select">
+                            <option value="1" selected="selected">Выберите номер отделения</option>
+                            <option value="2">Пункт №1</option>
+                            <option value="3">Пункт №2</option>
+                            <option value="4">Пункт №3</option>
+                        </select>
+                    </div>
+
+                    <div class="order__address">
+                        <label class="order__label">
+                            <input type="checkbox" name="address">
+                            <span></span>
+                            <i>Требуется адресная доставка</i>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="order__comment">
+                    <p class="order__title">Комментарий:</p>
+                    <input type="text" class="input" placeholder="Уточнения к заказу">
+                </div>
+
+                <div class="order__btn">
+                    <a href="#" class="btn btn-orange--transparent">Копировать в остальные заказы</a>
+                </div>
+
+                <div class="order-booking">
+                    <div class="order-booking__title">
+                        <p>Заказ 2</p>
+                        <p>Магазин «Солнышко»</p>
+                    </div>
+                    <div class="order__items">
+                        <div class="order__item">
+                            <div class="order__img">
+                                <img src="img/shop/item-2.png" alt="image"/>
+                            </div>
+
+                            <div class="order__holder">
+                                <div class="order-shoes">
+                                    <div class="order-shoes__desc">weestep shoes</div>
+                                    <div class="order-shoes__item">
+                                        <div class="order-shoes__color">
+                                            Цвет
+                                            <span style="background-color: #000;"></span>
+                                        </div>
+                                        <div class="order-shoes__size">
+                                            Размер
+                                            <span>26</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order__box">
+                                    <div class="order-count">
+                                        <p>1</p> <i>шт</i>
+                                    </div>
+                                    <div class="order__price">
+                                        <p>240</p> <i>грн</i>
+                                    </div>
+                                    <a href="#" class="order__close">
+                                        <img src="img/close-2.svg" alt="icon"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-booking__total">
+                        <p>Всего</p>
+                        <p><span>740</span> <i>грн</i></p>
+                    </div>
+                </div>
+
+                <div class="order__delivery">
+                    <p class="order__title">Способ доставки:</p>
+                    <div class="order__radio">
+                        <label class="order__label">
+                            <input type="radio" name="radio" checked>
+                            <span></span>
+                            <img src="img/delivery-1.png" alt="image"/>
+                        </label>
+                        <label class="order__label">
+                            <input type="radio" name="radio">
+                            <span></span>
+                            <img src="img/delivery-2.png" alt="image"/>
+                        </label>
+                    </div>
+
+                    <div class="order__select">
+                        <select name="form[]" class="select">
+                            <option value="1" selected="selected">Выберите область</option>
+                            <option value="2">Пункт №1</option>
+                            <option value="3">Пункт №2</option>
+                            <option value="4">Пункт №3</option>
+                        </select>
+
+                        <select name="form[]" class="select">
+                            <option value="1" selected="selected">Выберите город</option>
+                            <option value="2">Пункт №1</option>
+                            <option value="3">Пункт №2</option>
+                            <option value="4">Пункт №3</option>
+                        </select>
+
+                        <select name="form[]" class="select">
+                            <option value="1" selected="selected">Выберите номер отделения</option>
+                            <option value="2">Пункт №1</option>
+                            <option value="3">Пункт №2</option>
+                            <option value="4">Пункт №3</option>
+                        </select>
+                    </div>
+
+                    <div class="order__address">
+                        <label class="order__label">
+                            <input type="checkbox" name="address">
+                            <span></span>
+                            <i>Требуется адресная доставка</i>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="order__comment">
+                    <p class="order__title">Комментарий:</p>
+                    <input type="text" class="input" placeholder="Уточнения к заказу">
+                </div>
+
+                <div class="order__btn">
+                    <a href="#" class="btn btn-orange--transparent">Копировать в остальные заказы</a>
+                </div>
+            </div>
+
+            <div class="order__right">
+                <div class="order__all">
+                    <div class="order-top">
+                        <a href="basket.html" class="order-top__back">назад</a>
+                        <p class="order-top__total">Итого</p>
+                    </div>
+
+                    <div class="order-body">
+                        <div class="order-body__item">
+                            <div class="order-body__top">
+                                <p>Заказ 1</p>
+                                <span>Магазин «Ромашка»</span>
+                            </div>
+                            <div class="order-body__bottom">
+                                <p>2 товара на сумму</p>
+                                <p><span>740</span> <i>грн</i></p>
+                            </div>
+                        </div>
+                        <div class="order-body__item">
+                            <div class="order-body__top">
+                                <p>Заказ 2</p>
+                                <span>Магазин «Солнышко»</span>
+                            </div>
+                            <div class="order-body__bottom">
+                                <p>2 товара на сумму</p>
+                                <p><span>240</span> <i>грн</i></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-footer">
+                        <p>Всего</p>
+                        <p><span>980</span> <i>грн</i></p>
+                    </div>
+                </div>
+                <div class="order__confirm">
+                    <button type="submit" class="btn btn-orange">Подтвердить заказ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    {# We pass in the URL to send AJAX requests to #}
+    var options = {
+        'basketURL': '{% url 'basket:summary' %}'
+    };
+    oscar.basket.init(options);
+{% endblock %}

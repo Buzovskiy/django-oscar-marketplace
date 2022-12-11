@@ -6,6 +6,7 @@ from django.apps import apps
 
 class OscarRoutingConfig(config.Shop):
     home_app = partner_app = blog_app = flatpages_app = contacts_app = exchange_app = interview_app = None
+    one_page_checkout_app = None
 
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'oscar_routing'

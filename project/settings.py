@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
-    'oscar.apps.checkout.apps.CheckoutConfig',
+    'application.checkout.apps.CheckoutConfig',
     'oscar.apps.address.apps.AddressConfig',
     'oscar.apps.shipping.apps.ShippingConfig',
     'application.catalogue.apps.CatalogueConfig',
@@ -370,3 +370,4 @@ OSCAR_SEARCH_FACETS = {
 
 LOGIN_REDIRECT_URL = reverse_lazy('catalogue:index')
 
+# OSCAR_ALLOW_ANON_CHECKOUT = True
