@@ -1,337 +1,278 @@
 {% extends "oscar/layout.html" %}
 {% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+{% load currency_filters %}
+{% load image_tags %}
+{% load purchase_info_tags %}
 
 {% block title %}{% trans 'Checkout' %} - {{ block.super }}{% endblock %}
 
 {% block content_wrapper %}
-<section class="order section-top">
-    <div class="container">
-        <h1 class="title color-orange">{% trans 'Checkout' %}</h1>
-        <ul class="breadcrumb">
-            <li><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
-            <li><a href="{% url 'basket:summary' %}">{% trans "Basket" %}</a></li>
-            <li>{% trans 'Checkout' %}</li>
-        </ul>
+    <section class="order section-top">
+        <div class="container">
+            <h1 class="title color-orange">{% trans 'Checkout' %}</h1>
+            <ul class="breadcrumb">
+                <li><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
+                <li><a href="{% url 'basket:summary' %}">{% trans "Basket" %}</a></li>
+                <li>{% trans 'Checkout' %}</li>
+            </ul>
 
-        {% include "oscar/partials/alert_messages.html" %}
+            {% include "oscar/partials/alert_messages.html" %}
 
-        <form action="confirm.html" class="order__form">
-            <div class="order__left">
-                <div class="order-info">
-                    <p class="order__title">Информация о получателе:</p>
-                    <div class="order-info__inputs">
-                        <div class="order-info__input">
-                            <input type="text" placeholder="Имя *" name="form[]" class="input" required/>
-                        </div>
-                        <div class="order-info__input">
-                            <input type="text" placeholder="Фамилия *" name="form[]" class="input" required/>
-                        </div>
-                        <div class="order-info__input">
-                            <input type="tel" placeholder="Телефон *" name="form[]" class="input" required/>
-                        </div>
-                        <div class="order-info__input">
-                            <input type="email" placeholder="Адрес електронной почты *" name="form[]" class="input"
-                                   required/>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="order-booking">
-                    <div class="order-booking__title">
-                        <p>Заказ 1</p>
-                        <p>Магазин «Ромашка»</p>
-                    </div>
-                    <div class="order__items">
-                        <div class="order__item">
-                            <div class="order__img">
-                                <img src="img/shop/item-1.png" alt="image"/>
+            <form action="{% url 'checkout:index' %}" class="order__form" method="post">
+                {% csrf_token %}
+                <div class="order__left">
+                    <div class="order-info">
+                        <p class="order__title">{% trans "Recipient information" %}:</p>
+                        {% if not form_is_valid %}
+                            <div class="alert alert-danger">
+                                <strong>{% trans "Oops! We found some errors" %}</strong>
+                                - {% trans "please check the error messages below and try again" %}
                             </div>
-
-                            <div class="order__holder">
-                                <div class="order-shoes">
-                                    <div class="order-shoes__desc">weestep shoes</div>
-                                    <div class="order-shoes__item">
-                                        <div class="order-shoes__color">
-                                            Цвет
-                                            <span style="background-color: #000;"></span>
-                                        </div>
-                                        <div class="order-shoes__size">
-                                            Размер
-                                            <span>26</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order__box">
-                                    <div class="order-count">
-                                        <p>1</p> <i>шт</i>
-                                    </div>
-                                    <div class="order__price">
-                                        <p>240</p> <i>грн</i>
-                                    </div>
-                                    <a href="#" class="order__close">
-                                        <img src="img/close-2.svg" alt="icon"/>
-                                    </a>
-                                </div>
+                        {% endif %}
+                        {% if shipping_address_form.non_field_errors %}
+                            {% for error in shipping_address_form.non_field_errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="order-info__inputs">
+                            <input type="hidden" name="country" value="PL">
+                            <div class="order-info__input">
+                                {% for error in shipping_address_form.first_name.errors %}
+                                    <div class="alert alert-danger">{{ error }}</div>
+                                {% endfor %}
+                                {% render_field shipping_address_form.first_name class+="input" placeholder=shipping_address_form.first_name.label %}
                             </div>
-                        </div>
-
-                        <div class="order__item">
-                            <div class="order__img">
-                                <img src="img/shop/item-2.png" alt="image"/>
+                            <div class="order-info__input">
+                                {% for error in shipping_address_form.last_name.errors %}
+                                    <div class="alert alert-danger">{{ error }}</div>
+                                {% endfor %}
+                                {% render_field shipping_address_form.last_name class+="input" placeholder=shipping_address_form.last_name.label %}
                             </div>
-
-                            <div class="order__holder">
-                                <div class="order-shoes">
-                                    <div class="order-shoes__desc">weestep shoes</div>
-                                    <div class="order-shoes__item">
-                                        <div class="order-shoes__color">
-                                            Цвет
-                                            <span style="background-color: #000;"></span>
-                                        </div>
-                                        <div class="order-shoes__size">
-                                            Размер
-                                            <span>26</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order__box">
-                                    <div class="order-count">
-                                        <p>1</p> <i>шт</i>
-                                    </div>
-                                    <div class="order__price">
-                                        <p>240</p> <i>грн</i>
-                                    </div>
-                                    <a href="#" class="order__close">
-                                        <img src="img/close-2.svg" alt="icon"/>
-                                    </a>
-                                </div>
+                            <div class="order-info__input">
+                                {% for error in shipping_address_form.phone_number.errors %}
+                                    <div class="alert alert-danger">{{ error }}</div>
+                                {% endfor %}
+                                {% render_field shipping_address_form.phone_number class+="input" placeholder=shipping_address_form.fields.phone_number.widget.attrs.placeholder %}
+                            </div>
+                            <div class="order-info__input">
+                                {% for error in shipping_address_form.email.errors %}
+                                    <div class="alert alert-danger">{{ error }}</div>
+                                {% endfor %}
+                                {% render_field shipping_address_form.email class+="input" placeholder=shipping_address_form.email.label %}
+                            </div>
+                            <div class="order-info__input col1">
+                                {% for error in shipping_address_form.line1.errors %}
+                                    <div class="alert alert-danger">{{ error }}</div>
+                                {% endfor %}
+                                <textarea
+                                        name="{{ shipping_address_form.line1.name }}"
+                                        id=""
+                                        rows="4"
+                                        class="input"
+                                        {% if shipping_address_form.line1.field.required %}required{% endif %}
+                                        placeholder="{% trans 'Shipping address' %}">{% if shipping_address_form.line1.value %}{{ shipping_address_form.line1.value }}{% endif %}</textarea>
                             </div>
                         </div>
                     </div>
 
-                    <div class="order-booking__total">
-                        <p>Всего:</p>
-                        <p><span>740</span> <i>грн</i></p>
-                    </div>
-                </div>
-
-                <div class="order__payment">
-                    <p class="order__title">Способ оплаты:</p>
-                    <select name="form[]" class="select">
-                        <option value="1" selected="selected">Выберите способы оплаты</option>
-                        <option value="2">По реквезитам</option>
-                        <option value="3">Налоданный платеж</option>
-                    </select>
-                </div>
-
-                <div class="order__delivery">
-                    <p class="order__title">Способ доставки:</p>
-                    <div class="order__radio">
-                        <label class="order__label">
-                            <input type="radio" name="radio" checked>
-                            <span></span>
-                            <img src="img/delivery-1.png" alt="image"/>
-                        </label>
-                        <label class="order__label">
-                            <input type="radio" name="radio">
-                            <span></span>
-                            <img src="img/delivery-2.png" alt="image"/>
-                        </label>
-                    </div>
-
-                    <div class="order__select">
-                        <select name="form[]" class="select">
-                            <option value="1" selected="selected">Выберите область</option>
-                            <option value="2">Пункт №1</option>
-                            <option value="3">Пункт №2</option>
-                            <option value="4">Пункт №3</option>
-                        </select>
-
-                        <select name="form[]" class="select">
-                            <option value="1" selected="selected">Выберите город</option>
-                            <option value="2">Пункт №1</option>
-                            <option value="3">Пункт №2</option>
-                            <option value="4">Пункт №3</option>
-                        </select>
-
-                        <select name="form[]" class="select">
-                            <option value="1" selected="selected">Выберите номер отделения</option>
-                            <option value="2">Пункт №1</option>
-                            <option value="3">Пункт №2</option>
-                            <option value="4">Пункт №3</option>
-                        </select>
-                    </div>
-
-                    <div class="order__address">
-                        <label class="order__label">
-                            <input type="checkbox" name="address">
-                            <span></span>
-                            <i>Требуется адресная доставка</i>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="order__comment">
-                    <p class="order__title">Комментарий:</p>
-                    <input type="text" class="input" placeholder="Уточнения к заказу">
-                </div>
-
-                <div class="order__btn">
-                    <a href="#" class="btn btn-orange--transparent">Копировать в остальные заказы</a>
-                </div>
-
-                <div class="order-booking">
-                    <div class="order-booking__title">
-                        <p>Заказ 2</p>
-                        <p>Магазин «Солнышко»</p>
-                    </div>
-                    <div class="order__items">
-                        <div class="order__item">
-                            <div class="order__img">
-                                <img src="img/shop/item-2.png" alt="image"/>
-                            </div>
-
-                            <div class="order__holder">
-                                <div class="order-shoes">
-                                    <div class="order-shoes__desc">weestep shoes</div>
-                                    <div class="order-shoes__item">
-                                        <div class="order-shoes__color">
-                                            Цвет
-                                            <span style="background-color: #000;"></span>
+                    <div class="order-booking">
+                        <div class="order-booking__title">
+                            <p>Order 1</p>
+                            <p>Shop 1</p>
+                        </div>
+                        <div class="order__items">
+                            {% for line in basket.all_lines %}
+                                {% purchase_info_for_line request line as session %}
+                                {#Проверить верстку блока ошибок#}
+                                {% for field_errors in form.errors.values %}
+                                    {% for error in field_errors %}
+                                        <div class="alert alert-danger"><i class="fas fa-exclamation"></i> {{ error }}
                                         </div>
-                                        <div class="order-shoes__size">
-                                            Размер
-                                            <span>26</span>
+                                    {% endfor %}
+                                {% endfor %}
+                                <div class="order__item">
+                                    <div class="order__img">
+                                        {% with image=line.product.primary_image %}
+                                            {% oscar_thumbnail image.original "300x300" upscale=False as thumb %}
+                                            <a href="{{ line.product.get_absolute_url }}">
+                                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}">
+                                            </a>
+                                        {% endwith %}
+                                    </div>
+                                    <div class="order__holder">
+                                        <div class="order-shoes">
+                                            <div class="order-shoes__desc">weestep shoes</div>
+                                            <div class="order-shoes__item">
+                                                <div class="order-shoes__color">
+                                                    {% trans 'Color' %}
+                                                    <span style="background-color: {{ line.product.attr.color_hex_code }};"></span>
+                                                </div>
+                                                <div class="order-shoes__size">
+                                                    {% trans 'Size' %}
+                                                    <span>{{ line.product.attr.size }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order__box">
+                                            <div class="order-count">
+                                                <p>{{ line.quantity }}</p> <i>pairs</i>
+                                            </div>
+                                            <div class="order__price">
+                                                <p>
+                                                    {% if not show_tax_separately and line.is_tax_known %}
+                                                        {{ line.line_price_incl_tax|currency:basket.currency }}
+                                                    {% else %}
+                                                        {{ line.line_price_excl_tax|currency:basket.currency }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                            {#                                            <a href="#" class="order__close">#}
+                                            {#                                                <img src="{% static 'custom/build/img/close-2.svg' %}" alt="icon"/>#}
+                                            {#                                            </a>#}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="order__box">
-                                    <div class="order-count">
-                                        <p>1</p> <i>шт</i>
-                                    </div>
-                                    <div class="order__price">
-                                        <p>240</p> <i>грн</i>
-                                    </div>
-                                    <a href="#" class="order__close">
-                                        <img src="img/close-2.svg" alt="icon"/>
-                                    </a>
+                            {% endfor %}
+                        </div>
+
+                        <div class="order-booking__total">
+                            <p>{% trans "In total" %}</p>
+{#                            <p><span>980</span> <i>грн</i></p>#}
+                            <p>
+                                <span>
+                                    {% if request.basket.is_tax_known %}
+                                        {{ request.basket.total_incl_tax|currency:request.basket.currency }}
+                                    {% else %}
+                                        {{ request.basket.total_excl_tax|currency:request.basket.currency }}
+                                    {% endif %}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="order__payment">
+                        <p class="order__title">{% trans 'Payment method' %}:</p>
+                        {% if payment_method_form.non_field_errors %}
+                            {% for error in payment_method_form.non_field_errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        {% for error in payment_method_form.title.errors %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                        {% endfor %}
+                        {{ payment_method_form.title }}
+                    </div>
+                    <div class="order__delivery">
+                        <p class="order__title">{% trans 'Shipping method' %}:</p>
+                        {% if shipping_method_form.non_field_errors %}
+                            {% for error in shipping_method_form.non_field_errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        {% for error in shipping_method_form.method_code.errors %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                        {% endfor %}
+                        <div class="order__radio">
+                            {% for value, choice in shipping_method_form.fields.method_code.choices %}
+                                <label class="order__label">
+                                    <input
+                                            type="radio"
+                                            name="{{ shipping_method_form.method_code.html_name }}"
+                                            value="{{ value }}"
+                                            {% if shipping_method_form.method_code.value == value %}checked{% endif %}
+                                    >
+                                    <span>
+                                        <div class="shipping-method-name">
+                                            {% if choice.show_name %}{{ choice.name }}{% endif %}
+                                        </div>
+                                    </span>
+                                    {% if choice.image %}<img src="{{ choice.image }}" alt="image"/>{% endif %}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="order__comment">
+                        <p class="order__title">{% trans 'Comment' %}:</p>
+                        <div class="order-info__inputs col1">
+                            <textarea
+                                    name="{{ shipping_address_form.notes.name }}"
+                                    id=""
+                                    rows="3"
+                                    class="input"
+                                    placeholder="Notes">{% if shipping_address_form.notes.value %}{{ shipping_address_form.notes.value }}{% endif %}</textarea>
+                        </div>
+                    </div>
+
+{#                    <div class="order__btn">#}
+{#                        <a href="#" class="btn btn-orange--transparent">Копировать в остальные заказы</a>#}
+{#                    </div>#}
+                </div>
+
+                <div class="order__right">
+                    <div class="order__all">
+                        <div class="order-top">
+                            <a href="{% url 'basket:summary' %}" class="order-top__back">{% trans "Go back" %}</a>
+                            <p class="order-top__total">{% trans "Total" %}</p>
+                        </div>
+
+                        <div class="order-body">
+                            <div class="order-body__item">
+                                <div class="order-body__top">
+                                    <p>{% trans "Order 1" %}</p>
+                                    <span>Shop 1</span>
+                                </div>
+                                <div class="order-body__bottom">
+                                    <p>
+                                        {% blocktranslate count number=request.basket.num_items %}
+                                            {{ number }} product valued at
+                                            {% plural %}
+                                            {{ number }} products valued at
+                                        {% endblocktranslate %}
+                                    </p>
+                                    {#                                    <p><span>740</span> <i>грн</i></p>#}
+                                    <p>
+                                        <span>
+                                            {% if request.basket.is_tax_known %}
+                                                {{ request.basket.total_incl_tax|currency:request.basket.currency }}
+                                            {% else %}
+                                                {{ request.basket.total_excl_tax|currency:request.basket.currency }}
+                                            {% endif %}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="order-booking__total">
-                        <p>Всего</p>
-                        <p><span>740</span> <i>грн</i></p>
-                    </div>
-                </div>
-
-                <div class="order__delivery">
-                    <p class="order__title">Способ доставки:</p>
-                    <div class="order__radio">
-                        <label class="order__label">
-                            <input type="radio" name="radio" checked>
-                            <span></span>
-                            <img src="img/delivery-1.png" alt="image"/>
-                        </label>
-                        <label class="order__label">
-                            <input type="radio" name="radio">
-                            <span></span>
-                            <img src="img/delivery-2.png" alt="image"/>
-                        </label>
-                    </div>
-
-                    <div class="order__select">
-                        <select name="form[]" class="select">
-                            <option value="1" selected="selected">Выберите область</option>
-                            <option value="2">Пункт №1</option>
-                            <option value="3">Пункт №2</option>
-                            <option value="4">Пункт №3</option>
-                        </select>
-
-                        <select name="form[]" class="select">
-                            <option value="1" selected="selected">Выберите город</option>
-                            <option value="2">Пункт №1</option>
-                            <option value="3">Пункт №2</option>
-                            <option value="4">Пункт №3</option>
-                        </select>
-
-                        <select name="form[]" class="select">
-                            <option value="1" selected="selected">Выберите номер отделения</option>
-                            <option value="2">Пункт №1</option>
-                            <option value="3">Пункт №2</option>
-                            <option value="4">Пункт №3</option>
-                        </select>
-                    </div>
-
-                    <div class="order__address">
-                        <label class="order__label">
-                            <input type="checkbox" name="address">
-                            <span></span>
-                            <i>Требуется адресная доставка</i>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="order__comment">
-                    <p class="order__title">Комментарий:</p>
-                    <input type="text" class="input" placeholder="Уточнения к заказу">
-                </div>
-
-                <div class="order__btn">
-                    <a href="#" class="btn btn-orange--transparent">Копировать в остальные заказы</a>
-                </div>
-            </div>
-
-            <div class="order__right">
-                <div class="order__all">
-                    <div class="order-top">
-                        <a href="basket.html" class="order-top__back">назад</a>
-                        <p class="order-top__total">Итого</p>
-                    </div>
-
-                    <div class="order-body">
-                        <div class="order-body__item">
-                            <div class="order-body__top">
-                                <p>Заказ 1</p>
-                                <span>Магазин «Ромашка»</span>
-                            </div>
-                            <div class="order-body__bottom">
-                                <p>2 товара на сумму</p>
-                                <p><span>740</span> <i>грн</i></p>
-                            </div>
-                        </div>
-                        <div class="order-body__item">
-                            <div class="order-body__top">
-                                <p>Заказ 2</p>
-                                <span>Магазин «Солнышко»</span>
-                            </div>
-                            <div class="order-body__bottom">
-                                <p>2 товара на сумму</p>
-                                <p><span>240</span> <i>грн</i></p>
-                            </div>
+                        <div class="order-footer">
+                            <p>{% trans "In total" %}</p>
+{#                            <p><span>980</span> <i>грн</i></p>#}
+                            <p>
+                                <span>
+                                    {% if request.basket.is_tax_known %}
+                                        {{ request.basket.total_incl_tax|currency:request.basket.currency }}
+                                    {% else %}
+                                        {{ request.basket.total_excl_tax|currency:request.basket.currency }}
+                                    {% endif %}
+                                </span>
+                            </p>
                         </div>
                     </div>
-
-                    <div class="order-footer">
-                        <p>Всего</p>
-                        <p><span>980</span> <i>грн</i></p>
+                    <div class="order__confirm">
+                        <button type="submit" class="btn btn-orange">{% trans "Place your order" %}</button>
                     </div>
                 </div>
-                <div class="order__confirm">
-                    <button type="submit" class="btn btn-orange">Подтвердить заказ</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</section>
+            </form>
+        </div>
+    </section>
 {% endblock %}
 
 {% block onbodyload %}
     {{ block.super }}
     {# We pass in the URL to send AJAX requests to #}
     var options = {
-        'basketURL': '{% url 'basket:summary' %}'
+    'basketURL': '{% url 'basket:summary' %}'
     };
     oscar.basket.init(options);
 {% endblock %}

@@ -1,0 +1,205 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load static %}
+{% load currency_filters %}
+{% load image_tags %}
+{% load purchase_info_tags %}
+
+{% block title %}
+    {% blocktrans with number=order.number %}
+        Order {{ number }}: confirmation
+    {% endblocktrans %} | {{ block.super }}
+{% endblock title %}
+
+{% block content_wrapper %}
+    <section class="order section-top">
+        <div class="container">
+            <h1 class="title color-orange">{% trans 'Thank you' %}</h1>
+            <ul class="breadcrumb">
+                <li><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
+                <li>{% trans 'Thank you' %}</li>
+            </ul>
+
+            {% include "oscar/partials/alert_messages.html" %}
+
+            <div id="messages">
+                <div class="alert alert-dismissible alert-safe alert-noicon alert-success  fade show">
+                    <div class="alertinner">
+                        {% blocktrans with number=order.number %}
+                        Your order has been placed and a confirmation email has been sent - your order number is
+                        <strong>{{ number }}</strong>.
+                        {% endblocktrans %}
+                        {% trans "Please make a note of this reference or print this page and quote it in any communication with us regarding your order." %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="order__form">
+                {% csrf_token %}
+                <div class="order__left">
+                    <div class="order-info">
+                        <p class="order__title">{% trans "Recipient information" %}:</p>
+                        <div class="order-info-preview sublist">
+                            {% if order.shipping_address %}
+                                <div class="order__payment order__flex sublist">
+                                    <p class="order__title">{% trans 'First name' %}:</p>
+                                    <p class="order__desc">{{ order.shipping_address.first_name }}</p>
+                                </div>
+                                <div class="order__payment order__flex">
+                                    <p class="order__title">{% trans 'Last name' %}:</p>
+                                    <p class="order__desc">{{ order.shipping_address.last_name }}</p>
+                                </div>
+                                <div class="order__payment order__flex">
+                                    <p class="order__title">{% trans 'Phone number' %}:</p>
+                                    <p class="order__desc">{{ order.shipping_address.phone_number }}</p>
+                                </div>
+                                <div class="order__payment order__flex">
+                                    <p class="order__title">{% trans 'Email' %}:</p>
+                                    <p class="order__desc">{{ order.shipping_address.email }}</p>
+                                </div>
+                                <div class="order__payment order__flex">
+                                    <p class="order__title">{% trans 'Shipping address' %}:</p>
+                                    <p class="order__desc">{{ order.shipping_address.line1 }}</p>
+                                </div>
+                            {% else %}
+                                <p>{% trans "No shipping address required." %}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {#to do: сделать includes для блока с товарами на страницах оформления заказа#}
+                    <div class="order-booking">
+                        <div class="order-booking__title">
+                            <p>Order 1</p>
+                            <p>Shop 1</p>
+                        </div>
+                        <div class="order__items">
+                            {% for line in order.lines.all %}
+                                {% purchase_info_for_line request line as session %}
+                                <div class="order__item">
+                                    <div class="order__img">
+                                        {% with image=line.product.primary_image %}
+                                            {% oscar_thumbnail image.original "300x300" upscale=False as thumb %}
+                                            <a href="{{ line.product.get_absolute_url }}">
+                                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}">
+                                            </a>
+                                        {% endwith %}
+                                    </div>
+                                    <div class="order__holder">
+                                        <div class="order-shoes">
+                                            <div class="order-shoes__desc">weestep shoes</div>
+                                            <div class="order-shoes__item">
+                                                <div class="order-shoes__color">
+                                                    {% trans 'Color' %}
+                                                    <span style="background-color: {{ line.product.attr.color_hex_code }};"></span>
+                                                </div>
+                                                <div class="order-shoes__size">
+                                                    {% trans 'Size' %}
+                                                    <span>{{ line.product.attr.size }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order__box">
+                                            <div class="order-count">
+                                                <p>{{ line.quantity }}</p> <i>pairs</i>
+                                            </div>
+                                            <div class="order__price">
+                                                <p>
+                                                    {% if not show_tax_separately and line.is_tax_known %}
+                                                        {{ line.line_price_incl_tax|currency:basket.currency }}
+                                                    {% else %}
+                                                        {{ line.line_price_excl_tax|currency:basket.currency }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="order-booking__total">
+                            <p>{% trans "In total" %}</p>
+                            {#                            <p><span>980</span> <i>грн</i></p>#}
+                            <p><span>{{ order.total_incl_tax|currency:order.currency }}</span></p>
+                        </div>
+                    </div>
+
+                    <div class="order__payment order__flex">
+                        <p class="order__title">{% trans 'Payment method' %}:</p>
+                        <p class="order__desc">{{ order.payment_method.title }}</p>
+                    </div>
+                    <div class="order__payment order__flex">
+                        <p class="order__title">{% trans 'Shipping method' %}:</p>
+                        <p class="order__desc">{{ order.shipping_method }}</p>
+                    </div>
+                    <div class="order__payment order__flex">
+                        <p class="order__title">{% trans 'Comment' %}:</p>
+                        <p class="order__desc">{{ order.shipping_address.notes }}</p>
+                    </div>
+{#                    <div class="order__btn">#}
+{#                        <a href="JavaScript:window.print();" class="btn btn-orange--transparent">Напечатать эту страницу</a>#}
+{#                    </div>#}
+                </div>
+
+                <div class="order__right">
+                    <div class="order__all">
+                        <div class="order-top">
+                            <p class="order-top__total">{% trans "Total" %}</p>
+                        </div>
+                        <div class="order-body">
+                            <div class="order-body__item">
+                                <div class="order-body__top">
+                                    <p>{% trans "Order 1" %}</p>
+                                    <span>Shop 1</span>
+                                </div>
+                                <div class="order-body__bottom">
+                                    <p>
+                                        {% blocktranslate count number=request.basket.num_items %}
+                                            {{ number }} product valued at
+                                            {% plural %}
+                                            {{ number }} products valued at
+                                        {% endblocktranslate %}
+                                    </p>
+{#                                    <p><span>740</span> <i>грн</i></p>#}
+                                    <p>
+                                        <span>
+                                            {{ order.total_incl_tax|currency:order.currency }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-footer">
+                            <p>{% trans "In total" %}</p>
+                            {#<p><span>980</span> <i>грн</i></p>#}
+                            <p>
+                                <span>
+                                    {{ order.total_incl_tax|currency:order.currency }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="order__confirm">
+                        <a href="{{ homepage_url }}" class="btn btn-orange">{% trans "Continue shopping" %}</a>
+{#                        <button type="submit" class="btn btn-orange">{% trans "Confirm the order" %}</button>#}
+                    </div>
+                </div>
+            </div> {# class=order__form #}
+        </div>
+    </section>
+{% endblock %}
+
+{% block tracking %}
+    {% if send_analytics_event %}
+        {% include "oscar/partials/google_analytics_transaction.html" %}
+    {% endif %}
+{% endblock %}
+
+{#{% block onbodyload %}#}
+{#    {{ block.super }}#}
+    {# We pass in the URL to send AJAX requests to #}
+{#    var options = {#}
+{#    'basketURL': '{% url 'basket:summary' %}'#}
+{#    };#}
+{#    oscar.basket.init(options);#}
+{#{% endblock %}#}

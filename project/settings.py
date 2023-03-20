@@ -53,16 +53,16 @@ INSTALLED_APPS = [
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
     'application.checkout.apps.CheckoutConfig',
-    'oscar.apps.address.apps.AddressConfig',
-    'oscar.apps.shipping.apps.ShippingConfig',
+    'application.address.apps.AddressConfig',
+    'application.shipping.apps.ShippingConfig',
     'application.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
     'application.partner.apps.PartnerConfig',
     'application.basket.apps.BasketConfig',
-    'oscar.apps.payment.apps.PaymentConfig',
+    'application.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',
-    'oscar.apps.order.apps.OrderConfig',
+    'application.order.apps.OrderConfig',
     'application.customer.apps.CustomerConfig',
     'application.search.apps.SearchConfig',
 
@@ -367,6 +367,8 @@ OSCAR_SEARCH_FACETS = {
         #  }),
     ]),
 }
+
+OSCAR_REQUIRED_ADDRESS_FIELDS = ('first_name', 'last_name', 'phone_number', 'line1')
 
 LOGIN_REDIRECT_URL = reverse_lazy('catalogue:index')
 

@@ -870,7 +870,9 @@ var languageSwitcher = {
         }
     }
 }
-;(function(o={}, $) {
+/*global jQuery */
+
+;(function($, o={}) {
     o.basket = {
         is_form_being_submitted: false,
         init: function(options) {
@@ -887,7 +889,7 @@ var languageSwitcher = {
                 let input = $(this).parent().find('input');
                 let current_value = parseInt(input.val());
                 let step = $(this).data('counter') === 'plus' ? 1: -1;
-                let new_value = current_value + step
+                let new_value = current_value + step;
                 if (new_value < 1){
                     new_value = 1;
                 }
@@ -936,6 +938,29 @@ var languageSwitcher = {
         }
     };
 
+    o.checkout = {
+        gateway: {
+            init: function () {
+                var radioWidgets = $('form input[name=options]');
+                var selectedRadioWidget = $('form input[name=options]:checked');
+                o.checkout.gateway.handleRadioSelection(selectedRadioWidget.val());
+                radioWidgets.change(o.checkout.gateway.handleRadioChange);
+                $('#id_username').focus();
+            },
+            // handleRadioChange: function () {
+            //     o.checkout.gateway.handleRadioSelection($(this).val());
+            // },
+            // handleRadioSelection: function (value) {
+            //     var pwInput = $('#id_password');
+            //     if (value == 'anonymous' || value == 'new') {
+            //         pwInput.attr('disabled', 'disabled');
+            //     } else {
+            //         pwInput.removeAttr('disabled');
+            //     }
+            // }
+        }
+    };
+
     // Replicate Django's flash messages so they can be used by AJAX callbacks.
     o.messages = {
         addMessage: function(tag, msg) {
@@ -969,7 +994,7 @@ var languageSwitcher = {
     o.init = function(){
         o.messages.init();
     }
-})(window.oscar = window.oscar || {}, jQuery);
+})(jQuery, window.oscar = window.oscar || {});
 
 $(document).ready(function() {
     oscar.init();
