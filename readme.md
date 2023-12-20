@@ -18,3 +18,10 @@ docker exec -it solr-container ls -al /opt/solr/server/solr/weestepstore.pl/conf
 8. python manage.py rebuild_index --noinput
 9. sudo docker cp ./solr_config/security.json solr-container:/opt/solr/server/solr/security.json
 10. docker restart solr-container
+
+##### On Windows
+1. solr.cmd start
+2. solr.cmd create -c weestepstore.pl -n basic_config
+3. python manage.py build_solr_schema --configure-directory=C:\Users\buzov\PycharmProjects\solr-6.6.6\server\solr\weestepstore.pl\conf
+4. python manage.py build_solr_schema --reload-core weestepstore.pl
+5. python manage.py rebuild_index --noinput
