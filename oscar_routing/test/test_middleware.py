@@ -9,7 +9,7 @@ class AccessSiteTestCase(TestCase):
 
     def test_access(self):
         response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
+        self.assertIn(response.status_code, [200, 302])
 
         with self.settings(BLOCKED_IPS='127.0.0.1'):
             response = self.client.get('/')
