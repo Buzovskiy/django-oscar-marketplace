@@ -109,7 +109,7 @@
             $('html').animate({scrollTop: $('#messages').offset().top});
         },
         closeAlert: function(e){
-            $('body').on('click', 'a.close', function(e){
+            $('body').on('click', '.alert a.close', function(e){
                 e.preventDefault();
                 $(this).closest('.alert').remove();
             })

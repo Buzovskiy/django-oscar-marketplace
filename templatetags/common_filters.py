@@ -55,7 +55,7 @@ def meta_keywords_filter(page_name):
 def static_url_param(value):
     """
     Filter that returns get parameter for static file link.
-    Is used on order to get link like app.min.js?v=1667696353.474667 if DEBUG is True or
+    Is used in order to get link like app.min.js?v=1667696353.474667 if DEBUG is True or
     app.min.js?v=16 if DEBUG is False where 16 is value
     :param value: value of a parameter
     :return: value of a parameter
