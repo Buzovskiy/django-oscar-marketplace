@@ -7,30 +7,30 @@
 	<div class="canvas-hero-block block-scroll">
 		<div class="canvas-hero__inner">
 			<div class="canvas-hero">
-				<div class="canvas-hero--mob canvas-hero__wrap">
-					<div id="canvasHeroMob" class="canvas-hero__content">
-						<input
-							name="frames-url-mob"
-							type="hidden"
-							value="{% static 'custom/videos/hero-main/webp-mob-100' %}/{% templatetag openvariable %}id{% templatetag closevariable %}.webp"
-							data-frame-start="1"
-							data-frame-end="100"
-							data-frame-id-padding="3"
-						>
-					</div>
-				</div>
-				<div class="canvas-hero--pc canvas-hero__wrap">
-					<div id="canvasHeroPC" class="canvas-hero__content">
-						<input
-							name="frames-url-pc"
-							type="hidden"
-							value="{% static 'custom/videos/hero-main/jpg-pc' %}/{% templatetag openvariable %}id{% templatetag closevariable %}.jpg"
-							data-frame-start="1"
-							data-frame-end="200"
-							data-frame-id-padding="3"
-						>
-					</div>
-				</div>
+{#				<div class="canvas-hero--mob canvas-hero__wrap">#}
+{#					<div id="canvasHeroMob" class="canvas-hero__content">#}
+{#						<input#}
+{#							name="frames-url-mob"#}
+{#							type="hidden"#}
+{#							value="{% static 'custom/videos/hero-main/webp-mob-100' %}/{% templatetag openvariable %}id{% templatetag closevariable %}.webp"#}
+{#							data-frame-start="1"#}
+{#							data-frame-end="100"#}
+{#							data-frame-id-padding="3"#}
+{#						>#}
+{#					</div>#}
+{#				</div>#}
+{#				<div class="canvas-hero--pc canvas-hero__wrap">#}
+{#					<div id="canvasHeroPC" class="canvas-hero__content">#}
+{#						<input#}
+{#							name="frames-url-pc"#}
+{#							type="hidden"#}
+{#							value="{% static 'custom/videos/hero-main/jpg-pc' %}/{% templatetag openvariable %}id{% templatetag closevariable %}.jpg"#}
+{#							data-frame-start="1"#}
+{#							data-frame-end="200"#}
+{#							data-frame-id-padding="3"#}
+{#						>#}
+{#					</div>#}
+{#				</div>#}
 			</div>
 			<div class="canvas-hero__desc block-scroll__inner">
 				<div class="block-scroll__content">
@@ -205,15 +205,6 @@
 	</div>
 </section>
 {% endfor %}
-
-<section class="video">
-	<div class="container">
-		<div class="video__player" data-video="https://youtu.be/-m2xModhp0A">
-			<img src="#" alt="video">
-			<button class="video__btn"></button>
-		</div>
-	</div>
-</section>
 
 <section class="collection">
 	<div class="container">
