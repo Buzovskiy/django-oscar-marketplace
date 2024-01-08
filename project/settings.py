@@ -97,7 +97,6 @@ INSTALLED_APPS = [
     'captcha',
     'testmail',
     'oscar_routing',
-    'application.home.apps.HomeConfig',
     'application.blog.apps.BlogConfig',
     'application.contacts.apps.ContactsConfig',
     'application.exchange.apps.ExchangeConfig',
@@ -270,7 +269,7 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 
 OSCAR_SHOP_NAME = 'Weestep'
 OSCAR_SHOP_TAGLINE = 'be bigger'
-OSCAR_HOMEPAGE = reverse_lazy('home:home')
+OSCAR_HOMEPAGE = reverse_lazy('catalogue:index')
 
 OSCAR_PRODUCTS_PER_PAGE = 12
 

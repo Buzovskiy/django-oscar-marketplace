@@ -4,7 +4,7 @@
 {% load static_url_param from common_filters %}
 
 {% block styles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v={{ '17'|static_url_param }}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v={{ '18'|static_url_param }}" />
 {% endblock %}
 
 {% block layout %}
@@ -115,7 +115,7 @@
 {% block scripts %}
     <!-- Jquery and custom template scripts -->
     <script src="{% static 'custom/build/js/libs.min.js' %}?v=15"></script>
-    <script src="{% static 'custom/build/js/app.min.js' %}?v={{ '17'|static_url_param }}"></script>
+    <script src="{% static 'custom/build/js/app.min.js' %}?v={{ '18'|static_url_param }}"></script>
 {% endblock %}
 
 {% block onbodyload %}{% endblock %}
