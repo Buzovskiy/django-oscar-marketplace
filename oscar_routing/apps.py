@@ -5,7 +5,7 @@ from django.apps import apps
 
 
 class OscarRoutingConfig(config.Shop):
-    partner_app = blog_app = flatpages_app = contacts_app = exchange_app = interview_app = None
+    blog_app = flatpages_app = contacts_app = exchange_app = interview_app = None
     one_page_checkout_app = None
 
     default_auto_field = 'django.db.models.BigAutoField'
@@ -13,7 +13,6 @@ class OscarRoutingConfig(config.Shop):
 
     def ready(self):
         super().ready()
-        self.partner_app = apps.get_app_config('partner')
         self.blog_app = apps.get_app_config('blog')
         self.flatpages_app = include('django.contrib.flatpages.urls')
         self.contacts_app = apps.get_app_config('contacts')
@@ -26,7 +25,6 @@ class OscarRoutingConfig(config.Shop):
         from oscar.views.decorators import login_forbidden
 
         urls = [
-            path('', self.partner_app.urls),  # stores page
             path('', self.blog_app.urls),
             path('interview/', self.interview_app.urls),
             path('contacts/', self.contacts_app.urls),

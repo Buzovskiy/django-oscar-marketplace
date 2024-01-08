@@ -8,12 +8,3 @@ class PartnerConfig(apps.PartnerConfig):
     name = 'application.partner'
     stores_list_view = None
     namespace = 'partner'
-
-    def ready(self):
-        self.stores_list_view = get_class('partner.views', 'StoresListView')
-
-    def get_urls(self):
-        urls = [
-            path('stores/', self.stores_list_view.as_view(), name='stores'),
-        ]
-        return self.post_process_urls(urls)
