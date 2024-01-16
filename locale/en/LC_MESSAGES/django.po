@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-14 01:26+0100\n"
+"POT-Creation-Date: 2024-01-16 15:54+0100\n"
 "PO-Revision-Date: 2023-03-14 01:27+0000\n"
 "Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,6 +101,11 @@ msgstr ""
 msgid "Color hex code"
 msgstr ""
 
+#: .\application\catalogue\templatetags\catalogue_filters.py:36
+#: .\application\search\forms.py:83
+msgid "Sort by"
+msgstr ""
+
 #: .\application\checkout\forms.py:16
 msgid "E.g.: +48123456789"
 msgstr ""
@@ -114,11 +119,15 @@ msgid "Name"
 msgstr ""
 
 #: .\application\contacts\forms.py:16
+#: .\templates\oscar\checkout\preview.html:41
+#: .\templates\oscar\checkout\thank_you.html:49
 msgid "Last name"
 msgstr ""
 
 #: .\application\contacts\forms.py:22 .\application\customer\forms.py:11
 #: .\application\customer\forms.py:28
+#: .\templates\oscar\checkout\preview.html:49
+#: .\templates\oscar\checkout\thank_you.html:57
 msgid "Email"
 msgstr ""
 
@@ -220,24 +229,6 @@ msgstr ""
 msgid "Exchange is done successfully"
 msgstr ""
 
-#: .\application\home\admin.py:12
-msgid "Image left"
-msgstr ""
-
-#: .\application\home\admin.py:16
-msgid "Image right"
-msgstr ""
-
-#: .\application\home\models.py:17
-msgid ""
-"Enter the id selector of banner section without # or leave the field empty "
-"to create id automatically"
-msgstr ""
-
-#: .\application\home\models.py:21
-msgid "Position control"
-msgstr ""
-
 #: .\application\interview\models.py:7
 msgid "Enter question on the interview page"
 msgstr ""
@@ -270,6 +261,13 @@ msgstr ""
 
 #: .\application\interview\models.py:48
 msgid "Filter values for the interview"
+msgstr ""
+
+#: .\application\order\models.py:15
+#: .\templates\oscar\checkout\one_page_checkout.html:156
+#: .\templates\oscar\checkout\preview.html:135
+#: .\templates\oscar\checkout\thank_you.html:128
+msgid "Payment method"
 msgstr ""
 
 #: .\application\partner\admin.py:20
@@ -306,8 +304,8 @@ msgstr ""
 
 #: .\application\partner\models.py:45
 msgid ""
-"Enter short description which will be displayed in parenthesis near title or"
-" leave field empty"
+"Enter short description which will be displayed in parenthesis near title or "
+"leave field empty"
 msgstr ""
 
 #: .\application\partner\models.py:48 .\application\partner\models.py:77
@@ -373,10 +371,6 @@ msgstr ""
 msgid "Newest"
 msgstr ""
 
-#: .\application\search\forms.py:83
-msgid "Sort by"
-msgstr ""
-
 #: .\application\search\search_handlers.py:105
 msgid "Page is not 'last', nor can it be converted to an int."
 msgstr ""
@@ -411,50 +405,57 @@ msgstr ""
 msgid "Consultation required"
 msgstr ""
 
-#: .\project\settings.py:217
-msgid "Polish"
+#: .\project\settings.py:216
+msgid "Spanish"
 msgstr ""
 
-#: .\project\settings.py:218
+#: .\project\settings.py:217
 msgid "English"
 msgstr ""
 
-#: .\project\settings.py:337
+#: .\project\settings.py:336
 msgid "Rating"
 msgstr ""
 
-#: .\project\settings.py:338
+#: .\project\settings.py:337
 msgid "Type"
 msgstr ""
 
-#: .\project\settings.py:339
+#: .\project\settings.py:338
 msgid "Gender"
 msgstr ""
 
-#: .\project\settings.py:340
+#: .\project\settings.py:339
 msgid "Season"
 msgstr ""
 
-#: .\project\settings.py:341 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:340 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
+#: .\templates\oscar\catalogue\detail.html:86
 #: .\templates\oscar\checkout\one_page_checkout.html:113
+#: .\templates\oscar\checkout\preview.html:92
+#: .\templates\oscar\checkout\thank_you.html:96
 msgid "Size"
 msgstr ""
 
-#: .\project\settings.py:342
+#: .\project\settings.py:341 .\templates\oscar\catalogue\detail.html:116
 msgid "Material"
 msgstr ""
 
-#: .\project\settings.py:343
+#: .\project\settings.py:342 .\templates\oscar\catalogue\detail.html:68
+#: .\templates\oscar\catalogue\detail.html:174
+#: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:109
+#: .\templates\oscar\checkout\preview.html:88
+#: .\templates\oscar\checkout\thank_you.html:92
 msgid "Color"
 msgstr ""
 
-#: .\project\urls.py:64
+#: .\project\urls.py:66
 msgid "Administration panel"
 msgstr ""
 
-#: .\project\urls.py:66
+#: .\project\urls.py:68
 msgid "Brand site administration panel"
 msgstr ""
 
@@ -477,6 +478,8 @@ msgstr ""
 #: .\templates\404.html:15 .\templates\oscar\basket\basket.html:11
 #: .\templates\oscar\catalogue\detail.html:30
 #: .\templates\oscar\checkout\one_page_checkout.html:16
+#: .\templates\oscar\checkout\preview.html:16
+#: .\templates\oscar\checkout\thank_you.html:19
 #: .\templates\oscar\customer\login_registration.html:17
 #: .\templates\oscar\customer\registration.html:18
 #: .\templates\oscar\search\results.html:15
@@ -623,8 +626,7 @@ msgstr ""
 
 #: .\templates\flatpages\about-us.html:90
 #: .\templates\flatpages\brand-of-the-year.html:87
-#: .\templates\home\home.html:109 .\templates\oscar\layout.html:60
-#: .\templates\oscar\partials\footer.html:13
+#: .\templates\oscar\layout.html:60 .\templates\oscar\partials\footer.html:13
 msgid "about us"
 msgstr ""
 
@@ -642,8 +644,8 @@ msgstr ""
 #: .\templates\flatpages\brand-of-the-year.html:13
 msgid ""
 "In 2020, we were awarded in Poland with the Certificate of children\\'s "
-"brand of the year. We\\'ve already sold five million pairs in the world, and"
-" a million in Europe."
+"brand of the year. We\\'ve already sold five million pairs in the world, and "
+"a million in Europe."
 msgstr ""
 
 #: .\templates\flatpages\brand-of-the-year.html:14
@@ -657,7 +659,8 @@ msgid "Edit this page"
 msgstr ""
 
 #: .\templates\flatpages\size-guide.html:17
-#: .\templates\oscar\checkout\one_page_checkout.html:240
+#: .\templates\oscar\checkout\one_page_checkout.html:217
+#: .\templates\oscar\checkout\preview.html:154
 msgid "Go back"
 msgstr ""
 
@@ -671,129 +674,6 @@ msgstr ""
 msgid ""
 "Measure together the length of the pattern with a ruler and select the "
 "appropriate option."
-msgstr ""
-
-#: .\templates\home\home.html:41
-msgid "We make"
-msgstr ""
-
-#: .\templates\home\home.html:42
-msgid "shoes"
-msgstr ""
-
-#: .\templates\home\home.html:45
-msgid "for children as for adults"
-msgstr ""
-
-#: .\templates\home\home.html:50
-msgid "We look at adult"
-msgstr ""
-
-#: .\templates\home\home.html:53
-msgid "fashion"
-msgstr ""
-
-#: .\templates\home\home.html:56
-msgid "and use trends in our design"
-msgstr ""
-
-#: .\templates\home\home.html:61
-msgid "We give"
-msgstr ""
-
-#: .\templates\home\home.html:64
-msgid "your child"
-msgstr ""
-
-#: .\templates\home\home.html:65
-msgid "a sense"
-msgstr ""
-
-#: .\templates\home\home.html:68
-msgid "of uniqueness and self-importance"
-msgstr ""
-
-#: .\templates\home\home.html:73
-msgid "We help"
-msgstr ""
-
-#: .\templates\home\home.html:76
-msgid "parents raise their"
-msgstr ""
-
-#: .\templates\home\home.html:80
-msgid "personalities"
-msgstr ""
-
-#: .\templates\home\home.html:100
-msgid "hi, <br>we are <br>weestep!"
-msgstr ""
-
-#: .\templates\home\home.html:105
-msgid "We manufacture children’s shoes like for adults, only better."
-msgstr ""
-
-#: .\templates\home\home.html:106
-msgid ""
-"We believe that children are small adults, and the fact that they grow out "
-"of their shoes quickly doesn't mean that footwear should be approached "
-"differently."
-msgstr ""
-
-#: .\templates\home\home.html:131
-msgid "why weestep?"
-msgstr ""
-
-#: .\templates\home\home.html:135
-msgid "Trendset"
-msgstr ""
-
-#: .\templates\home\home.html:136
-msgid "We follow the adult fashion trends and bring them to children’s shoes"
-msgstr ""
-
-#: .\templates\home\home.html:141
-msgid "We believe"
-msgstr ""
-
-#: .\templates\home\home.html:142
-msgid ""
-"We believe that a child—who will ultimately be wearing our shoes—should be "
-"treated with respect and should have a right to choose what his or her shoes"
-" will look like"
-msgstr ""
-
-#: .\templates\home\home.html:147
-msgid "Individuality"
-msgstr ""
-
-#: .\templates\home\home.html:148
-msgid ""
-"We give your child a sense of uniqueness and self-importance. We help "
-"parents raise their personalities"
-msgstr ""
-
-#: .\templates\home\home.html:153
-msgid "Exact specialization"
-msgstr ""
-
-#: .\templates\home\home.html:154
-#, python-format
-msgid ""
-"Every season we update our collections by 100%%, our assortment always "
-"includes more than 1000 fashionable trendy new products"
-msgstr ""
-
-#: .\templates\home\home.html:220
-msgid "new collection"
-msgstr ""
-
-#: .\templates\home\home.html:227
-msgid "Children's choice"
-msgstr ""
-
-#: .\templates\home\home.html:234
-msgid "Parents choose"
 msgstr ""
 
 #: .\templates\interview\interview-05.html:29
@@ -836,6 +716,7 @@ msgstr ""
 #: .\templates\oscar\basket\basket.html:9
 #: .\templates\oscar\basket\basket.html:12
 #: .\templates\oscar\checkout\one_page_checkout.html:17
+#: .\templates\oscar\checkout\preview.html:17
 msgid "Basket"
 msgstr ""
 
@@ -920,7 +801,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                <div class=\"warning\">%(message)s to qualify for the <a href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
+"                <div class=\"warning\">%(message)s to qualify for the <a "
+"href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
 "            "
 msgstr ""
 
@@ -934,6 +816,7 @@ msgstr ""
 
 #: .\templates\oscar\basket\partials\basket_content.html:107
 #: .\templates\oscar\basket\partials\basket_content.html:118
+#: .\templates\oscar\checkout\thank_you.html:183
 msgid "Continue shopping"
 msgstr ""
 
@@ -959,11 +842,20 @@ msgstr ""
 #: .\templates\oscar\checkout\one_page_checkout.html:9
 #: .\templates\oscar\checkout\one_page_checkout.html:14
 #: .\templates\oscar\checkout\one_page_checkout.html:18
+#: .\templates\oscar\checkout\preview.html:18
 msgid "Checkout"
 msgstr ""
 
 #: .\templates\oscar\basket\partials\basket_totals.html:7
 msgid "Totals"
+msgstr ""
+
+#: .\templates\oscar\catalogue\browse.html:25
+msgid "filter"
+msgstr ""
+
+#: .\templates\oscar\catalogue\browse.html:26
+msgid "sort"
 msgstr ""
 
 #: .\templates\oscar\catalogue\browse.html:83
@@ -979,6 +871,22 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
+#: .\templates\oscar\catalogue\detail.html:98
+msgid "Size guide"
+msgstr ""
+
+#: .\templates\oscar\catalogue\detail.html:111
+msgid "design"
+msgstr ""
+
+#: .\templates\oscar\catalogue\detail.html:123
+msgid "Benefits"
+msgstr ""
+
+#: .\templates\oscar\catalogue\detail.html:151
+msgid "You may like"
+msgstr ""
+
 #: .\templates\oscar\catalogue\partials\add_to_basket_form.html:13
 msgid "Add to basket"
 msgstr ""
@@ -992,6 +900,8 @@ msgid "Free"
 msgstr ""
 
 #: .\templates\oscar\checkout\one_page_checkout.html:27
+#: .\templates\oscar\checkout\preview.html:28
+#: .\templates\oscar\checkout\thank_you.html:41
 msgid "Recipient information"
 msgstr ""
 
@@ -1008,30 +918,47 @@ msgid "please check the error messages below and try again"
 msgstr ""
 
 #: .\templates\oscar\checkout\one_page_checkout.html:75
+#: .\templates\oscar\checkout\preview.html:53
+#: .\templates\oscar\checkout\thank_you.html:61
 msgid "Shipping address"
 msgstr ""
 
-#: .\templates\oscar\checkout\one_page_checkout.html:147
-msgid "Payment method"
+#: .\templates\oscar\checkout\one_page_checkout.html:141
+#: .\templates\oscar\checkout\one_page_checkout.html:249
+#: .\templates\oscar\checkout\preview.html:120
+#: .\templates\oscar\checkout\preview.html:186
+#: .\templates\oscar\checkout\thank_you.html:121
+#: .\templates\oscar\checkout\thank_you.html:173
+msgid "In total"
 msgstr ""
 
-#: .\templates\oscar\checkout\one_page_checkout.html:159
+#: .\templates\oscar\checkout\one_page_checkout.html:168
+#: .\templates\oscar\checkout\preview.html:139
+#: .\templates\oscar\checkout\thank_you.html:132
 msgid "Shipping method"
 msgstr ""
 
-#: .\templates\oscar\checkout\one_page_checkout.html:220
+#: .\templates\oscar\checkout\one_page_checkout.html:198
+#: .\templates\oscar\checkout\preview.html:143
+#: .\templates\oscar\checkout\thank_you.html:136
 msgid "Comment"
 msgstr ""
 
-#: .\templates\oscar\checkout\one_page_checkout.html:241
+#: .\templates\oscar\checkout\one_page_checkout.html:218
+#: .\templates\oscar\checkout\preview.html:155
+#: .\templates\oscar\checkout\thank_you.html:147
 msgid "Total"
 msgstr ""
 
-#: .\templates\oscar\checkout\one_page_checkout.html:247
+#: .\templates\oscar\checkout\one_page_checkout.html:224
+#: .\templates\oscar\checkout\preview.html:161
+#: .\templates\oscar\checkout\thank_you.html:152
 msgid "Order 1"
 msgstr ""
 
-#: .\templates\oscar\checkout\one_page_checkout.html:252
+#: .\templates\oscar\checkout\one_page_checkout.html:229
+#: .\templates\oscar\checkout\preview.html:166
+#: .\templates\oscar\checkout\thank_you.html:157
 #, python-format
 msgid ""
 "\n"
@@ -1048,13 +975,79 @@ msgstr[1] ""
 "\n"
 "%(number)s products valued at"
 
-#: .\templates\oscar\checkout\one_page_checkout.html:272
-msgid "In total"
-msgstr ""
-
-#: .\templates\oscar\checkout\one_page_checkout.html:286
+#: .\templates\oscar\checkout\one_page_checkout.html:263
 msgid "Place your order"
 msgstr "Place your order"
+
+#: .\templates\oscar\checkout\preview.html:9
+msgid "Confirm"
+msgstr ""
+
+#: .\templates\oscar\checkout\preview.html:14
+msgid "confirm"
+msgstr ""
+
+#: .\templates\oscar\checkout\preview.html:19
+msgid "Order confirmation"
+msgstr ""
+
+#: .\templates\oscar\checkout\preview.html:37
+#: .\templates\oscar\checkout\thank_you.html:45
+msgid "First name"
+msgstr ""
+
+#: .\templates\oscar\checkout\preview.html:45
+#: .\templates\oscar\checkout\thank_you.html:53
+msgid "Phone number"
+msgstr ""
+
+#: .\templates\oscar\checkout\preview.html:201
+msgid "Confirm the order"
+msgstr ""
+
+#: .\templates\oscar\checkout\thank_you.html:9
+#, python-format
+msgid ""
+"\n"
+"        Order %(number)s: confirmation\n"
+"    "
+msgstr ""
+
+#: .\templates\oscar\checkout\thank_you.html:17
+#: .\templates\oscar\checkout\thank_you.html:20
+msgid "Thank you"
+msgstr ""
+
+#: .\templates\oscar\checkout\thank_you.html:28
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                                            %(number)s product valued at\n"
+#| "                                            "
+#| msgid_plural ""
+#| "\n"
+#| "                                            %(number)s products valued "
+#| "at\n"
+#| "                                        "
+msgid ""
+"\n"
+"                        Your order has been placed and a confirmation email "
+"has been sent - your order number is\n"
+"                        <strong>%(number)s</strong>.\n"
+"                        "
+msgstr ""
+"\n"
+"%(number)s product valued at"
+
+#: .\templates\oscar\checkout\thank_you.html:32
+msgid ""
+"Please make a note of this reference or print this page and quote it in any "
+"communication with us regarding your order."
+msgstr ""
+
+#: .\templates\oscar\checkout\thank_you.html:65
+msgid "No shipping address required."
+msgstr ""
 
 #: .\templates\oscar\customer\login_registration.html:7
 msgid "Login"
@@ -1107,24 +1100,28 @@ msgstr ""
 msgid "catalogue"
 msgstr ""
 
-#: .\templates\oscar\layout.html:70 .\templates\oscar\partials\footer.html:24
-msgid "Stores"
-msgstr ""
-
-#: .\templates\oscar\layout.html:80
+#: .\templates\oscar\layout.html:75
 msgid "brand of the year"
 msgstr ""
 
-#: .\templates\oscar\layout.html:85 .\templates\oscar\partials\footer.html:27
+#: .\templates\oscar\layout.html:80 .\templates\oscar\partials\footer.html:24
 msgid "Contacts"
 msgstr ""
 
-#: .\templates\oscar\layout.html:90 .\templates\oscar\partials\footer.html:30
+#: .\templates\oscar\layout.html:85 .\templates\oscar\partials\footer.html:27
 msgid "Find yor fit"
 msgstr ""
 
 #: .\templates\oscar\partials\footer.html:17
 msgid "Become our partner"
+msgstr ""
+
+#: .\templates\oscar\partials\footer.html:47
+msgid "Private policy"
+msgstr ""
+
+#: .\templates\oscar\partials\footer.html:48
+msgid "Terms & conditions"
 msgstr ""
 
 #: .\templates\oscar\partials\mini_basket.html:5
@@ -1137,6 +1134,10 @@ msgstr ""
 
 #: .\templates\oscar\partials\nav_accounts.html:10
 msgid "log in"
+msgstr ""
+
+#: .\templates\oscar\search\partials\facet-modal-window.html:106
+msgid "sort by"
 msgstr ""
 
 #: .\templates\oscar\search\results.html:27
@@ -1155,7 +1156,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Found <strong>%(num_results)s</strong> results, showing <strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
+"                    Found <strong>%(num_results)s</strong> results, showing "
+"<strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
 "                "
 msgstr ""
 
@@ -1180,7 +1182,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                        Did you mean <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</a>?\n"
+"                        Did you mean <a href=\"%(search_url)s?q="
+"%(suggestion)s\">\"%(suggestion)s\"</a>?\n"
 "                    "
 msgstr ""
 

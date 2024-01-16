@@ -9,424 +9,445 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-16 15:54+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2024-01-16 15:55+0000\n"
+"Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.7\n"
 
 #: .\application\blog\admin.py:21
 msgid "Image in the list of posts"
-msgstr ""
+msgstr "Imagen en la lista de publicaciones"
 
 #: .\application\blog\admin.py:29
 msgid "Popularity"
-msgstr ""
+msgstr "Popularidad"
 
 #: .\application\blog\admin.py:37
 msgid "Link"
-msgstr ""
+msgstr "Enlace"
 
 #: .\application\blog\models.py:22 .\application\partner\models.py:10
 #: .\application\partner\models.py:26 .\application\payment\models.py:7
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: .\application\blog\models.py:30
 msgid "Manage Popularity"
-msgstr ""
+msgstr "Administrar popularidad"
 
 #: .\application\catalogue\models.py:28
 msgid "Sizes must by like: 20-26"
-msgstr ""
+msgstr "Los tamaños deben ser como: 20-26"
 
 #: .\application\catalogue\models.py:34 .\application\catalogue\models.py:86
 #: .\application\catalogue\models.py:117
 msgid "Code in 1c"
-msgstr ""
+msgstr "Código en 1c"
 
 #: .\application\catalogue\models.py:89
 msgid "Product description"
-msgstr ""
+msgstr "Descripción del Producto"
 
 #: .\application\catalogue\models.py:92
 msgid "Enter product description that is to display on product page"
 msgstr ""
+"Ingrese la descripción del producto que se mostrará en la página del "
+"producto"
 
 #: .\application\catalogue\models.py:95
 msgid "Product long description"
-msgstr ""
+msgstr "Descripción larga del producto"
 
 #: .\application\catalogue\models.py:98
 msgid "Enter product long description that is to display on product page"
 msgstr ""
+"Ingrese la descripción larga del producto que se mostrará en la página del "
+"producto"
 
 #: .\application\catalogue\models.py:101
 msgid "Product design description"
-msgstr ""
+msgstr "Descripción del diseño del producto"
 
 #: .\application\catalogue\models.py:104
 msgid "Enter product design description that is to display on product page"
 msgstr ""
+"Ingrese la descripción del diseño del producto que se mostrará en la página "
+"del producto"
 
 #: .\application\catalogue\models.py:107
 msgid "Product benefits description"
-msgstr ""
+msgstr "Descripción de los beneficios del producto"
 
 #: .\application\catalogue\models.py:110
 msgid "Enter product benefits description that is to display on product page"
 msgstr ""
+"Ingrese la descripción de los beneficios del producto que se mostrará en la "
+"página del producto"
 
 #: .\application\catalogue\models.py:123
 msgid "Color name"
-msgstr ""
+msgstr "Nombre del color"
 
 #: .\application\catalogue\models.py:126
 msgid "Color name, e.g. black "
-msgstr ""
+msgstr "Nombre del color, p.e. negro"
 
 #: .\application\catalogue\models.py:129
 msgid "Hex code"
-msgstr ""
+msgstr "Сódigo hexadecimal"
 
 #: .\application\catalogue\models.py:133
 msgid "Color hex code, e.g. #000000"
-msgstr ""
+msgstr "Código hexadecimal de color, p. #000000"
 
 #: .\application\catalogue\models.py:141
 msgid "Color hex code"
-msgstr ""
+msgstr "Сódigo hexadecimal de color"
 
 #: .\application\catalogue\templatetags\catalogue_filters.py:36
 #: .\application\search\forms.py:83
 msgid "Sort by"
-msgstr ""
+msgstr "Ordenar por"
 
 #: .\application\checkout\forms.py:16
 msgid "E.g.: +48123456789"
-msgstr ""
+msgstr "Por ejemplo: +48123456789"
 
 #: .\application\checkout\forms.py:29
 msgid "Choose payment method"
-msgstr ""
+msgstr "Elige el método de pago"
 
 #: .\application\contacts\forms.py:11
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: .\application\contacts\forms.py:16
 #: .\templates\oscar\checkout\preview.html:41
 #: .\templates\oscar\checkout\thank_you.html:49
 msgid "Last name"
-msgstr ""
+msgstr "Apellido"
 
 #: .\application\contacts\forms.py:22 .\application\customer\forms.py:11
 #: .\application\customer\forms.py:28
 #: .\templates\oscar\checkout\preview.html:49
 #: .\templates\oscar\checkout\thank_you.html:57
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: .\application\contacts\forms.py:27
 msgid "Telephone"
-msgstr ""
+msgstr "Teléfono"
 
 #: .\application\contacts\forms.py:30
 msgid "Start with country phone code"
-msgstr ""
+msgstr "Comience con el código telefónico del país"
 
 #: .\application\contacts\forms.py:33
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #: .\application\contacts\forms.py:38
 msgid "City"
-msgstr ""
+msgstr "Ciudad"
 
 #: .\application\contacts\forms.py:43
 msgid "Postal code"
-msgstr ""
+msgstr "Código Postal"
 
 #: .\application\contacts\forms.py:49
 msgid "Subject"
-msgstr ""
+msgstr "Sujeto"
 
 #: .\application\contacts\forms.py:54
 msgid "Your message"
-msgstr ""
+msgstr "Tu mensaje"
 
 #: .\application\contacts\forms.py:59 .\application\contacts\forms.py:60
 msgid "Do you already have a shop?"
-msgstr ""
+msgstr "¿Ya tienes una tienda?"
 
 #: .\application\contacts\forms.py:60
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: .\application\contacts\forms.py:60
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: .\application\contacts\forms.py:63
 msgid "Shop sign"
-msgstr ""
+msgstr "Rótulo de establecimiento"
 
 #: .\application\contacts\forms.py:69
 msgid "Website"
-msgstr ""
+msgstr "Sitio web"
 
 #: .\application\contacts\forms.py:75
 msgid "Accept"
-msgstr ""
+msgstr "Aceptar"
 
 #: .\application\contacts\forms.py:78
 msgid "Captcha"
-msgstr ""
+msgstr "Captcha"
 
 #: .\application\customer\forms.py:9 .\application\customer\forms.py:26
 msgid "Email address"
-msgstr ""
+msgstr "Dirección de correo electrónico"
 
 #: .\application\customer\forms.py:15 .\application\customer\forms.py:19
 #: .\application\customer\forms.py:32 .\application\customer\forms.py:35
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: .\application\customer\forms.py:40
 msgid "Confirm password"
-msgstr ""
+msgstr "Confirmar Contraseña"
 
 #: .\application\customer\forms.py:43
 msgid "Repeat password"
-msgstr ""
+msgstr "Repita la contraseña"
 
 #: .\application\exchange\admin_form.py:44
 msgid "Actions"
-msgstr ""
+msgstr "Comportamiento"
 
 #: .\application\exchange\admin_form.py:46
 msgid "exchange"
-msgstr ""
+msgstr "intercambio"
 
 #: .\application\exchange\admin_form.py:47
 msgid "delete"
-msgstr ""
+msgstr "borrar"
 
 #: .\application\exchange\admin_form.py:59
 msgid ""
 "Items must be selected in order to perform actions on them. No items have"
 msgstr ""
+"Los elementos deben seleccionarse para poder realizar acciones sobre ellos. "
+"No hay artículos"
 
 #: .\application\exchange\admin_form.py:64
 msgid "Files are deleted successfully"
-msgstr ""
+msgstr "Los archivos se eliminan correctamente"
 
 #: .\application\exchange\admin_form.py:86
 msgid "Exchange is done successfully"
-msgstr ""
+msgstr "El intercambio se realiza con éxito"
 
 #: .\application\interview\models.py:7
 msgid "Enter question on the interview page"
-msgstr ""
+msgstr "Ingrese la pregunta en la página de la entrevista"
 
 #: .\application\interview\models.py:14
 msgid ""
 "Enter the number of the question which is to be displayed on the interview "
 "page, e.g. 01"
 msgstr ""
+"Ingrese el número de la pregunta que se mostrará en la página de la "
+"entrevista, p.e. 01"
 
 #: .\application\interview\models.py:21
 msgid "Should be the same as key name value in OSCAR_SEARCH_FACETS settings"
 msgstr ""
+"Debe ser el mismo que el valor del nombre de la clave en la configuración de"
+" OSCAR_SEARCH_FACETS"
 
 #: .\application\interview\models.py:31
 msgid "Filter for the interview"
-msgstr ""
+msgstr "Filtrar para la entrevista"
 
 #: .\application\interview\models.py:32
 msgid "Filters for the interview"
-msgstr ""
+msgstr "Filtros para la entrevista"
 
 #: .\application\interview\models.py:39
 msgid "Enter the title of the filter on interview page"
-msgstr ""
+msgstr "Ingrese el título del filtro en la página de la entrevista"
 
 #: .\application\interview\models.py:47
 msgid "Filter value for the interview"
-msgstr ""
+msgstr "Valor de filtro para la entrevista"
 
 #: .\application\interview\models.py:48
 msgid "Filter values for the interview"
-msgstr ""
+msgstr "Filtrar valores para la entrevista"
 
 #: .\application\order\models.py:15
 #: .\templates\oscar\checkout\one_page_checkout.html:156
 #: .\templates\oscar\checkout\preview.html:135
 #: .\templates\oscar\checkout\thank_you.html:128
 msgid "Payment method"
-msgstr ""
+msgstr "Método de pago"
 
 #: .\application\partner\admin.py:20
 msgid "Filter cities by countries"
-msgstr ""
+msgstr "Filtrar ciudades por países"
 
 #: .\application\partner\admin.py:63
 msgid "The number of addresses"
-msgstr ""
+msgstr "El número de direcciones"
 
 #: .\application\partner\models.py:14
 msgid "Enter the title of retail partner stores"
-msgstr ""
+msgstr "Ingrese el título de las tiendas minoristas asociadas"
 
 #: .\application\partner\models.py:18
 msgid "Retail shop partner"
-msgstr ""
+msgstr "Socio de tienda minorista"
 
 #: .\application\partner\models.py:19
 msgid "Retail shop partners"
-msgstr ""
+msgstr "Socios de tiendas minoristas"
 
 #: .\application\partner\models.py:33
 msgid "Retail city"
-msgstr ""
+msgstr "Ciudad minorista"
 
 #: .\application\partner\models.py:34
 msgid "Retail cities"
-msgstr ""
+msgstr "Ciudades minoristas"
 
 #: .\application\partner\models.py:41
 msgid "Short description"
-msgstr ""
+msgstr "Breve descripción"
 
 #: .\application\partner\models.py:45
 msgid ""
-"Enter short description which will be displayed in parenthesis near title or "
-"leave field empty"
+"Enter short description which will be displayed in parenthesis near title or"
+" leave field empty"
 msgstr ""
+"Ingrese una breve descripción que se mostrará entre paréntesis cerca del "
+"título o deje el campo vacío"
 
 #: .\application\partner\models.py:48 .\application\partner\models.py:77
 msgid "Address"
-msgstr ""
+msgstr "DIRECCIÓN"
 
 #: .\application\partner\models.py:50
 msgid "Enter address of the retail partner store"
-msgstr ""
+msgstr "Ingrese la dirección de la tienda minorista asociada"
 
 #: .\application\partner\models.py:53
 msgid "Store working hours"
-msgstr ""
+msgstr "Horario de trabajo de la tienda"
 
 #: .\application\partner\models.py:56
 msgid "Enter store working hours"
-msgstr ""
+msgstr "Introduce el horario laboral de la tienda"
 
 #: .\application\partner\models.py:58
 msgid "Web site"
-msgstr ""
+msgstr "Sitio web"
 
 #: .\application\partner\models.py:58
 msgid "Enter web site"
-msgstr ""
+msgstr "Ingresar al sitio web"
 
 #: .\application\partner\models.py:60
 msgid "Latitude"
-msgstr ""
+msgstr "Latitud"
 
 #: .\application\partner\models.py:63
 msgid ""
 "Enter latitude coordinate in decimal format, for example 46.43143143569561"
 msgstr ""
+"Ingrese las coordenadas de latitud en formato decimal, por ejemplo "
+"46.43143143569561"
 
 #: .\application\partner\models.py:66
 msgid "longitude"
-msgstr ""
+msgstr "longitud"
 
 #: .\application\partner\models.py:69
 msgid ""
 "Enter longitude coordinate in decimal format, for example 30.724300888157735"
 msgstr ""
+"Ingrese la coordenada de longitud en formato decimal, por ejemplo "
+"30.724300888157735"
 
 #: .\application\partner\models.py:78
 msgid "Addresses"
-msgstr ""
+msgstr "Direcciones"
 
 #: .\application\payment\models.py:8
 msgid "Payment method that will be shown on the checkout page"
-msgstr ""
+msgstr "Método de pago que se mostrará en la página de pago"
 
 #: .\application\search\forms.py:40 .\application\search\forms.py:42
 #: .\templates\oscar\layout.html:37 .\templates\oscar\search\results.html:18
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: .\application\search\forms.py:57
 msgid "Relevancy"
-msgstr ""
+msgstr "Pertinencia"
 
 #: .\application\search\forms.py:59
 msgid "Newest"
-msgstr ""
+msgstr "La mas nueva"
 
 #: .\application\search\search_handlers.py:105
 msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
+msgstr "La página no es la \"última\" ni se puede convertir a un int."
 
 #: .\application\search_optimisation_fields\admin.py:13
 #: .\application\search_optimisation_fields\models.py:10
 msgid "Url of the page"
-msgstr ""
+msgstr "URL de la página"
 
 #: .\application\search_optimisation_fields\models.py:6
 msgid "Meta page name"
-msgstr ""
+msgstr "Nombre de la metapágina"
 
 #: .\application\search_optimisation_fields\models.py:7
 msgid "Meta title"
-msgstr ""
+msgstr "Metatítulo"
 
 #: .\application\search_optimisation_fields\models.py:8
 msgid "Meta description"
-msgstr ""
+msgstr "Metadescripción"
 
 #: .\application\search_optimisation_fields\models.py:9
 msgid "Meta keywords"
-msgstr ""
+msgstr "Metapalabras clave"
 
 #: .\application\search_optimisation_fields\models.py:18
 #: .\application\search_optimisation_fields\models.py:19
 msgid "Search optimisation fields"
-msgstr ""
+msgstr "Campos de optimización de búsqueda"
 
 #: .\application\shipping\methods.py:25
 msgid "Consultation required"
-msgstr ""
+msgstr "Se requiere consulta"
 
 #: .\project\settings.py:216
 msgid "Spanish"
-msgstr ""
+msgstr "Española"
 
 #: .\project\settings.py:217
 msgid "English"
-msgstr ""
+msgstr "English"
 
 #: .\project\settings.py:336
 msgid "Rating"
-msgstr ""
+msgstr "Clasificación"
 
 #: .\project\settings.py:337
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: .\project\settings.py:338
 msgid "Gender"
-msgstr ""
+msgstr "Género"
 
 #: .\project\settings.py:339
 msgid "Season"
-msgstr ""
+msgstr "Estación"
 
 #: .\project\settings.py:340 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
@@ -435,11 +456,11 @@ msgstr ""
 #: .\templates\oscar\checkout\preview.html:92
 #: .\templates\oscar\checkout\thank_you.html:96
 msgid "Size"
-msgstr ""
+msgstr "Tamaño"
 
 #: .\project\settings.py:341 .\templates\oscar\catalogue\detail.html:116
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: .\project\settings.py:342 .\templates\oscar\catalogue\detail.html:68
 #: .\templates\oscar\catalogue\detail.html:174
@@ -448,31 +469,31 @@ msgstr ""
 #: .\templates\oscar\checkout\preview.html:88
 #: .\templates\oscar\checkout\thank_you.html:92
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: .\project\urls.py:66
 msgid "Administration panel"
-msgstr ""
+msgstr "Panel de administración"
 
 #: .\project\urls.py:68
 msgid "Brand site administration panel"
-msgstr ""
+msgstr "Panel de administración del sitio de marca"
 
 #: .\templates\403.html:5 .\templates\403.html:9
 msgid "Permission denied!"
-msgstr ""
+msgstr "¡Permiso denegado!"
 
 #: .\templates\403.html:13
 msgid "We're sorry but you are not permitted to access this page."
-msgstr ""
+msgstr "Lo sentimos pero no se le permite acceder a esta página."
 
 #: .\templates\404.html:6
 msgid "Page not found"
-msgstr ""
+msgstr "Página no encontrada"
 
 #: .\templates\404.html:14
 msgid "Page not found, moved, changed, or no longer exists."
-msgstr ""
+msgstr "La página no se encontró, se movió, se modificó o ya no existe."
 
 #: .\templates\404.html:15 .\templates\oscar\basket\basket.html:11
 #: .\templates\oscar\catalogue\detail.html:30
@@ -483,121 +504,127 @@ msgstr ""
 #: .\templates\oscar\customer\registration.html:18
 #: .\templates\oscar\search\results.html:15
 msgid "Home"
-msgstr ""
+msgstr "Hogar"
 
 #: .\templates\404.html:18
 msgid "Choose your favorite color by clicking the left mouse button."
 msgstr ""
+"Elige tu color favorito haciendo clic con el botón izquierdo del ratón."
 
 #: .\templates\404.html:22
 msgid "To change the color, double-tap the screen in place of the picture"
 msgstr ""
+"Para cambiar el color, toque dos veces la pantalla en lugar de la imagen"
 
 #: .\templates\admin\app_list.html:12
 #: .\templates\admin\exchange\custom_app_list.html:6
 #, python-format
 msgid "Models in the %(name)s application"
-msgstr ""
+msgstr "Modelos en la aplicación %(name)s"
 
 #: .\templates\admin\app_list.html:24
 #: .\templates\admin\exchange\custom_app_list.html:17
 msgid "Add"
-msgstr ""
+msgstr "Agregar"
 
 #: .\templates\admin\app_list.html:31
 #: .\templates\admin\exchange\custom_app_list.html:24
 msgid "View"
-msgstr ""
+msgstr "Vista"
 
 #: .\templates\admin\app_list.html:33
 #: .\templates\admin\exchange\custom_app_list.html:26
 msgid "Change"
-msgstr ""
+msgstr "Cambiar"
 
 #: .\templates\admin\app_list.html:45
 msgid "You don’t have permission to view or edit anything."
-msgstr ""
+msgstr "No tienes permiso para ver o editar nada."
 
 #: .\templates\admin\exchange\custom_app_list.html:34
 msgid "rebuild index"
-msgstr ""
+msgstr "índice de reconstrucción"
 
 #: .\templates\admin\exchange\files_list.html:37
 msgid "File"
-msgstr ""
+msgstr "Archivo"
 
 #: .\templates\admin\exchange\files_list.html:41
 msgid "Date created"
-msgstr ""
+msgstr "Fecha de creacion"
 
 #: .\templates\blog\post_detail.html:5 .\templates\blog\post_list.html:6
 #: .\templates\blog\post_list.html:15
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: .\templates\blog\post_detail.html:24
 msgid "share"
-msgstr ""
+msgstr "compartir"
 
 #: .\templates\blog\post_detail.html:42
 msgid "also read"
-msgstr ""
+msgstr "también lee"
 
 #: .\templates\blog\post_list.html:19
 msgid "All publications"
-msgstr ""
+msgstr "Todas las publicaciones"
 
 #: .\templates\blog\post_list.html:24
 msgid "Popular"
-msgstr ""
+msgstr "Popular"
 
 #: .\templates\blog\post_list.html:29
 msgid "New"
-msgstr ""
+msgstr "Nueva"
 
 #: .\templates\blog\post_list.html:46
 #: .\templates\oscar\catalogue\browse.html:91
 msgid "Show more"
-msgstr ""
+msgstr "Mostrar más"
 
 #: .\templates\contacts\become-our-partner-form.html:5
 msgid "Thank you for the message. We will answer you as soon as possible"
-msgstr ""
+msgstr "Gracias por el mensaje. Te responderemos tan pronto como sea posible"
 
 #: .\templates\contacts\become-our-partner-form.html:7
 msgid "BECOME A WEESTEP PARTNER"
-msgstr ""
+msgstr "CONVIÉRTETE EN SOCIO DE WEESTEP"
 
 #: .\templates\contacts\become-our-partner-form.html:9
 msgid "You want to become a part of the “Weestep” team?"
-msgstr ""
+msgstr "¿Quieres formar parte del equipo \"Weestep\"?"
 
 #: .\templates\contacts\become-our-partner-form.html:10
 msgid ""
 "You want to become an official dealer or you want to open branded store "
 "“Weestep”?"
 msgstr ""
+"¿Quiere convertirse en distribuidor oficial o abrir una tienda de marca "
+"“Weeste”?"
 
 #: .\templates\contacts\become-our-partner-form.html:11
 msgid ""
 "Fill out simple form and we will contact you to get necessary information."
 msgstr ""
+"Complete un formulario simple y nos comunicaremos con usted para obtener la "
+"información necesaria."
 
 #: .\templates\contacts\become-our-partner-form.html:66
 msgid "User agreement"
-msgstr ""
+msgstr "Acuerdo del Usuario"
 
 #: .\templates\contacts\email.html:3
 msgid "Email from"
-msgstr ""
+msgstr "Email de"
 
 #: .\templates\contacts\email.html:3
 msgid "page"
-msgstr ""
+msgstr "página"
 
 #: .\templates\flatpages\about-us.html:20
 msgid "We make shoes for children as for adults, ONLY BETTER!"
-msgstr ""
+msgstr "Hacemos zapatos para niños como para adultos, ¡SOLO MEJORES!"
 
 #: .\templates\flatpages\about-us.html:84
 #: .\templates\flatpages\brand-of-the-year.html:81
@@ -605,6 +632,9 @@ msgid ""
 "For us, the fact that children do not wear shoes as long as their parents "
 "do, does not mean that it should be approached differently."
 msgstr ""
+"Para nosotros, el hecho de que los niños no usen zapatos durante tanto "
+"tiempo como sus padres no significa que deba abordarse el asunto de manera "
+"diferente."
 
 #: .\templates\flatpages\about-us.html:85
 #: .\templates\flatpages\brand-of-the-year.html:82
@@ -612,26 +642,30 @@ msgid ""
 "We follow the trends in the world of adult fashion and transfer them to "
 "children's shoes."
 msgstr ""
+"Seguimos las tendencias del mundo de la moda adulta y las trasladamos al "
+"calzado infantil."
 
 #: .\templates\flatpages\about-us.html:86
 #: .\templates\flatpages\brand-of-the-year.html:83
 msgid "A child can and should choose and wear what he or she likes."
-msgstr ""
+msgstr "Un niño puede y debe elegir y vestir lo que le guste."
 
 #: .\templates\flatpages\about-us.html:87
 #: .\templates\flatpages\brand-of-the-year.html:84
 msgid "Because, after all, children are just small adults."
-msgstr ""
+msgstr "Porque, después de todo, los niños son sólo adultos pequeños."
 
 #: .\templates\flatpages\about-us.html:90
 #: .\templates\flatpages\brand-of-the-year.html:87
 #: .\templates\oscar\layout.html:60 .\templates\oscar\partials\footer.html:13
 msgid "about us"
-msgstr ""
+msgstr "sobre nosotros"
 
 #: .\templates\flatpages\about-us.html:108
 msgid "Our shoes are designed for thousands of kilometers of children's run."
 msgstr ""
+"Nuestros zapatos están diseñados para miles de kilómetros de carrera "
+"infantil."
 
 #: .\templates\flatpages\about-us.html:109
 #, python-format
@@ -639,77 +673,89 @@ msgid ""
 "80%% of the models in the range are made of leather, and all of the models "
 "have 100%% leather insole and arch support."
 msgstr ""
+"El 80% de los modelos de la gama están fabricados en piel, y todos los "
+"modelos tienen plantilla y soporte para el arco 100% piel."
 
 #: .\templates\flatpages\brand-of-the-year.html:13
 msgid ""
 "In 2020, we were awarded in Poland with the Certificate of children\\'s "
-"brand of the year. We\\'ve already sold five million pairs in the world, and "
-"a million in Europe."
+"brand of the year. We\\'ve already sold five million pairs in the world, and"
+" a million in Europe."
 msgstr ""
+"En 2020 obtuvimos en Polonia el Certificado de marca infantil del año. Ya "
+"hemos vendido cinco millones de pares en el mundo y un millón en Europa."
 
 #: .\templates\flatpages\brand-of-the-year.html:14
 msgid ""
 "At the same time, the quality and price ratio of Weestep footwear is one of "
 "the best on the market."
 msgstr ""
+"Al mismo tiempo, la relación calidad-precio del calzado Weestep es una de "
+"las mejores del mercado."
 
 #: .\templates\flatpages\default.html:20
 msgid "Edit this page"
-msgstr ""
+msgstr "Edita esta página"
 
 #: .\templates\flatpages\size-guide.html:17
 #: .\templates\oscar\checkout\one_page_checkout.html:217
 #: .\templates\oscar\checkout\preview.html:154
 msgid "Go back"
-msgstr ""
+msgstr "Regresa"
 
 #: .\templates\flatpages\size-guide.html:33
 msgid ""
 "Take a piece of paper and ask an adult to trace the leg as shown in the "
 "example."
 msgstr ""
+"Toma una hoja de papel y pídele a un adulto que trace la pierna como se "
+"muestra en el ejemplo."
 
 #: .\templates\flatpages\size-guide.html:34
 msgid ""
 "Measure together the length of the pattern with a ruler and select the "
 "appropriate option."
 msgstr ""
+"Midan juntos la longitud del patrón con una regla y seleccione la opción "
+"adecuada."
 
 #: .\templates\interview\interview-05.html:29
 msgid "Choose size"
-msgstr ""
+msgstr "Elige talla"
 
 #: .\templates\interview\interview-05.html:39
 #: .\templates\interview\interview-layout.html:44
 msgid "Choose"
-msgstr ""
+msgstr "Elegir"
 
 #: .\templates\interview\interview-05.html:40
 #: .\templates\interview\interview-layout.html:45
 msgid "Back"
-msgstr ""
+msgstr "Atrás"
 
 #: .\templates\interview\interview-layout.html:11
 msgid "Go to the catalogue"
-msgstr ""
+msgstr "Ir al catalogo"
 
 #: .\templates\interview\interview-start.html:14
 msgid "Thanks to the answers of the child, we will choose the best option"
-msgstr ""
+msgstr "Gracias a las respuestas del niño elegiremos la mejor opción"
 
 #: .\templates\interview\interview-start.html:16
 msgid "Start"
-msgstr ""
+msgstr "Comenzar"
 
 #: .\templates\interview\interview-start.html:17
 msgid "Go to the catalog"
-msgstr ""
+msgstr "Ir al catalogo"
 
 #: .\templates\oscar\base.html:14
 msgid ""
 "weestep, wholesale baby shoes, Europe wholesale warehouse shoes Weestep, "
 "wholesale stock children\\"
 msgstr ""
+"Weeste, zapatos de bebé al por mayor, zapatos de almacén al por mayor en "
+"Europa Weeste, stock al por mayor para niños"
 
 #: .\templates\oscar\basket\basket.html:4
 #: .\templates\oscar\basket\basket.html:9
@@ -717,7 +763,7 @@ msgstr ""
 #: .\templates\oscar\checkout\one_page_checkout.html:17
 #: .\templates\oscar\checkout\preview.html:17
 msgid "Basket"
-msgstr ""
+msgstr "Cesta"
 
 #: .\templates\oscar\basket\messages\addition.html:4
 #, python-format
@@ -726,6 +772,8 @@ msgid ""
 "    <strong>%(title)s</strong> has been added to your basket.\n"
 "    "
 msgstr ""
+"\n"
+"<strong>%(title)s</strong> se ha añadido a tu carrito."
 
 #: .\templates\oscar\basket\messages\addition.html:8
 #, python-format
@@ -735,6 +783,9 @@ msgid ""
 "    have been added to your basket.\n"
 "    "
 msgstr ""
+"\n"
+"<strong>%(quantity)s</strong> copias de <strong>%(title)s</strong>\n"
+"han sido añadidos a tu cesta."
 
 #: .\templates\oscar\basket\messages\line_restored.html:3
 #, python-format
@@ -742,6 +793,8 @@ msgid ""
 "\n"
 "<strong>%(title)s</strong> has been moved back to your basket.\n"
 msgstr ""
+"\n"
+"<strong>%(title)s</strong> ha sido devuelto a tu carrito.\n"
 
 #: .\templates\oscar\basket\messages\line_saved.html:3
 #, python-format
@@ -749,10 +802,12 @@ msgid ""
 "\n"
 "<strong>%(title)s</strong> has been saved for later\n"
 msgstr ""
+"\n"
+"<strong>%(title)s</strong> se ha guardado para más adelante\n"
 
 #: .\templates\oscar\basket\messages\new_total.html:5
 msgid "Your basket is now empty"
-msgstr ""
+msgstr "Tu cesta ya está vacía"
 
 #: .\templates\oscar\basket\messages\new_total.html:8
 #: .\templates\oscar\basket\messages\new_total.html:12
@@ -762,15 +817,17 @@ msgid ""
 "        Your basket total is now <strong>%(total)s</strong>\n"
 "        "
 msgstr ""
+"\n"
+"El total de tu cesta ahora es <strong>%(total)s</strong>"
 
 #: .\templates\oscar\basket\messages\new_total.html:20
 #: .\templates\oscar\basket\partials\basket_quick.html:38
 msgid "View basket"
-msgstr ""
+msgstr "Ver cesta"
 
 #: .\templates\oscar\basket\messages\new_total.html:21
 msgid "Checkout now"
-msgstr ""
+msgstr "Chequear ahora"
 
 #: .\templates\oscar\basket\messages\offer_gained.html:3
 #, python-format
@@ -779,6 +836,9 @@ msgid ""
 "Your basket now qualifies for the \n"
 "<strong>%(name)s</strong> offer.\n"
 msgstr ""
+"\n"
+"Tu cesta ahora califica para el\n"
+"Oferta de <strong>%(name)s</strong>.\n"
 
 #: .\templates\oscar\basket\messages\offer_lost.html:3
 #, python-format
@@ -787,55 +847,59 @@ msgid ""
 "Your basket no longer qualifies for the\n"
 "<strong>%(name)s</strong> offer.\n"
 msgstr ""
+"\n"
+"Su cesta ya no califica para el\n"
+"Oferta de <strong>%(name)s</strong>.\n"
 
 #: .\templates\oscar\basket\partials\basket_content.html:9
 msgid "Important messages about items in your basket"
-msgstr ""
+msgstr "Mensajes importantes sobre artículos en su cesta"
 
 #: .\templates\oscar\basket\partials\basket_content.html:17
 msgid "You could be missing out on offers!"
-msgstr ""
+msgstr "¡Podrías estar perdiendo ofertas!"
 
 #: .\templates\oscar\basket\partials\basket_content.html:19
 #, python-format
 msgid ""
 "\n"
-"                <div class=\"warning\">%(message)s to qualify for the <a "
-"href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
+"                <div class=\"warning\">%(message)s to qualify for the <a href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
 "            "
 msgstr ""
+"\n"
+"<div class=\"warning\">%(message)s para calificar para la oferta especial <a href=\"%(url)s\">%(offer_name)s</a></div>"
 
 #: .\templates\oscar\basket\partials\basket_content.html:55
 msgid "color"
-msgstr ""
+msgstr "color"
 
 #: .\templates\oscar\basket\partials\basket_content.html:65
 msgid "Choose seller"
-msgstr ""
+msgstr "Elige vendedor"
 
 #: .\templates\oscar\basket\partials\basket_content.html:107
 #: .\templates\oscar\basket\partials\basket_content.html:118
 #: .\templates\oscar\checkout\thank_you.html:183
 msgid "Continue shopping"
-msgstr ""
+msgstr "Seguir comprando"
 
 #: .\templates\oscar\basket\partials\basket_content.html:108
 msgid "Proceed to checkout"
-msgstr ""
+msgstr "Pasar por la caja"
 
 #: .\templates\oscar\basket\partials\basket_content.html:117
 #: .\templates\oscar\basket\partials\basket_quick.html:42
 msgid "Your basket is empty."
-msgstr ""
+msgstr "Tu cesta está vacía."
 
 #: .\templates\oscar\basket\partials\basket_quick.html:25
 msgid "Qty"
-msgstr ""
+msgstr "Cantidad"
 
 #: .\templates\oscar\basket\partials\basket_quick.html:33
 #: .\templates\oscar\basket\partials\basket_quick.html:35
 msgid "Total:"
-msgstr ""
+msgstr "Total:"
 
 #: .\templates\oscar\basket\partials\basket_quick.html:39
 #: .\templates\oscar\checkout\one_page_checkout.html:9
@@ -843,84 +907,85 @@ msgstr ""
 #: .\templates\oscar\checkout\one_page_checkout.html:18
 #: .\templates\oscar\checkout\preview.html:18
 msgid "Checkout"
-msgstr ""
+msgstr "Verificar"
 
 #: .\templates\oscar\basket\partials\basket_totals.html:7
 msgid "Totals"
-msgstr ""
+msgstr "Totales"
 
 #: .\templates\oscar\catalogue\browse.html:25
 msgid "filter"
-msgstr ""
+msgstr "filtrar"
 
 #: .\templates\oscar\catalogue\browse.html:26
 msgid "sort"
-msgstr ""
+msgstr "ordenar"
 
 #: .\templates\oscar\catalogue\browse.html:83
 msgid "No products found."
-msgstr ""
+msgstr "No se encontraron productos."
 
 #: .\templates\oscar\catalogue\detail.html:59
 #: .\templates\oscar\catalogue\detail.html:61
 msgid "show more"
-msgstr ""
+msgstr "mostrar más"
 
 #: .\templates\oscar\catalogue\detail.html:60
 msgid "hide"
-msgstr ""
+msgstr "esconder"
 
 #: .\templates\oscar\catalogue\detail.html:98
 msgid "Size guide"
-msgstr ""
+msgstr "Guia de tallas"
 
 #: .\templates\oscar\catalogue\detail.html:111
 msgid "design"
-msgstr ""
+msgstr "diseño"
 
 #: .\templates\oscar\catalogue\detail.html:123
 msgid "Benefits"
-msgstr ""
+msgstr "Beneficios"
 
 #: .\templates\oscar\catalogue\detail.html:151
 msgid "You may like"
-msgstr ""
+msgstr "Te podría gustar"
 
 #: .\templates\oscar\catalogue\partials\add_to_basket_form.html:13
 msgid "Add to basket"
-msgstr ""
+msgstr "Añadir al carrito"
 
 #: .\templates\oscar\catalogue\partials\add_to_basket_form.html:13
 msgid "Adding..."
-msgstr ""
+msgstr "Añadiendo..."
 
 #: .\templates\oscar\catalogue\partials\stock_record.html:9
 msgid "Free"
-msgstr ""
+msgstr "Gratis"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:27
 #: .\templates\oscar\checkout\preview.html:28
 #: .\templates\oscar\checkout\thank_you.html:41
 msgid "Recipient information"
-msgstr ""
+msgstr "Recipiente de información"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:30
 #: .\templates\oscar\customer\login_registration.html:25
 #: .\templates\oscar\customer\registration.html:28
 msgid "Oops! We found some errors"
-msgstr ""
+msgstr "¡Ups! Encontramos algunos errores"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:31
 #: .\templates\oscar\customer\login_registration.html:26
 #: .\templates\oscar\customer\registration.html:29
 msgid "please check the error messages below and try again"
 msgstr ""
+"por favor revise los mensajes de error a continuación y vuelva a intentarlo."
 
 #: .\templates\oscar\checkout\one_page_checkout.html:75
 #: .\templates\oscar\checkout\preview.html:53
 #: .\templates\oscar\checkout\thank_you.html:61
 msgid "Shipping address"
-msgstr ""
+msgstr "Dirección de envío"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:141
 #: .\templates\oscar\checkout\one_page_checkout.html:249
@@ -929,31 +994,31 @@ msgstr ""
 #: .\templates\oscar\checkout\thank_you.html:121
 #: .\templates\oscar\checkout\thank_you.html:173
 msgid "In total"
-msgstr ""
+msgstr "En total"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:168
 #: .\templates\oscar\checkout\preview.html:139
 #: .\templates\oscar\checkout\thank_you.html:132
 msgid "Shipping method"
-msgstr ""
+msgstr "Método de envío"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:198
 #: .\templates\oscar\checkout\preview.html:143
 #: .\templates\oscar\checkout\thank_you.html:136
 msgid "Comment"
-msgstr ""
+msgstr "Comentario"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:218
 #: .\templates\oscar\checkout\preview.html:155
 #: .\templates\oscar\checkout\thank_you.html:147
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:224
 #: .\templates\oscar\checkout\preview.html:161
 #: .\templates\oscar\checkout\thank_you.html:152
 msgid "Order 1"
-msgstr ""
+msgstr "Orden 1"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:229
 #: .\templates\oscar\checkout\preview.html:166
@@ -968,37 +1033,41 @@ msgid_plural ""
 "                                            %(number)s products valued at\n"
 "                                        "
 msgstr[0] ""
+"\n"
+"%(number)s producto valorado en"
 msgstr[1] ""
+"\n"
+"%(number)s productos valorados en"
 
 #: .\templates\oscar\checkout\one_page_checkout.html:263
 msgid "Place your order"
-msgstr ""
+msgstr "Haga su pedido"
 
 #: .\templates\oscar\checkout\preview.html:9
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: .\templates\oscar\checkout\preview.html:14
 msgid "confirm"
-msgstr ""
+msgstr "confirmar"
 
 #: .\templates\oscar\checkout\preview.html:19
 msgid "Order confirmation"
-msgstr ""
+msgstr "Confirmación del pedido"
 
 #: .\templates\oscar\checkout\preview.html:37
 #: .\templates\oscar\checkout\thank_you.html:45
 msgid "First name"
-msgstr ""
+msgstr "Nombre de pila"
 
 #: .\templates\oscar\checkout\preview.html:45
 #: .\templates\oscar\checkout\thank_you.html:53
 msgid "Phone number"
-msgstr ""
+msgstr "Número de teléfono"
 
 #: .\templates\oscar\checkout\preview.html:201
 msgid "Confirm the order"
-msgstr ""
+msgstr "Confirmar el pedido"
 
 #: .\templates\oscar\checkout\thank_you.html:9
 #, python-format
@@ -1007,126 +1076,132 @@ msgid ""
 "        Order %(number)s: confirmation\n"
 "    "
 msgstr ""
+"\n"
+"Orden %(number)s: confirmación"
 
 #: .\templates\oscar\checkout\thank_you.html:17
 #: .\templates\oscar\checkout\thank_you.html:20
 msgid "Thank you"
-msgstr ""
+msgstr "Gracias"
 
 #: .\templates\oscar\checkout\thank_you.html:28
 #, python-format
 msgid ""
 "\n"
-"                        Your order has been placed and a confirmation email "
-"has been sent - your order number is\n"
+"                        Your order has been placed and a confirmation email has been sent - your order number is\n"
 "                        <strong>%(number)s</strong>.\n"
 "                        "
 msgstr ""
+"\n"
+"Se ha realizado su pedido y se ha enviado un correo electrónico de confirmación; su número de pedido es\n"
+"<strong>%(number)s</strong>."
 
 #: .\templates\oscar\checkout\thank_you.html:32
 msgid ""
 "Please make a note of this reference or print this page and quote it in any "
 "communication with us regarding your order."
 msgstr ""
+"Tome nota de esta referencia o imprima esta página y cítela en cualquier "
+"comunicación con nosotros con respecto a su pedido."
 
 #: .\templates\oscar\checkout\thank_you.html:65
 msgid "No shipping address required."
-msgstr ""
+msgstr "No se requiere dirección de envío."
 
 #: .\templates\oscar\customer\login_registration.html:7
 msgid "Login"
-msgstr ""
+msgstr "Acceso"
 
 #: .\templates\oscar\customer\login_registration.html:18
 #: .\templates\oscar\customer\login_registration.html:50
 msgid "Log In"
-msgstr ""
+msgstr "Acceso"
 
 #: .\templates\oscar\customer\login_registration.html:50
 msgid "Logging in..."
-msgstr ""
+msgstr "Iniciando sesión..."
 
 #: .\templates\oscar\customer\login_registration.html:53
 msgid "Need an account?"
-msgstr ""
+msgstr "¿Necesito una cuenta?"
 
 #: .\templates\oscar\customer\login_registration.html:54
 msgid "Sign up"
-msgstr ""
+msgstr "Inscribirse"
 
 #: .\templates\oscar\customer\registration.html:7
 #: .\templates\oscar\customer\registration.html:19
 #: .\templates\oscar\customer\registration.html:43
 msgid "Register"
-msgstr ""
+msgstr "Registro"
 
 #: .\templates\oscar\customer\registration.html:43
 msgid "Registering..."
-msgstr ""
+msgstr "Registrando..."
 
 #: .\templates\oscar\customer\registration.html:46
 msgid "Already have an account?"
-msgstr ""
+msgstr "¿Ya tienes una cuenta?"
 
 #: .\templates\oscar\customer\registration.html:47
 msgid "Sign In"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: .\templates\oscar\layout.html:18
 msgid "For children as for adults. even better."
-msgstr ""
+msgstr "Tanto para niños como para adultos. Aun mejor."
 
 #: .\templates\oscar\layout.html:46
 msgid "wish list"
-msgstr ""
+msgstr "lista de deseos"
 
 #: .\templates\oscar\layout.html:65
 msgid "catalogue"
-msgstr ""
+msgstr "catálogo"
 
 #: .\templates\oscar\layout.html:75
 msgid "brand of the year"
-msgstr ""
+msgstr "marca del año"
 
 #: .\templates\oscar\layout.html:80 .\templates\oscar\partials\footer.html:24
 msgid "Contacts"
-msgstr ""
+msgstr "Contactos"
 
 #: .\templates\oscar\layout.html:85 .\templates\oscar\partials\footer.html:27
 msgid "Find yor fit"
-msgstr ""
+msgstr "Encuentra tu ajuste"
 
 #: .\templates\oscar\partials\footer.html:17
 msgid "Become our partner"
-msgstr ""
+msgstr "Conviértete en nuestra compañera"
 
 #: .\templates\oscar\partials\footer.html:47
 msgid "Private policy"
-msgstr ""
+msgstr "Política privada"
 
 #: .\templates\oscar\partials\footer.html:48
 msgid "Terms & conditions"
-msgstr ""
+msgstr "Términos y condiciones"
 
 #: .\templates\oscar\partials\mini_basket.html:5
 msgid "Basket total:"
-msgstr ""
+msgstr "Total de la cesta:"
 
 #: .\templates\oscar\partials\nav_accounts.html:8
 msgid "log out"
-msgstr ""
+msgstr "cerrar sesión"
 
 #: .\templates\oscar\partials\nav_accounts.html:10
 msgid "log in"
-msgstr ""
+msgstr "acceso"
 
 #: .\templates\oscar\search\partials\facet-modal-window.html:106
 msgid "sort by"
-msgstr ""
+msgstr "Ordenar por"
 
 #: .\templates\oscar\search\results.html:27
 msgid "Refine your search"
-msgstr ""
+msgstr "Refina tu búsqueda"
 
 #: .\templates\oscar\search\results.html:39
 #, python-format
@@ -1135,15 +1210,18 @@ msgid ""
 "        Products matching \"%(q)s\"\n"
 "    "
 msgstr ""
+"\n"
+"Productos que coinciden con \"%(q)s\""
 
 #: .\templates\oscar\search\results.html:54
 #, python-format
 msgid ""
 "\n"
-"                    Found <strong>%(num_results)s</strong> results, showing "
-"<strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
+"                    Found <strong>%(num_results)s</strong> results, showing <strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
 "                "
 msgstr ""
+"\n"
+"Se encontraron resultados de <strong>%(num_results)s</strong>, que muestran <strong>%(start)s</strong> a <strong>%(end)s</strong>."
 
 #: .\templates\oscar\search\results.html:58
 #, python-format
@@ -1156,37 +1234,42 @@ msgid_plural ""
 "                    Found <strong>%(num_results)s</strong> results.\n"
 "                "
 msgstr[0] ""
+"\n"
+"Se encontró <strong>%(num_results)s</strong> resultado."
 msgstr[1] ""
+"\n"
+"Se encontraron <strong>%(num_results)s</strong> resultados."
 
 #: .\templates\oscar\search\results.html:69
 msgid "Found <strong>0</strong> results."
-msgstr ""
+msgstr "Se encontraron <strong>0</strong> resultados."
 
 #: .\templates\oscar\search\results.html:72
 #, python-format
 msgid ""
 "\n"
-"                        Did you mean <a href=\"%(search_url)s?q="
-"%(suggestion)s\">\"%(suggestion)s\"</a>?\n"
+"                        Did you mean <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</a>?\n"
 "                    "
 msgstr ""
+"\n"
+"¿Quiso decir <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</a>?"
 
 #: .\templates\partials\countries-stripe.html:4
 msgid "Where to buy?"
-msgstr ""
+msgstr "¿Donde comprar?"
 
 #: .\templates\partials\countries-stripe.html:20
 msgid "Show"
-msgstr ""
+msgstr "Espectáculo"
 
 #: .\templates\partner\stores.html:46
 msgid "Open hours"
-msgstr ""
+msgstr "Horarios de apertura"
 
 #: .\templates\partner\stores.html:47
 msgid "website"
-msgstr ""
+msgstr "sitio web"
 
 #: .\templates\partner\stores.html:49 .\templates\partner\stores.html:50
 msgid "On the map"
-msgstr ""
+msgstr "En el mapa"

@@ -22,8 +22,8 @@
         <div class="shop__content">
             <div class="shop__filter">
                 <div class="shop__filter-mob">
-                    <button class="button-filter">filter</button>
-                    <button class="button-sort">sort</button>
+                    <button class="button-filter">{% trans 'filter' %}</button>
+                    <button class="button-sort">{% trans 'sort' %}</button>
                 </div>
                 <div class="shop__filter-content"> {# Facet buttons on desktop #}
                     {% for field, data in facet_data.items %}

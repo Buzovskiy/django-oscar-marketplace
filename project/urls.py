@@ -24,7 +24,6 @@ from django.views.generic.base import TemplateView
 from django.utils.translation import gettext_lazy as _
 from .sitemaps import sitemap_url_patterns
 
-
 urlpatterns = [
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path('i18n/', include('django.conf.urls.i18n')),
@@ -41,7 +40,9 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
+    path('admin/', admin.site.urls),
     path('', include(apps.get_app_config('oscar_routing').urls[0])),
+    prefix_default_language=False
 )
 
 urlpatterns += sitemap_url_patterns
@@ -49,9 +50,10 @@ urlpatterns += sitemap_url_patterns
 urlpatterns += [url(r'^ckeditor/', include('ckeditor_uploader.urls'))]
 
 if 'rosetta' in settings.INSTALLED_APPS:
-    urlpatterns += [
-        re_path(r'^rosetta/', include('rosetta.urls'))
-    ]
+    urlpatterns += i18n_patterns(
+        re_path(r'^rosetta/', include('rosetta.urls')),
+        prefix_default_language=False
+    )
 
 if 'debug_toolbar' in settings.INSTALLED_APPS:
     import debug_toolbar

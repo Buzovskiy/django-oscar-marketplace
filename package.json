@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "bootstrap": "4.6.x",
-    "caniuse-lite": "^1.0.30001451",
     "jquery": "3.6.0",
     "popper.js": "1.16.1"
   },

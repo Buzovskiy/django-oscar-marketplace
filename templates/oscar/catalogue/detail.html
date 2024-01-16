@@ -65,7 +65,7 @@
 					<div class="cart__form">
 						{% csrf_token %}
 						<div class="color-select">
-							<p class="color-select__selected">Color <span></span></p>
+							<p class="color-select__selected">{% trans 'Color' %} <span></span></p>
 							<ul class="color-select__list">
 								<li class="color-select__item">
                                     <i class="color-select__btn btn-reset color-select__btn--active" data-color="black"
@@ -83,7 +83,7 @@
 						</div>
 
 						<div class="cart-size">
-							<p class="cart-size__name">size</p>
+							<p class="cart-size__name">{% trans 'Size' %}</p>
 							<div class="cart-size__numbers">
                                 {% if product.is_parent %}
                                     {% for child in product.children_ordered_by_size %}
@@ -95,7 +95,7 @@
 							</div>
 							<div class="cart-size__guide" data-move="cart__form,2,576" data-toggle="modal"
 								 data-target="#sizeGuide">
-								Size guide
+								{% trans 'Size guide' %}
 							</div>
 						</div>
                         {% if not product.is_parent %}
@@ -108,19 +108,19 @@
 
 				<div class="cart__bottom">
 					<div class="cart__info">
-						<h3 class="cart__desc">design</h3>
+						<h3 class="cart__desc">{% trans 'design' %}</h3>
 						<p class="cart__text">{{ product.get_parent.categories.first.product_design_description }}</p>
 					</div>
 
 					<div class="cart__info">
-						<h3 class="cart__desc">material</h3>
+						<h3 class="cart__desc">{% trans 'Material' %}</h3>
 						<ul class="cart__list">
 							<li>{{ product.get_parent.attributes_container.material_verkha.value }}</li>
 						</ul>
 					</div>
 
 					<div class="cart__info">
-						<h3 class="cart__desc">benefits</h3>
+						<h3 class="cart__desc">{% trans 'Benefits' %}</h3>
 						{{ product.get_parent.categories.first.product_benefits_description | safe }}
 					</div>
 				</div>
@@ -148,7 +148,7 @@
 </section>
 <section class="like">
 	<div class="container">
-		<h1 class="title color-red">you may like</h1>
+		<h1 class="title color-red">{% trans 'You may like' %}</h1>
 
 		<div class="swiper like__swiper">
 			<div class="swiper-wrapper shop__items">
@@ -171,7 +171,7 @@
 							</div>
 
 							<div class="cart__select cart__first-select color-select">
-								<p class="color-select__selected">Color <span></span></p>
+								<p class="color-select__selected">{% trans 'Color' %} <span></span></p>
 								<ul class="color-select__list">
 									<li class="color-select__item">
 										 {% with image=recommended_product.primary_image %}
