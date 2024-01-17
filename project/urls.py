@@ -31,7 +31,7 @@ urlpatterns = [
     # The Django admin is not officially supported; expect breakage.
     # Nonetheless, it's often useful for debugging.
 
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('captcha/', include('captcha.urls')),
     path('testmail/', include('testmail.urls')),
     path('1c_exchange/', include(apps.get_app_config('exchange').urls[0]))
