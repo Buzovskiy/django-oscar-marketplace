@@ -95,6 +95,8 @@ class OnePageCheckoutView(CheckoutViewMixin, CheckoutSessionMixin, TemplateView)
 
         if shipping_address_form.is_valid() and payment_method_form.is_valid() and shipping_method_form.is_valid():
             # <process form cleaned data>
+            # This line is only for guest user
+            self.checkout_session.set_guest_email(shipping_address_form.cleaned_data['email'])
             self.valid_shipping_address_form(shipping_address_form)
             self.valid_payment_method_form(payment_method_form)
             self.checkout_session.use_shipping_method(

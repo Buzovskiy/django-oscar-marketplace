@@ -371,4 +371,4 @@ OSCAR_REQUIRED_ADDRESS_FIELDS = ('first_name', 'last_name', 'phone_number', 'lin
 
 LOGIN_REDIRECT_URL = reverse_lazy('catalogue:index')
 
-# OSCAR_ALLOW_ANON_CHECKOUT = True
+OSCAR_ALLOW_ANON_CHECKOUT = True
