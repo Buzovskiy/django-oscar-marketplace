@@ -13,7 +13,7 @@ class ShippingAddressForm(ShippingAddressFormCore):
         super().__init__(*args, **kwargs)
         if 'phone_number' in self.fields:
             self.fields['phone_number'].widget.attrs.update({
-                'placeholder': _('E.g.: +48123456789')
+                'placeholder': _('E.g.: +34123456789')
             })
 
     class Meta(ShippingAddressFormCore.Meta):
