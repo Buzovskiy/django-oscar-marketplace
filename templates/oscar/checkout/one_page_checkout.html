@@ -36,8 +36,11 @@
                                 <div class="alert alert-danger">{{ error }}</div>
                             {% endfor %}
                         {% endif %}
+                        {% for error in shipping_address_form.country.errors %}
+                            <div class="alert alert-danger">Country: {{ error }}</div>
+                        {% endfor %}
                         <div class="order-info__inputs">
-                            <input type="hidden" name="country" value="PL">
+                            <input type="hidden" name="country" value="ES">
                             <div class="order-info__input">
                                 {% for error in shipping_address_form.first_name.errors %}
                                     <div class="alert alert-danger">{{ error }}</div>
@@ -72,7 +75,8 @@
                                         rows="4"
                                         class="input"
                                         {% if shipping_address_form.line1.field.required %}required{% endif %}
-                                        placeholder="{% trans 'Shipping address' %}">{% if shipping_address_form.line1.value %}{{ shipping_address_form.line1.value }}{% endif %}</textarea>
+                                        placeholder="{% trans 'Shipping address' %}">{% if shipping_address_form.line1.value %}
+                                    {{ shipping_address_form.line1.value }}{% endif %}</textarea>
                             </div>
                         </div>
                     </div>
@@ -139,7 +143,7 @@
 
                         <div class="order-booking__total">
                             <p>{% trans "In total" %}</p>
-{#                            <p><span>980</span> <i>грн</i></p>#}
+                            {#                            <p><span>980</span> <i>грн</i></p>#}
                             <p>
                                 <span>
                                     {% if request.basket.is_tax_known %}
@@ -202,13 +206,14 @@
                                     id=""
                                     rows="3"
                                     class="input"
-                                    placeholder="Notes">{% if shipping_address_form.notes.value %}{{ shipping_address_form.notes.value }}{% endif %}</textarea>
+                                    placeholder="Notes">{% if shipping_address_form.notes.value %}
+                                {{ shipping_address_form.notes.value }}{% endif %}</textarea>
                         </div>
                     </div>
 
-{#                    <div class="order__btn">#}
-{#                        <a href="#" class="btn btn-orange--transparent">Копировать в остальные заказы</a>#}
-{#                    </div>#}
+                    {#                    <div class="order__btn">#}
+                    {#                        <a href="#" class="btn btn-orange--transparent">Копировать в остальные заказы</a>#}
+                    {#                    </div>#}
                 </div>
 
                 <div class="order__right">
@@ -247,7 +252,7 @@
                         </div>
                         <div class="order-footer">
                             <p>{% trans "In total" %}</p>
-{#                            <p><span>980</span> <i>грн</i></p>#}
+                            {#                            <p><span>980</span> <i>грн</i></p>#}
                             <p>
                                 <span>
                                     {% if request.basket.is_tax_known %}
