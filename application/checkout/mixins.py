@@ -63,8 +63,8 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
             checkout_session = stripe.checkout.Session.create(
                 line_items=line_items,
                 mode='payment',
-                success_url=settings.BASE_URL + '/' + self.get_success_url(),
-                cancel_url=settings.BASE_URL + '/' + self.get_success_url(),
+                success_url=settings.BASE_URL + self.get_success_url(),
+                cancel_url=settings.BASE_URL + self.get_success_url(),
             )
         except Exception as e:
             return self.get_success_url()
