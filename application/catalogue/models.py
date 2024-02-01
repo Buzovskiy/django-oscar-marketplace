@@ -34,6 +34,8 @@ class Product(AbstractProduct):
         _('Code in 1c'), max_length=255, editable=False, null=True, unique=True
     )
 
+    stripe_product_id = models.CharField(max_length=255, null=True, blank=True)
+
     @property
     def attributes_container(self):
         """
