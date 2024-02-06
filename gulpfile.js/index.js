@@ -12,7 +12,10 @@ var gulp = require('gulp'),  // подключаем Gulp
 /* задачи */
 
 // сбор стилей
-gulp.task('css:build', custom.cssBuild);
+gulp.task('css:build:only', custom.cssBuild);
+gulp.task('css:build:copyWebfonts', custom.copyWebfonts);
+
+gulp.task('css:build', gulp.series('css:build:only', 'css:build:copyWebfonts'));
 
 // сбор js библиотек
 gulp.task('js:libs:build', custom.jsLibsBuild);
@@ -45,7 +48,7 @@ gulp.task('build',
             'css:build',
             'js:libs:build',
             'js:app:build',
-            'image:build'
+            'image:build',
         )
     )
 );
@@ -77,6 +80,6 @@ gulp.task('watch:js:app', function(){
 
 // задача по умолчанию
 gulp.task('default', gulp.series(
-//     'build',
+    // 'build',
     'watch'
 ));

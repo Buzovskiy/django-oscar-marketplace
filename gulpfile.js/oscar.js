@@ -4,7 +4,7 @@
 var gulp = require('gulp'),  // подключаем Gulp
     plumber = require('gulp-plumber'), // модуль для отслеживания ошибок
     sourcemaps = require('gulp-sourcemaps'), // модуль для генерации карты исходных файлов
-    sass = require('gulp-sass'), // модуль для компиляции SASS (SCSS) в CSS
+    sass = require('gulp-sass')(require('sass')), // модуль для компиляции SASS (SCSS) в CSS
     autoprefixer = require('gulp-autoprefixer') // модуль для автоматической установки автопрефиксов
 
 // пути для стилей по умолчанию cms django-oscar
@@ -36,6 +36,7 @@ function css_build(){
     .pipe(sourcemaps.write('./')) // записываем sourcemap
     .pipe(gulp.dest(path.build.css)) // выгружаем в build
 }
+
 
 let sources = [path.src.style, path.src.style_dashboard];
 

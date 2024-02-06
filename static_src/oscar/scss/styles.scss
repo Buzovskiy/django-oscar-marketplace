@@ -3,10 +3,10 @@
 // Bootstrap (all dependencies)
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
-//// Components: Icons / Fonts
-//@import "../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
-//@import "../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
-//@import "../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+// Components: Icons / Fonts
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
 
 // Oscar public side pages styles
 @import "alerts";

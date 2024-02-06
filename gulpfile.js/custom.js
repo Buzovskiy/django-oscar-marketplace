@@ -17,6 +17,12 @@ var gulp = require('gulp'),  // подключаем Gulp
 
 var path_to_build = 'static_src/custom/build';
 var path_to_src = 'static_src/custom/src';
+
+
+function copyWebfonts(){
+    return gulp.src('static_src/oscar/webfonts/*')
+       .pipe(gulp.dest(path_to_build + '/webfonts'))
+}
     
 /* пути к исходным файлам (src), к готовым файлам (build), а также к тем, 
 за изменениями которых нужно наблюдать (watch) */
@@ -114,4 +120,5 @@ module.exports.cssBuild = cssBuild;
 module.exports.jsLibsBuild = jsLibsBuild;
 module.exports.jsAppBuild = jsAppBuild;
 module.exports.imageBuild = imageBuild;
+module.exports.copyWebfonts = copyWebfonts;
 module.exports.path = path;
