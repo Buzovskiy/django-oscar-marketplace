@@ -6,17 +6,17 @@ from oscar.core.loading import get_class
 Free = get_class('shipping.methods', 'Free')
 
 
-class GLS(Free):
-    code = 'gls-shipping'
-    name = 'GLS'
-    image = static('custom/build/img/shipping/gls.png')
+class CORREOS(Free):
+    code = 'correos-shipping'
+    name = 'CORREOS'
+    image = static('custom/build/img/shipping/correos.jpg')
     show_name = False
 
 
-class DPD(Free):
-    code = 'dpd-shipping'
-    name = 'DPD'
-    image = static('custom/build/img/shipping/dpd.png')
+class MRW(Free):
+    code = 'mrw-shipping'
+    name = 'MRW'
+    image = static('custom/build/img/shipping/mrw.png')
     show_name = False
 
 

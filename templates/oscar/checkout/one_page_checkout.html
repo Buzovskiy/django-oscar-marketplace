@@ -82,10 +82,6 @@
                     </div>
 
                     <div class="order-booking">
-                        <div class="order-booking__title">
-                            <p>Order 1</p>
-                            <p>Shop 1</p>
-                        </div>
                         <div class="order__items">
                             {% for line in basket.all_lines %}
                                 {% purchase_info_for_line request line as session %}
@@ -225,10 +221,6 @@
 
                         <div class="order-body">
                             <div class="order-body__item">
-                                <div class="order-body__top">
-                                    <p>{% trans "Order 1" %}</p>
-                                    <span>Shop 1</span>
-                                </div>
                                 <div class="order-body__bottom">
                                     <p>
                                         {% blocktranslate count number=request.basket.num_items %}

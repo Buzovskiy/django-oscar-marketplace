@@ -41,7 +41,7 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
             except stripe.error.InvalidRequestError:
                 # If no product in stripe, create it and add to DB
                 images = []
-                if product.primary_image().original.url:
+                if hasattr(product.primary_image(), 'original') and product.primary_image().original.url:
                     images.append(settings.BASE_URL + product.primary_image().original.url)
                 stripe_product = stripe.Product.create(name=product.title.strip(), images=images)
                 product.stripe_product_id = stripe_product.id
