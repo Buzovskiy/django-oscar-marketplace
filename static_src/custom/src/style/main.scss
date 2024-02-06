@@ -1,6 +1,11 @@
 // Переопределение дефолтных значений переменных Bootstrap 4 и определение своих
 @import "variables";
 
+// Components: Icons / Fonts
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+
 // Подключение нужных SCSS исходников Bootstrap 4
 @import "../../../../node_modules/bootstrap/scss/_functions";
 @import "../../../../node_modules/bootstrap/scss/_variables";
