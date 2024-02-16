@@ -448,29 +448,25 @@ body.lock .header__logo-order p {
 
 	&__top {
 		display: grid;
-		grid-template-columns: 175px repeat(5, auto);
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		justify-items: end;
 		grid-gap: 0 20px;
 		align-items: center;
 		margin-bottom: 25px;
 
 		@media (max-width: 1200px) {
-			grid-template-columns: 175px repeat(2, auto);
+			grid-template-columns: 1fr 1fr;
 			grid-gap: 12px 20px;
 		}
 
 		@media (max-width: 991px) {
 			grid-template-columns: repeat(2, auto);
 			grid-gap: 30px 20px;
+			justify-items: start;
 		}
 
 		.header-lang {
 			margin-left: 0;
-
-			@media (max-width: 1200px) {
-				margin: auto;
-			}
-
-
 
 			@media (max-width: 991px) {
 				position: relative;
@@ -489,9 +485,9 @@ body.lock .header__logo-order p {
 		color: #000;
 		transition: all 0.3s ease;
 
-		@media (max-width: 1200px) {
-			margin: auto;
-		}
+		//@media (max-width: 1200px) {
+		//	margin: auto;
+		//}
 
 		@media (max-width: 991px) {
 			margin: 0;
@@ -618,9 +614,9 @@ body.lock .header__logo-order p {
 		&-tel {
 			font-weight: 700;
 
-			@media (max-width: 1200px) {
-				grid-column: span 1/3;
-			}
+			//@media (max-width: 1200px) {
+			//	grid-column: span 1/3;
+			//}
 
 			@media (max-width: 991px) {
 				grid-column: span 1/2;

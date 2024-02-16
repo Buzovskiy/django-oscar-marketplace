@@ -4,7 +4,7 @@
 {% load static_url_param from common_filters %}
 
 {% block styles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v={{ '18'|static_url_param }}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'custom/build/css/main.min.css' %}?v={{ '19'|static_url_param }}" />
 {% endblock %}
 
 {% block layout %}
@@ -18,9 +18,9 @@
                             <p>{% trans 'For children as for adults. even better.' %}</p>
                         </a>
                         <div class="header__right">
-                            <div class="menu__search-icon">
-                                <img src="{% static 'custom/build/img/search.svg' %}" alt="icon">
-                            </div>
+                            {#<div class="menu__search-icon">#}
+                            {#    <img src="{% static 'custom/build/img/search.svg' %}" alt="icon">#}
+                            {#</div>#}
                             <div class="mini-basket-ajax mobile">
                                 {% include "oscar/partials/mini_basket.html" %}
                             </div>
@@ -29,22 +29,22 @@
                                 <nav class="menu__body">
                                     <div class="menu__container">
                                         <div class="menu__top">
-                                            <form action="#" class="menu__item menu__item-search"
-                                                  data-move="header__content,2,992">
-                                                <button type="submit">
-                                                    <img src="{% static 'custom/build/img/search.svg' %}" alt="icon">
-                                                </button>
-                                                <input type="text" placeholder="{% trans 'Search' %}">
-                                            </form>
+                                            {#<form action="#" class="menu__item menu__item-search"#}
+                                            {#      data-move="header__content,2,992">#}
+                                            {#    <button type="submit">#}
+                                            {#        <img src="{% static 'custom/build/img/search.svg' %}" alt="icon">#}
+                                            {#    </button>#}
+                                            {#    <input type="text" placeholder="{% trans 'Search' %}">#}
+                                            {#</form>#}
 
                                             <div class="menu__item">
                                                 {% include 'oscar/partials/nav_accounts.html' %}
                                             </div>
 
-                                            <a href="wish-list.html" class="menu__item">
-                                                <img src="{% static 'custom/build/img/heart.svg' %}" alt="icon">
-                                                {% trans 'wish list' %}
-                                            </a>
+                                            {#<a href="wish-list.html" class="menu__item">#}
+                                            {#    <img src="{% static 'custom/build/img/heart.svg' %}" alt="icon">#}
+                                            {#    {% trans 'wish list' %}#}
+                                            {#</a>#}
                                             <div class="mini-basket-ajax">
                                                 {% block mini_basket %}
                                                     {% include "oscar/partials/mini_basket.html" %}
