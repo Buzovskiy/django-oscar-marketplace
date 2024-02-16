@@ -5,6 +5,7 @@ from django.core.files.images import ImageFile
 from django.core.files.base import ContentFile
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from django.db.models import Sum
 from oscar.core.loading import get_class, get_classes, get_model
 from .files import FileXml, FileImage
 import xml.etree.ElementTree as ET
@@ -148,130 +149,154 @@ class ImportProduct(ImportCore):
             )
 
     def save_products(self):
-        product_class = ProductClass.objects.filter(name='Shoes').get()
         for product_xml in self.xml_root.findall('./Каталог/Товары/Товар'):
-            """product.title, see .models.product_category_changed"""
-            try:
-                category_external_id_xml = product_xml.find('./Группы/Ид').text
-            except AttributeError:
-                continue
+            external_id_xml_parts_list = product_xml.find('Ид').text.split('#')
 
-            try:
-                category = Category.objects.filter(external_id=category_external_id_xml).get()
-            except ObjectDoesNotExist:
-                continue
+            if len(external_id_xml_parts_list) == 1:
+                self.save_product_parent(product_xml=product_xml)
+            elif len(external_id_xml_parts_list) == 2:
+                self.save_product_children(product_xml=product_xml)
 
-            external_id_xml = product_xml.find('Ид').text.split('#')[0]
+    def save_product_parent(self, product_xml):
+        """product.title, see .models.product_category_changed"""
+        product_class = ProductClass.objects.filter(name='Shoes').get()
+        external_id_xml = product_xml.find('Ид').text
+        try:
+            category_external_id_xml = product_xml.find('./Группы/Ид').text
+        except AttributeError:
+            return False
 
-            try:
-                status_xml = product_xml.find('./Статус').text
-            except AttributeError:
-                pass
-            else:
-                if status_xml == 'Удален':
-                    try:
-                        Product.objects.filter(external_id=external_id_xml).get().delete()
-                    except ObjectDoesNotExist:
-                        pass
-                    continue  # If see product with Удален status, skip it
+        try:
+            category = Category.objects.filter(external_id=category_external_id_xml).get()
+        except ObjectDoesNotExist:
+            return False
 
-            upc_xml = product_xml.find('Артикул').text
-            # If find product with the same upc but different external_id delete it
-            try:
-                Product.objects.exclude(external_id=external_id_xml).filter(upc=upc_xml).get().delete()
-            except ObjectDoesNotExist:
-                pass
-
-            product, created = Product.objects.update_or_create(
-                external_id=external_id_xml, upc=upc_xml,
-                defaults={
-                    'structure': 'parent',
-                    'upc': upc_xml,
-                    'product_class': product_class,
-                },
-            )
-
-            # Add category to product
-            product.categories.add(category)
-            product.full_clean()
-
-            # Save product attributes values
-            for product_attribute_xml in product_xml.findall('./ЗначенияСвойств/ЗначенияСвойства'):
-                attribute_external_id_xml = product_attribute_xml.find('Ид').text
+        try:
+            status_xml = product_xml.find('./Статус').text
+        except AttributeError:
+            pass
+        else:
+            if status_xml == 'Удален':
                 try:
-                    attribute = ProductAttribute.objects.filter(external_id=attribute_external_id_xml).get()
+                    Product.objects.filter(external_id=external_id_xml).get().delete()
                 except ObjectDoesNotExist:
-                    continue
+                    pass
+                return False  # If see product with Удален status, skip it
 
-                try:
-                    product_attribute_xml.find('Значение').text
-                except AttributeError:
-                    continue
+        upc_xml = product_xml.find('Артикул').text
+        # If find product with the same upc but different external_id delete it
+        try:
+            Product.objects.exclude(external_id=external_id_xml).filter(upc=upc_xml).get().delete()
+        except ObjectDoesNotExist:
+            pass
 
-                if not product_attribute_xml.find('Значение').text:
-                    continue
+        product, created = Product.objects.update_or_create(
+            external_id=external_id_xml, upc=upc_xml,
+            defaults={
+                'structure': 'parent',
+                'upc': upc_xml,
+                'product_class': product_class,
+            },
+        )
 
-                try:
-                    product_attribute_value, created = ProductAttributeValue.objects.update_or_create(
-                        attribute=attribute, product=product,
-                        defaults={
-                            'value_text': product_attribute_xml.find('Значение').text
-                        },
-                    )
-                except ValidationError:
-                    continue
+        # Add category to product
+        product.categories.add(category)
+        product.full_clean()
 
-                if attribute.code == settings.ATTR_COLOR_CODE:  # if tsvet
-                    ColorHexCode.objects.update_or_create(
-                        color=product_attribute_value.value_text,
-                    )
+        # Save product attributes values
+        for product_attribute_xml in product_xml.findall('./ЗначенияСвойств/ЗначенияСвойства'):
+            attribute_external_id_xml = product_attribute_xml.find('Ид').text
+            try:
+                attribute = ProductAttribute.objects.filter(external_id=attribute_external_id_xml).get()
+            except ObjectDoesNotExist:
+                continue
 
-            self.save_color_hex_code_product_attribute(product)
+            try:
+                product_attribute_xml.find('Значение').text
+            except AttributeError:
+                continue
 
-            # Save product children according to product size variations
-            self.save_product_children(product)
+            if not product_attribute_xml.find('Значение').text:
+                continue
+
+            try:
+                product_attribute_value, created = ProductAttributeValue.objects.update_or_create(
+                    attribute=attribute, product=product,
+                    defaults={
+                        'value_text': product_attribute_xml.find('Значение').text
+                    },
+                )
+            except ValidationError:
+                continue
+
+            if attribute.code == settings.ATTR_COLOR_CODE:  # if tsvet
+                ColorHexCode.objects.update_or_create(
+                    color=product_attribute_value.value_text,
+                )
+
+        self.save_color_hex_code_product_attribute(product)
 
     @staticmethod
-    def save_product_children(product_parent):
+    def save_product_children(product_xml):
         """Save product children according to product size variations"""
+        external_id_xml = product_xml.find('Ид').text
+        parent_external_id_xml = external_id_xml.split('#')[0]
 
-        try:  # Get sizes range of the parent product
-            product_attribute_value = ProductAttributeValue.objects.filter(
-                attribute__code=settings.ATTR_SIZES_CODE, product=product_parent).get()
-            # Check if the range of sizes corresponds pattern
-            product_attribute_value.clean()
+        try:
+            product_parent = Product.objects.filter(external_id=parent_external_id_xml).get()
+        except ObjectDoesNotExist:
+            return False
+
+        size_xml = None
+        for product_attribute_xml in product_xml.findall('./ЗначенияСвойств/ЗначенияСвойства'):
+            attribute_external_id_xml = product_attribute_xml.find('Ид').text
+
+            if attribute_external_id_xml != 'property_razmer':
+                continue
+
+            try:
+                ProductAttribute.objects.filter(external_id=attribute_external_id_xml).get()
+            except ObjectDoesNotExist:
+                continue
+
+            try:
+                product_attribute_xml.find('Значение').text
+            except AttributeError:
+                continue
+
+            if not re.match(r'^\d{2}$', product_attribute_xml.find('Значение').text):
+                continue
+
+            size_xml = product_attribute_xml.find('Значение').text
+
+        if not size_xml:
+            return False
+
+        try:
+            product_child = Product.objects.filter(
+                parent=product_parent, external_id=external_id_xml
+            ).get()
+        except ObjectDoesNotExist:
+            product_child = Product()
+
+        product_child.structure = 'child'
+        product_child.external_id = external_id_xml
+        product_child.parent = product_parent
+        product_child.upc = f"{product_parent.upc}: {size_xml}"
+        product_child.title = f"{product_parent.title} | {_('Size')} {size_xml}"
+        product_child.custom_save()
+        product_child.full_clean()
+
+        # save child product size attribute value
+        try:
+            size_attribute = ProductAttribute.objects.filter(code='size').get()
+            ProductAttributeValue.objects.update_or_create(
+                attribute=size_attribute, product=product_child,
+                defaults={'value_text': size_xml},
+            )
         except (ObjectDoesNotExist, ValidationError):
             return False
 
-        sizes_list = get_sizes_list_from_range(product_attribute_value.value_text)
-
-        if not sizes_list:
-            return False
-
-        for size in sizes_list:
-            try:
-                product_child = Product.objects.filter(
-                    parent=product_parent, upc=f"{product_parent.upc}: {size}"
-                ).get()
-            except ObjectDoesNotExist:
-                product_child = Product()
-
-            product_child.structure = 'child'
-            product_child.parent = product_parent
-            product_child.upc = f"{product_parent.upc}: {size}"
-            product_child.title = f"{product_parent.title} | {_('Size')} {size}"
-            product_child.custom_save()
-            product_child.full_clean()
-
-            # save child product size attribute value
-            try:
-                size_attribute = ProductAttribute.objects.filter(code='size').get()
-                ProductAttributeValue.objects.update_or_create(
-                    attribute=size_attribute, product=product_child,
-                    defaults={'value_text': size},
-                )
-            except (ObjectDoesNotExist, ValidationError):
-                continue
 
     @staticmethod
     def save_color_hex_code_product_attribute(product):
@@ -325,42 +350,45 @@ class ImportOffers(ImportCore):
     def save_stock_records(self):
         offers = self.xml_root.findall('./ПакетПредложений/Предложения/Предложение')
         for offer_xml in offers:
-            try:
-                upc_xml = offer_xml.find('Артикул').text
-            except AttributeError:
-                continue
+            # try:
+            #     upc_xml = offer_xml.find('Артикул').text
+            # except AttributeError:
+            #     continue
 
-            external_id_xml = offer_xml.find('Ид').text.split('#')[0]
+            external_id_xml = offer_xml.find('Ид').text
+            if len(external_id_xml.split('#')) != 2:
+                continue
 
             try:  # try finding product and partner. If not found, go to another one
                 product = Product.objects.filter(
-                    structure='parent',
+                    structure='child',
                     external_id=external_id_xml,
-                    upc=upc_xml
-                ).prefetch_related('children').get()
+                ).get()
                 partner = Partner.objects.filter(code=settings.PARTNER_DEFAULT['code']).get()
             except ObjectDoesNotExist:
                 continue
 
-            # If quantity below 0, turn it in into 0
+            # If quantity below 0, turn it into 0
             num_in_stock_xml = float(offer_xml.find('Количество').text)
             num_in_stock_xml = num_in_stock_xml if num_in_stock_xml > 0 else 0
 
-            if num_in_stock_xml == 0:  # Do not show product in catalogue if quantity 0
-                product.is_public = False
-                product.save()
-            else:
-                product.is_public = True
-                product.save()
+            product.is_public = False if num_in_stock_xml == 0 else True
+            product.save()
 
-            for product_child in product.children.all():
-                try:
-                    StockRecord.objects.update_or_create(
-                        partner=partner, product=product_child,
-                        defaults={
-                            'partner_sku': f'{product_child.upc} | {partner.name}',
-                            'price': float(offer_xml.find('./Цены/Цена/ЦенаЗаЕдиницу').text),
-                            'num_in_stock': num_in_stock_xml,
-                        })
-                except ValueError:
-                    continue
+            try:
+                StockRecord.objects.update_or_create(
+                    partner=partner, product=product,
+                    defaults={
+                        'partner_sku': f'{product.upc} | {partner.name}',
+                        'price': float(offer_xml.find('./Цены/Цена/ЦенаЗаЕдиницу').text),
+                        'num_in_stock': num_in_stock_xml,
+                    })
+            except ValueError:
+                return False
+
+        product_qs = Product.objects.filter(structure='parent').annotate(
+            num_in_stock__sum=Sum('children__stockrecords__num_in_stock')
+        )
+        for product in product_qs:
+            product.is_public = False if product.num_in_stock__sum == 0 else True
+            product.save()
