@@ -18,10 +18,3 @@ class MRW(Free):
     name = 'MRW'
     image = static('custom/build/img/shipping/mrw.png')
     show_name = False
-
-
-class ConsultationRequired(Free):
-    code = 'consultation-required-shipping'
-    name = _('Consultation required')
-    image = None
-    show_name = True

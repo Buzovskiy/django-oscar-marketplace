@@ -65,6 +65,12 @@
                                 {% endfor %}
                                 {% render_field shipping_address_form.email class+="input" placeholder=shipping_address_form.email.label %}
                             </div>
+                            <div class="order-info__input">
+                                {% for error in shipping_address_form.postcode.errors %}
+                                    <div class="alert alert-danger">{{ error }}</div>
+                                {% endfor %}
+                                {% render_field shipping_address_form.postcode class+="input" placeholder=shipping_address_form.postcode.label %}
+                            </div>
                             <div class="order-info__input col1">
                                 {% for error in shipping_address_form.line1.errors %}
                                     <div class="alert alert-danger">{{ error }}</div>

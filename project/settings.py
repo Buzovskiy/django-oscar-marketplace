@@ -369,7 +369,7 @@ OSCAR_SEARCH_FACETS = {
     ]),
 }
 
-OSCAR_REQUIRED_ADDRESS_FIELDS = ('first_name', 'last_name', 'phone_number', 'line1')
+OSCAR_REQUIRED_ADDRESS_FIELDS = ('first_name', 'last_name', 'phone_number', 'line1', 'postcode')
 
 LOGIN_REDIRECT_URL = reverse_lazy('catalogue:index')
 

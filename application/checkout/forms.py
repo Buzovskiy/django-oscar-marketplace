@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from oscar.apps.checkout.forms import ShippingAddressForm as ShippingAddressFormCore, \
     ShippingMethodForm as ShippingMethodFormCore
@@ -19,7 +20,7 @@ class ShippingAddressForm(ShippingAddressFormCore):
     class Meta(ShippingAddressFormCore.Meta):
         fields = [
             'first_name', 'last_name',
-            'phone_number', 'country', 'notes', 'line1', 'email'
+            'phone_number', 'country', 'notes', 'line1', 'email', 'postcode'
         ]
 
 

@@ -1,6 +1,6 @@
 from oscar.apps.shipping.repository import Repository as RepositoryCore
-from .methods import CORREOS, MRW, ConsultationRequired
+from .methods import CORREOS, MRW
 
 
 class Repository(RepositoryCore):
-    methods = (CORREOS(), MRW(), ConsultationRequired())
+    methods = (CORREOS(), MRW())
