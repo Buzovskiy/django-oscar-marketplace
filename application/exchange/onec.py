@@ -350,10 +350,10 @@ class ImportOffers(ImportCore):
     def save_stock_records(self):
         offers = self.xml_root.findall('./ПакетПредложений/Предложения/Предложение')
         for offer_xml in offers:
-            # try:
-            #     upc_xml = offer_xml.find('Артикул').text
-            # except AttributeError:
-            #     continue
+            try:
+                price = offer_xml.find('./Цены/Цена/ЦенаЗаЕдиницу').text
+            except AttributeError:
+                continue
 
             external_id_xml = offer_xml.find('Ид').text
             if len(external_id_xml.split('#')) != 2:
@@ -380,11 +380,11 @@ class ImportOffers(ImportCore):
                     partner=partner, product=product,
                     defaults={
                         'partner_sku': f'{product.upc} | {partner.name}',
-                        'price': float(offer_xml.find('./Цены/Цена/ЦенаЗаЕдиницу').text),
+                        'price': float(price),
                         'num_in_stock': num_in_stock_xml,
                     })
             except ValueError:
-                return False
+                continue
 
         product_qs = Product.objects.filter(structure='parent').annotate(
             num_in_stock__sum=Sum('children__stockrecords__num_in_stock')
