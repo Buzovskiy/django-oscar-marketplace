@@ -350,11 +350,6 @@ class ImportOffers(ImportCore):
     def save_stock_records(self):
         offers = self.xml_root.findall('./ПакетПредложений/Предложения/Предложение')
         for offer_xml in offers:
-            try:
-                price = offer_xml.find('./Цены/Цена/ЦенаЗаЕдиницу').text
-            except AttributeError:
-                continue
-
             external_id_xml = offer_xml.find('Ид').text
             if len(external_id_xml.split('#')) != 2:
                 continue
@@ -376,6 +371,11 @@ class ImportOffers(ImportCore):
             product.save()
 
             try:
+                price = offer_xml.find('./Цены/Цена/ЦенаЗаЕдиницу').text
+            except AttributeError:
+                continue
+
+            try:
                 StockRecord.objects.update_or_create(
                     partner=partner, product=product,
                     defaults={
@@ -390,5 +390,5 @@ class ImportOffers(ImportCore):
             num_in_stock__sum=Sum('children__stockrecords__num_in_stock')
         )
         for product in product_qs:
-            product.is_public = False if product.num_in_stock__sum == 0 else True
+            product.is_public = True if product.num_in_stock__sum else False
             product.save()
