@@ -87,7 +87,7 @@
 							<div class="cart-size__numbers">
                                 {% if product.is_parent %}
                                     {% for child in product.children_ordered_by_size %}
-                                        <a href="{{ child.get_absolute_url }}">{{ child.attributes_container.size.value }}</a>
+                                        <a {% if not child.is_public %}style="color: red"{% endif %} href="{{ child.get_absolute_url }}">{{ child.attributes_container.size.value }}</a>
                                     {% endfor %}
                                 {% else %}
                                     <span>{{ product.attributes_container.size.value }}</span>
