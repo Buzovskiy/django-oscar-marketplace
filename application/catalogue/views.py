@@ -46,7 +46,7 @@ class ProductDetailView(CoreProductDetailView):
         logger = logging.getLogger('product_detail_ctx')
         if self.request.GET.get('logging'):
             logger.warning(f"get_context_data 11")
-            for product in ctx['product'].recommended_products.all():
+            for product in ctx['product'].get_parent().recommended_products.all():
                 logger.warning(f"{product.upc} - is public={product.is_public}")
 
         return ctx
