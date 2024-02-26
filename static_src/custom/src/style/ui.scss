@@ -81,6 +81,10 @@ input, textarea {
 	}
 }
 
+.product-not-public{
+	text-decoration: line-through;
+}
+
 .btn {
 	display: inline-flex;
 	align-items: center;

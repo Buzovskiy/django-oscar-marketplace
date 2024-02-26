@@ -7651,6 +7651,10 @@ input, textarea {
   }
 }
 
+.product-not-public {
+  text-decoration: line-through;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -12594,6 +12598,7 @@ body.lock .header__logo-order p {
 @media (min-width: 576px) {
   .cart-size__guide {
     font-size: 20px;
+    margin-left: 20px;
   }
 }
 @media (max-width: 575px) {

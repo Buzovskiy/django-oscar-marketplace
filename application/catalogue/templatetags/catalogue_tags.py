@@ -14,3 +14,10 @@ def get_child_products_sizes(child_products):
             pass
     sizes.sort()
     return sizes
+
+
+@register.simple_tag
+def get_product_size_hyperlink_data(product):
+    data = {}
+    data['link_class'] = '' if product.is_public else 'product-not-public'
+    return data

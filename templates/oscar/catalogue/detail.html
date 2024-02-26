@@ -7,8 +7,10 @@
 {% load display_tags %}
 {% load i18n %}
 {% load purchase_info_tags %}
-{% load product_attributes_tags %}
+{% load catalogue_tags %}
+{% load catalogue_filters %}
 {% load image_tags %}
+
 
 {% block title %}
     {{ product.get_meta_title }} | {{ block.super }}
@@ -87,7 +89,8 @@
 							<div class="cart-size__numbers">
                                 {% if product.is_parent %}
                                     {% for child in product.children_ordered_by_size %}
-                                        <a {% if not child.is_public %}style="color: red"{% endif %} href="{{ child.get_absolute_url }}">{{ child.attributes_container.size.value }}</a>
+                                        {% get_product_size_hyperlink_data product=child as size_link_data %}
+                                        <a class="{{ size_link_data.link_class }}" href="{{ child|size_variation_url }}">{{ child.attributes_container.size.value }}</a>
                                     {% endfor %}
                                 {% else %}
                                     <span>{{ product.attributes_container.size.value }}</span>
@@ -169,7 +172,6 @@
 									<span>{{ size }}</span>
 								{% endfor %}
 							</div>
-
 							<div class="cart__select cart__first-select color-select">
 								<p class="color-select__selected">{% trans 'Color' %} <span></span></p>
 								<ul class="color-select__list">

@@ -39,3 +39,8 @@ def get_sort_button_title(form):
             title = option_title
     return title
 
+
+@register.filter(name='size_variation_url')
+def size_variation_url(product):
+    return product.get_absolute_url() if product.is_public else '#'
+
