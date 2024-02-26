@@ -124,6 +124,7 @@ MIDDLEWARE = [
 
     'oscar.apps.basket.middleware.BasketMiddleware',
     'oscar_routing.middleware.block_ip.BlockedIpMiddleware',
+    'oscar_routing.middleware.log_request.log_request',
 ]
 
 if 'debug_toolbar' in INSTALLED_APPS:
