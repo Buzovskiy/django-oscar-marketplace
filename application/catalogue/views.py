@@ -50,3 +50,11 @@ class ProductDetailView(CoreProductDetailView):
                 logger.warning(f"{product.upc} - is public={product.is_public}")
 
         return ctx
+
+    def get(self, request, **kwargs):
+        response = super().get(request, **kwargs)
+        logging.basicConfig(format='%(asctime)s - %(message)s', filename=settings.BASE_DIR / 'logs/app.log')
+        logger = logging.getLogger('product_detail_ctx')
+        if self.request.GET.get('logging'):
+            logger.warning(response.rendered_content.__str__())
+        return response

@@ -173,12 +173,6 @@ TEMPLATES = [
     },
 ]
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
-    }
-}
-
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
