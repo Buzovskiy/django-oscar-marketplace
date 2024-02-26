@@ -45,6 +45,8 @@ class ProductDetailView(CoreProductDetailView):
         logging.basicConfig(format='%(asctime)s - %(message)s', filename=settings.BASE_DIR / 'logs/app.log')
         logger = logging.getLogger('product_detail_ctx')
         if self.request.GET.get('logging'):
+            logger.warning(f"get_context_data 11")
             for product in ctx['product'].recommended_products.all():
                 logger.warning(f"{product.upc} - is public={product.is_public}")
+
         return ctx
