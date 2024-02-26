@@ -1,5 +1,6 @@
 import logging
 from django.conf import settings
+from django.http import Http404
 from django.db.models import Prefetch
 from oscar.apps.catalogue.views import ProductDetailView as CoreProductDetailView
 from oscar.core.loading import get_model
@@ -31,6 +32,11 @@ class ProductDetailView(CoreProductDetailView):
             Prefetch('parent__recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
             Prefetch('parent__recommended_products__recommended_products__attributes', queryset=queryset_attributes),
         )
+
+        logging.basicConfig(format='%(asctime)s - %(message)s', filename=settings.BASE_DIR / 'logs/app.log')
+        logger = logging.getLogger('product_detail_ctx')
+        if self.request.GET.get('logging'):
+            logger.warning(f"get_queryset {qs.all().count()}")
 
         return qs
 
