@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 10:17+0100\n"
+"POT-Creation-Date: 2024-02-27 16:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -398,31 +398,31 @@ msgstr ""
 msgid "Search optimisation fields"
 msgstr ""
 
-#: .\project\settings.py:218
+#: .\project\settings.py:214
 msgid "Spanish"
 msgstr ""
 
-#: .\project\settings.py:219
+#: .\project\settings.py:215
 msgid "English"
 msgstr ""
 
-#: .\project\settings.py:338
+#: .\project\settings.py:334
 msgid "Rating"
 msgstr ""
 
-#: .\project\settings.py:339
+#: .\project\settings.py:335
 msgid "Type"
 msgstr ""
 
-#: .\project\settings.py:340
+#: .\project\settings.py:336
 msgid "Gender"
 msgstr ""
 
-#: .\project\settings.py:341
+#: .\project\settings.py:337
 msgid "Season"
 msgstr ""
 
-#: .\project\settings.py:342 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:338 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
 #: .\templates\oscar\catalogue\detail.html:88
 #: .\templates\oscar\checkout\one_page_checkout.html:119
@@ -430,11 +430,11 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: .\project\settings.py:343 .\templates\oscar\catalogue\detail.html:119
+#: .\project\settings.py:339 .\templates\oscar\catalogue\detail.html:119
 msgid "Material"
 msgstr ""
 
-#: .\project\settings.py:344 .\templates\oscar\catalogue\detail.html:70
+#: .\project\settings.py:340 .\templates\oscar\catalogue\detail.html:70
 #: .\templates\oscar\catalogue\detail.html:176
 #: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:115
@@ -697,10 +697,14 @@ msgstr ""
 msgid "Go to the catalog"
 msgstr ""
 
-#: .\templates\oscar\base.html:14
+#: .\templates\oscar\base.html:13
 msgid ""
-"weestep, wholesale baby shoes, Europe wholesale warehouse shoes Weestep, "
-"wholesale stock children's shoes from the manufacturer, Wólka Kosowska"
+"Buy children's shoes online at weestep-kids.es: sneakers, boots, ankle "
+"boots, sandals. Buy shoes online at weestep-kids.es."
+msgstr ""
+
+#: .\templates\oscar\base.html:14
+msgid "weestep, baby shoes, child shoes, sneakers, boots, sandals"
 msgstr ""
 
 #: .\templates\oscar\basket\basket.html:4

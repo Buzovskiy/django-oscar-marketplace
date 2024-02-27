@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 10:17+0100\n"
-"PO-Revision-Date: 2024-02-27 10:18+0000\n"
+"POT-Creation-Date: 2024-02-27 16:06+0100\n"
+"PO-Revision-Date: 2024-02-27 16:07+0000\n"
 "Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -419,31 +419,31 @@ msgstr "Metapalabras clave"
 msgid "Search optimisation fields"
 msgstr "Campos de optimización de búsqueda"
 
-#: .\project\settings.py:218
+#: .\project\settings.py:214
 msgid "Spanish"
 msgstr "Española"
 
-#: .\project\settings.py:219
+#: .\project\settings.py:215
 msgid "English"
 msgstr "English"
 
-#: .\project\settings.py:338
+#: .\project\settings.py:334
 msgid "Rating"
 msgstr "Clasificación"
 
-#: .\project\settings.py:339
+#: .\project\settings.py:335
 msgid "Type"
 msgstr "Tipo"
 
-#: .\project\settings.py:340
+#: .\project\settings.py:336
 msgid "Gender"
 msgstr "Género"
 
-#: .\project\settings.py:341
+#: .\project\settings.py:337
 msgid "Season"
 msgstr "Estación"
 
-#: .\project\settings.py:342 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:338 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
 #: .\templates\oscar\catalogue\detail.html:88
 #: .\templates\oscar\checkout\one_page_checkout.html:119
@@ -451,11 +451,11 @@ msgstr "Estación"
 msgid "Size"
 msgstr "Tamaño"
 
-#: .\project\settings.py:343 .\templates\oscar\catalogue\detail.html:119
+#: .\project\settings.py:339 .\templates\oscar\catalogue\detail.html:119
 msgid "Material"
 msgstr "Material"
 
-#: .\project\settings.py:344 .\templates\oscar\catalogue\detail.html:70
+#: .\project\settings.py:340 .\templates\oscar\catalogue\detail.html:70
 #: .\templates\oscar\catalogue\detail.html:176
 #: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:115
@@ -741,16 +741,19 @@ msgstr "Comenzar"
 msgid "Go to the catalog"
 msgstr "Ir al catalogo"
 
-#: .\templates\oscar\base.html:14
-#| msgid ""
-#| "weestep, wholesale baby shoes, Europe wholesale warehouse shoes Weestep, "
-#| "wholesale stock children\\"
+#: .\templates\oscar\base.html:13
 msgid ""
-"weestep, wholesale baby shoes, Europe wholesale warehouse shoes Weestep, "
-"wholesale stock children's shoes from the manufacturer, Wólka Kosowska"
+"Buy children's shoes online at weestep-kids.es: sneakers, boots, ankle "
+"boots, sandals. Buy shoes online at weestep-kids.es."
 msgstr ""
-"Weeste, zapatos de bebé al por mayor, zapatos de almacén al por mayor en "
-"Europa Weeste, stock al por mayor para niños"
+"Compra calzado infantil online en weestep-kids.es: zapatillas, botas, "
+"botines, sandalias. Compra zapatos online en weestep-kids.es."
+
+#: .\templates\oscar\base.html:14
+msgid "weestep, baby shoes, child shoes, sneakers, boots, sandals"
+msgstr ""
+"weestep, zapatos de bebe, zapatos de niño, zapatillas de deporte, botas, "
+"sandalias"
 
 #: .\templates\oscar\basket\basket.html:4
 #: .\templates\oscar\basket\basket.html:9
@@ -1235,6 +1238,13 @@ msgstr "sitio web"
 #: .\templates\partner\stores.html:49 .\templates\partner\stores.html:50
 msgid "On the map"
 msgstr "En el mapa"
+
+#~ msgid ""
+#~ "weestep, wholesale baby shoes, Europe wholesale warehouse shoes Weestep, "
+#~ "wholesale stock children's shoes from the manufacturer, Wólka Kosowska"
+#~ msgstr ""
+#~ "Weeste, zapatos de bebé al por mayor, zapatos de almacén al por mayor en "
+#~ "Europa Weeste, stock al por mayor para niños"
 
 #~ msgid "Consultation required"
 #~ msgstr "Se requiere consulta"
