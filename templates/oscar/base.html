@@ -14,12 +14,12 @@
         <meta name="keywords" content="{% block keywords %}{% trans "weestep, baby shoes, child shoes, sneakers, boots, sandals" %}{% endblock %}">
         <meta name="viewport" content="{% block viewport %}width=device-width, initial-scale=1, shrink-to-fit=no{% endblock %}" />
         <meta name="robots" content="NOARCHIVE,NOCACHE" />
-    
+
         <meta property="og:title" content="{% block og_title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+        <meta property="og:url" content="{{ request.build_absolute_uri }}?v=1" />
         <meta property="og:image" content="{% block og_image %}{{ 'custom/build/img/og_main_img.png'|full_url_static }}{% endblock %}" />
-    
+
         {% block favicon %}
 		<!--	favicon-->
 			<link rel="apple-touch-icon" sizes="180x180" href="{% static "custom/favicon/apple-touch-icon.png" %}">
