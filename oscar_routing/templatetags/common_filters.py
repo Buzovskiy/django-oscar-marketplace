@@ -2,6 +2,7 @@ from datetime import datetime
 from django import template
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.templatetags.static import static
 from application.search_optimisation_fields.models import SearchOptimisationFields
 
 register = template.Library()
@@ -64,3 +65,10 @@ def static_url_param(value):
         return datetime.timestamp(datetime.now())
     else:
         return value
+
+
+@register.filter
+def full_url_static(path_to_static):
+    url_static = static(path_to_static).lstrip('/')
+    base_url = settings.BASE_URL.strip('/')
+    return base_url + '/' + url_static

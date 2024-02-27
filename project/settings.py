@@ -164,10 +164,6 @@ TEMPLATES = [
                 'oscar.apps.communication.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
             ],
-            'libraries': {
-                'common_template_tags': 'templatetags.common_template_tags',
-                'common_filters': 'templatetags.common_filters',
-            }
         },
     },
 ]

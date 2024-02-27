@@ -1,5 +1,6 @@
 from django import template
 from django.urls import translate_url as django_translate_url
+from django.conf import settings
 
 register = template.Library()
 

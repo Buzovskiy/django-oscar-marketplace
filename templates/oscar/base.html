@@ -1,19 +1,25 @@
 {% load i18n %}
 {% load static %}
+{% load common_filters %}
 
-{% load i18n %}
-{% load static %}
+{% get_current_language as CURRENT_LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="{% block html_class %}no-js{% endblock %}">
+<html lang="{{ CURRENT_LANGUAGE_CODE|default:"en-gb" }}" class="{% block html_class %}no-js{% endblock %}">
     <head>
         <title>{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
 
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <meta name="created" content="{% now "jS M Y h:i" %}" />
-        <meta name="description" content="{% block description %}Weestep official online store and wholesale of weestep brand shoes in Europe, children's shoes wholesale at Wólka Kosowska, Weestep Sp. z o. o.{% endblock %}" />
-        <meta name="keywords" content="{% block keywords %}{% trans 'weestep, wholesale baby shoes, Europe wholesale warehouse shoes Weestep, wholesale stock children\'s shoes from the manufacturer, Wólka Kosowska' %}{% endblock %}">
+        <meta name="description" content="{% block description %}{% trans "Buy children's shoes online at weestep-kids.es: sneakers, boots, ankle boots, sandals. Buy shoes online at weestep-kids.es." %}{% endblock %}" />
+        <meta name="keywords" content="{% block keywords %}{% trans "weestep, baby shoes, child shoes, sneakers, boots, sandals" %}{% endblock %}">
         <meta name="viewport" content="{% block viewport %}width=device-width, initial-scale=1, shrink-to-fit=no{% endblock %}" />
         <meta name="robots" content="NOARCHIVE,NOCACHE" />
+    
+        <meta property="og:title" content="{% block og_title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+        <meta property="og:image" content="{% block og_image %}{{ 'custom/build/img/og_main_img.png'|full_url_static }}{% endblock %}" />
+    
         {% block favicon %}
 		<!--	favicon-->
 			<link rel="apple-touch-icon" sizes="180x180" href="{% static "custom/favicon/apple-touch-icon.png" %}">
