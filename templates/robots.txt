@@ -1,5 +1,12 @@
 User-agent: *
-Disallow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Allow: /*.js
+Allow: /*.css
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.png
+Allow: /*.svg
 
-Sitemap: https://weestepstore.pl/sitemap.xml
-Host: https://weestepstore.pl
+Host: https://weestep-kids.es/

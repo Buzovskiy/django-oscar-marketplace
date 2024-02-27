@@ -17,7 +17,7 @@
 
         <meta property="og:title" content="{% block og_title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="{{ request.build_absolute_uri }}?v=1" />
+        <meta property="og:url" content="{{ request.build_absolute_uri }}" />
         <meta property="og:image" content="{% block og_image %}{{ 'custom/build/img/og_main_img.png'|full_url_static }}{% endblock %}" />
 
         {% block favicon %}
