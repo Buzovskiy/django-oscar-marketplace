@@ -1,5 +1,6 @@
 import re
 from extra_views import ModelFormSetView
+from django import http
 from django.views.generic import TemplateView, FormView
 from django.urls import reverse_lazy
 from django.shortcuts import HttpResponseRedirect, render
@@ -131,6 +132,10 @@ class PaymentDetailsView(CheckoutViewMixin, PaymentDetailsViewCore):
 
     def get(self, request, *args, **kwargs):
         self._shipping_methods = self.get_available_shipping_methods()
+
+        if request.GET.get('action', '') == 'place_order':
+            return self.handle_place_order_submission(request)
+
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -139,3 +144,18 @@ class PaymentDetailsView(CheckoutViewMixin, PaymentDetailsViewCore):
         context['payment_method_object'] = self.checkout_session.get_payment_method_object()
         context['shipping_method_object'] = self.checkout_session.get_shipping_method_object()
         return context
+
+    def post(self, request, *args, **kwargs):
+        # Posting to payment-details isn't the right thing to do.  Form
+        # submissions should use the preview URL.
+        if not self.preview:
+            return http.HttpResponseBadRequest()
+
+        # We use a custom parameter to indicate if this is an attempt to place
+        # an order (normally from the preview page).  Without this, we assume a
+        # payment form is being submitted from the payment details view. In
+        # this case, the form needs validating and the order preview shown.
+        if request.POST.get('action', '') == 'place_order':
+            basket = self.build_submission()['basket']
+            return self.handle_redirect_to_payment_page(basket=basket)
+        return self.handle_payment_details_submission(request)

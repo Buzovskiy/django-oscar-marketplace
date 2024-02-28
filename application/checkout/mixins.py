@@ -1,4 +1,5 @@
 import stripe
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from oscar.apps.checkout.mixins import OrderPlacementMixin as OrderPlacementMixinCore
@@ -6,34 +7,16 @@ from oscar.apps.checkout.mixins import OrderPlacementMixin as OrderPlacementMixi
 
 class OrderPlacementMixin(OrderPlacementMixinCore):
 
-    def handle_successful_order(self, order):
-        """
-        Handle the various steps required after an order has been successfully
-        placed.
-
-        Override this view if you want to perform custom actions when an
-        order is submitted.
-        """
-        # Send confirmation message (normally an email)
-        self.send_order_placed_email(order)
-
-        # Flush all session data
-        self.checkout_session.flush()
-
-        # Save order id in session so thank-you page can load it
-        self.request.session['checkout_order_id'] = order.id
-
-        next_page_url = self.get_stripe_payment_page_url(order)
-
+    def handle_redirect_to_payment_page(self, basket):
+        next_page_url = self.get_stripe_payment_page_url(basket)
         response = HttpResponseRedirect(next_page_url)
-        self.send_signal(self.request, response, order)
         return response
 
-    def get_stripe_payment_page_url(self, order):
+    def get_stripe_payment_page_url(self, basket):
         stripe.api_key = settings.STRIPE_API_KEY
 
         line_items = []
-        for line in order.lines.all():
+        for line in basket.all_lines():
             product = line.product
             try:
                 # Trying to get product from stripe
@@ -49,7 +32,7 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
 
             # Create price
             price = stripe.Price.create(
-                currency=order.currency.lower(),
+                currency=basket.currency.lower(),
                 unit_amount=round(float(line.unit_price_incl_tax) * 100),
                 product=stripe_product
             )
@@ -63,8 +46,8 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
             checkout_session = stripe.checkout.Session.create(
                 line_items=line_items,
                 mode='payment',
-                success_url=settings.BASE_URL + self.get_success_url(),
-                cancel_url=settings.BASE_URL + self.get_success_url(),
+                success_url=settings.BASE_URL + reverse('checkout:preview') + "?action=place_order",
+                cancel_url=settings.BASE_URL + reverse('checkout:preview')
             )
         except Exception as e:
             return self.get_success_url()
