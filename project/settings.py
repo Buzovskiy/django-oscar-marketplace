@@ -30,7 +30,6 @@ SECRET_KEY = decouple.config('SECRET_KEY')
 DEBUG = decouple.config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = decouple.config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
-STRIPE_API_KEY = decouple.config('STRIPE_API_KEY')
 BASE_URL = decouple.config('BASE_URL')
 
 
@@ -99,6 +98,7 @@ INSTALLED_APPS = [
     'captcha',
     'testmail',
     'oscar_routing',
+    'app_settings',
     'application.blog.apps.BlogConfig',
     'application.contacts.apps.ContactsConfig',
     'application.exchange.apps.ExchangeConfig',

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 16:06+0100\n"
+"POT-Creation-Date: 2024-02-29 10:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: .\app_settings\models.py:11 .\application\blog\models.py:22
+#: .\application\partner\models.py:10 .\application\partner\models.py:26
+#: .\application\payment\models.py:7
+msgid "Title"
+msgstr ""
+
+#: .\app_settings\models.py:12
+msgid "Key"
+msgstr ""
+
+#: .\app_settings\models.py:13
+msgid "Value"
+msgstr ""
+
+#: .\app_settings\models.py:14
+msgid "Description"
+msgstr ""
+
+#: .\app_settings\models.py:23 .\app_settings\models.py:24
+msgid "Application settings"
+msgstr ""
 
 #: .\application\blog\admin.py:21
 msgid "Image in the list of posts"
@@ -28,11 +50,6 @@ msgstr ""
 
 #: .\application\blog\admin.py:37
 msgid "Link"
-msgstr ""
-
-#: .\application\blog\models.py:22 .\application\partner\models.py:10
-#: .\application\partner\models.py:26 .\application\payment\models.py:7
-msgid "Title"
 msgstr ""
 
 #: .\application\blog\models.py:30
@@ -398,31 +415,31 @@ msgstr ""
 msgid "Search optimisation fields"
 msgstr ""
 
-#: .\project\settings.py:214
+#: .\project\settings.py:215
 msgid "Spanish"
 msgstr ""
 
-#: .\project\settings.py:215
+#: .\project\settings.py:216
 msgid "English"
 msgstr ""
 
-#: .\project\settings.py:334
+#: .\project\settings.py:335
 msgid "Rating"
 msgstr ""
 
-#: .\project\settings.py:335
+#: .\project\settings.py:336
 msgid "Type"
 msgstr ""
 
-#: .\project\settings.py:336
+#: .\project\settings.py:337
 msgid "Gender"
 msgstr ""
 
-#: .\project\settings.py:337
+#: .\project\settings.py:338
 msgid "Season"
 msgstr ""
 
-#: .\project\settings.py:338 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:339 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
 #: .\templates\oscar\catalogue\detail.html:88
 #: .\templates\oscar\checkout\one_page_checkout.html:119
@@ -430,11 +447,11 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: .\project\settings.py:339 .\templates\oscar\catalogue\detail.html:119
+#: .\project\settings.py:340 .\templates\oscar\catalogue\detail.html:119
 msgid "Material"
 msgstr ""
 
-#: .\project\settings.py:340 .\templates\oscar\catalogue\detail.html:70
+#: .\project\settings.py:341 .\templates\oscar\catalogue\detail.html:70
 #: .\templates\oscar\catalogue\detail.html:176
 #: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:115

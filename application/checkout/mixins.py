@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from oscar.apps.checkout.mixins import OrderPlacementMixin as OrderPlacementMixinCore
+from app_settings.models import AppSettings
 
 
 class OrderPlacementMixin(OrderPlacementMixinCore):
@@ -13,7 +14,7 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
         return response
 
     def get_stripe_payment_page_url(self, basket):
-        stripe.api_key = settings.STRIPE_API_KEY
+        stripe.api_key = AppSettings.stripe_api_key.get().value
 
         line_items = []
         for line in basket.all_lines():

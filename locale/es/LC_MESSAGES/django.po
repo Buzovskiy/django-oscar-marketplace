@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 16:06+0100\n"
+"POT-Creation-Date: 2024-02-29 10:14+0100\n"
 "PO-Revision-Date: 2024-02-27 16:07+0000\n"
 "Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.7\n"
+
+#: .\app_settings\models.py:11 .\application\blog\models.py:22
+#: .\application\partner\models.py:10 .\application\partner\models.py:26
+#: .\application\payment\models.py:7
+msgid "Title"
+msgstr "Título"
+
+#: .\app_settings\models.py:12
+msgid "Key"
+msgstr ""
+
+#: .\app_settings\models.py:13
+msgid "Value"
+msgstr ""
+
+#: .\app_settings\models.py:14
+#, fuzzy
+#| msgid "Meta description"
+msgid "Description"
+msgstr "Metadescripción"
+
+#: .\app_settings\models.py:23 .\app_settings\models.py:24
+#, fuzzy
+#| msgid "All publications"
+msgid "Application settings"
+msgstr "Todas las publicaciones"
 
 #: .\application\blog\admin.py:21
 msgid "Image in the list of posts"
@@ -30,11 +56,6 @@ msgstr "Popularidad"
 #: .\application\blog\admin.py:37
 msgid "Link"
 msgstr "Enlace"
-
-#: .\application\blog\models.py:22 .\application\partner\models.py:10
-#: .\application\partner\models.py:26 .\application\payment\models.py:7
-msgid "Title"
-msgstr "Título"
 
 #: .\application\blog\models.py:30
 msgid "Manage Popularity"
@@ -56,8 +77,7 @@ msgstr "Descripción del Producto"
 #: .\application\catalogue\models.py:94
 msgid "Enter product description that is to display on product page"
 msgstr ""
-"Ingrese la descripción del producto que se mostrará en la página del "
-"producto"
+"Ingrese la descripción del producto que se mostrará en la página del producto"
 
 #: .\application\catalogue\models.py:97
 msgid "Product long description"
@@ -253,8 +273,8 @@ msgstr ""
 #: .\application\interview\models.py:21
 msgid "Should be the same as key name value in OSCAR_SEARCH_FACETS settings"
 msgstr ""
-"Debe ser el mismo que el valor del nombre de la clave en la configuración de"
-" OSCAR_SEARCH_FACETS"
+"Debe ser el mismo que el valor del nombre de la clave en la configuración de "
+"OSCAR_SEARCH_FACETS"
 
 #: .\application\interview\models.py:31
 msgid "Filter for the interview"
@@ -316,8 +336,8 @@ msgstr "Breve descripción"
 
 #: .\application\partner\models.py:45
 msgid ""
-"Enter short description which will be displayed in parenthesis near title or"
-" leave field empty"
+"Enter short description which will be displayed in parenthesis near title or "
+"leave field empty"
 msgstr ""
 "Ingrese una breve descripción que se mostrará entre paréntesis cerca del "
 "título o deje el campo vacío"
@@ -419,31 +439,31 @@ msgstr "Metapalabras clave"
 msgid "Search optimisation fields"
 msgstr "Campos de optimización de búsqueda"
 
-#: .\project\settings.py:214
+#: .\project\settings.py:215
 msgid "Spanish"
 msgstr "Española"
 
-#: .\project\settings.py:215
+#: .\project\settings.py:216
 msgid "English"
 msgstr "English"
 
-#: .\project\settings.py:334
+#: .\project\settings.py:335
 msgid "Rating"
 msgstr "Clasificación"
 
-#: .\project\settings.py:335
+#: .\project\settings.py:336
 msgid "Type"
 msgstr "Tipo"
 
-#: .\project\settings.py:336
+#: .\project\settings.py:337
 msgid "Gender"
 msgstr "Género"
 
-#: .\project\settings.py:337
+#: .\project\settings.py:338
 msgid "Season"
 msgstr "Estación"
 
-#: .\project\settings.py:338 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:339 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
 #: .\templates\oscar\catalogue\detail.html:88
 #: .\templates\oscar\checkout\one_page_checkout.html:119
@@ -451,11 +471,11 @@ msgstr "Estación"
 msgid "Size"
 msgstr "Tamaño"
 
-#: .\project\settings.py:339 .\templates\oscar\catalogue\detail.html:119
+#: .\project\settings.py:340 .\templates\oscar\catalogue\detail.html:119
 msgid "Material"
 msgstr "Material"
 
-#: .\project\settings.py:340 .\templates\oscar\catalogue\detail.html:70
+#: .\project\settings.py:341 .\templates\oscar\catalogue\detail.html:70
 #: .\templates\oscar\catalogue\detail.html:176
 #: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:115
@@ -671,8 +691,8 @@ msgstr ""
 #: .\templates\flatpages\brand-of-the-year.html:13
 msgid ""
 "In 2020, we were awarded in Poland with the Certificate of children\\'s "
-"brand of the year. We\\'ve already sold five million pairs in the world, and"
-" a million in Europe."
+"brand of the year. We\\'ve already sold five million pairs in the world, and "
+"a million in Europe."
 msgstr ""
 "En 2020 obtuvimos en Polonia el Certificado de marca infantil del año. Ya "
 "hemos vendido cinco millones de pares en el mundo y un millón en Europa."
@@ -861,11 +881,13 @@ msgstr "¡Podrías estar perdiendo ofertas!"
 #, python-format
 msgid ""
 "\n"
-"                <div class=\"warning\">%(message)s to qualify for the <a href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
+"                <div class=\"warning\">%(message)s to qualify for the <a "
+"href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
 "            "
 msgstr ""
 "\n"
-"<div class=\"warning\">%(message)s para calificar para la oferta especial <a href=\"%(url)s\">%(offer_name)s</a></div>"
+"<div class=\"warning\">%(message)s para calificar para la oferta especial <a "
+"href=\"%(url)s\">%(offer_name)s</a></div>"
 
 #: .\templates\oscar\basket\partials\basket_content.html:55
 msgid "color"
@@ -1065,12 +1087,14 @@ msgstr "Gracias"
 #, python-format
 msgid ""
 "\n"
-"                        Your order has been placed and a confirmation email has been sent - your order number is\n"
+"                        Your order has been placed and a confirmation email "
+"has been sent - your order number is\n"
 "                        <strong>%(number)s</strong>.\n"
 "                        "
 msgstr ""
 "\n"
-"Se ha realizado su pedido y se ha enviado un correo electrónico de confirmación; su número de pedido es\n"
+"Se ha realizado su pedido y se ha enviado un correo electrónico de "
+"confirmación; su número de pedido es\n"
 "<strong>%(number)s</strong>."
 
 #: .\templates\oscar\checkout\thank_you.html:32
@@ -1182,11 +1206,13 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Found <strong>%(num_results)s</strong> results, showing <strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
+"                    Found <strong>%(num_results)s</strong> results, showing "
+"<strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
 "                "
 msgstr ""
 "\n"
-"Se encontraron resultados de <strong>%(num_results)s</strong>, que muestran <strong>%(start)s</strong> a <strong>%(end)s</strong>."
+"Se encontraron resultados de <strong>%(num_results)s</strong>, que muestran "
+"<strong>%(start)s</strong> a <strong>%(end)s</strong>."
 
 #: .\templates\oscar\search\results.html:58
 #, python-format
@@ -1213,11 +1239,13 @@ msgstr "Se encontraron <strong>0</strong> resultados."
 #, python-format
 msgid ""
 "\n"
-"                        Did you mean <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</a>?\n"
+"                        Did you mean <a href=\"%(search_url)s?q="
+"%(suggestion)s\">\"%(suggestion)s\"</a>?\n"
 "                    "
 msgstr ""
 "\n"
-"¿Quiso decir <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</a>?"
+"¿Quiso decir <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</"
+"a>?"
 
 #: .\templates\partials\countries-stripe.html:4
 msgid "Where to buy?"
