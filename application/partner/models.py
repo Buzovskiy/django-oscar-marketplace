@@ -1,8 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-# from oscar.core.loading import get_model
-#
-# Country = get_model('address', 'Country')
+from oscar.apps.partner.abstract_models import AbstractStockRecord
+
+
+class StockRecord(AbstractStockRecord):
+    # discount in percents, e.g: 10.
+    discount_1c = models.DecimalField(
+        _("Value"), decimal_places=2, max_digits=12, null=True, blank=True)
+    price_initial_1c = models.DecimalField(
+        _("Price"), decimal_places=2, max_digits=12,
+        blank=True, null=True)
 
 
 class Retail(models.Model):
@@ -76,7 +83,6 @@ class RetailAddress(models.Model):
     class Meta:
         verbose_name = _('Address')
         verbose_name_plural = _('Addresses')
-
 
 
 from oscar.apps.partner.models import *  # noqa isort:skip

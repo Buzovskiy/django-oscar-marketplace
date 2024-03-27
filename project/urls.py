@@ -42,7 +42,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include(apps.get_app_config('oscar_routing').urls[0])),
-    prefix_default_language=False
+    prefix_default_language=True
 )
 
 urlpatterns += sitemap_url_patterns

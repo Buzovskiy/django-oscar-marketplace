@@ -1,5 +1,6 @@
 from oscar.apps.catalogue.search_handlers import *
-from oscar.apps.catalogue.search_handlers import SimpleProductSearchHandler as SimpleProductSearchHandlerCore
+from oscar.apps.catalogue.search_handlers import SimpleProductSearchHandler as SimpleProductSearchHandlerCore, \
+    SolrProductSearchHandler as SolrProductSearchHandlerCore
 
 
 class SimpleProductSearchHandler(SimpleProductSearchHandlerCore):
@@ -18,3 +19,11 @@ class SimpleProductSearchHandler(SimpleProductSearchHandlerCore):
         if self.categories:
             qs = qs.filter(categories__in=self.categories).distinct()
         return qs
+
+
+class SolrProductSearchHandler(SolrProductSearchHandlerCore):
+    def __init__(self, request_data, full_path, categories=None, paginate_by=None):
+        if paginate_by is not None:
+            self.paginate_by = paginate_by
+        super().__init__(request_data, full_path, categories)
+

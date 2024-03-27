@@ -372,6 +372,13 @@ class ImportOffers(ImportCore):
 
             try:
                 price = offer_xml.find('./Цены/Цена/ЦенаЗаЕдиницу').text
+                price = float(price)
+            except AttributeError:
+                continue
+
+            try:
+                discount = offer_xml.find('Скидка').text
+                discount = float(discount)
             except AttributeError:
                 continue
 
@@ -380,7 +387,9 @@ class ImportOffers(ImportCore):
                     partner=partner, product=product,
                     defaults={
                         'partner_sku': f'{product.upc} | {partner.name}',
-                        'price': float(price),
+                        'price_initial_1c': price,
+                        'discount_1c': discount,
+                        'price': price - price * discount / 100,
                         'num_in_stock': num_in_stock_xml,
                     })
             except ValueError:

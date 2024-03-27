@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'treebeard',
     'sorl.thumbnail',  # Default thumbnail backend, can be replaced
     'django_tables2',
+    'rest_framework',
 
     'adminsortable2',
     'ckeditor',
@@ -210,6 +211,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 
+# The language code corresponding to 1c language
+LANGUAGE_CODE_1C = 'en'
+
 LANGUAGES = (
     ('es', _('Spanish')),
     ('en', _('English')),
@@ -269,7 +273,7 @@ OSCAR_SHOP_NAME = 'Weestep'
 OSCAR_SHOP_TAGLINE = 'be bigger'
 OSCAR_HOMEPAGE = reverse_lazy('catalogue:index')
 
-OSCAR_PRODUCTS_PER_PAGE = 12
+OSCAR_PRODUCTS_PER_PAGE = 24
 
 OSCAR_DEFAULT_CURRENCY = 'EUR'
 
@@ -324,6 +328,7 @@ ATTR_SIZES_CODE = 'razmery'
 PRODUCT_CLASS_SHOES_SLUG = 'shoes'
 # The partner which is to be added to the database on 1c exchange
 PARTNER_DEFAULT = {'code': 'weestep', 'name': 'Weestep'}
+
 
 # Search facets
 OSCAR_SEARCH_FACETS = {

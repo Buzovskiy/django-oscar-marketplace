@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.conf import settings
 
 
 def check_email_valid(email: str) -> bool:
@@ -14,3 +15,12 @@ def check_email_valid(email: str) -> bool:
         return False
     else:
         return True
+
+
+def site_url(url: str) -> str:
+    return settings.BASE_URL.rstrip('/') + '/' + url.lstrip('/')
+
+
+def get_lang_lookup(request):
+    return '' if settings.LANGUAGE_CODE_1C == request.LANGUAGE_CODE else '_' + request.LANGUAGE_CODE
+

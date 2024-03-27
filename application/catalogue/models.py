@@ -112,6 +112,8 @@ class Category(AbstractCategory):
         help_text=_('Enter product benefits description that is to display on product page')
     )
 
+    name_es = models.CharField(_('Name ES'), max_length=255, null=True, blank=True)
+
 
 class ProductAttribute(AbstractProductAttribute):
 

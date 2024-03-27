@@ -25,18 +25,24 @@ ProductImage = get_model('catalogue', 'ProductImage')
 ColorHexCode = get_model('catalogue', 'ColorHexCode')
 Partner = get_model('partner', 'Partner')
 StockRecord = get_model('partner', 'StockRecord')
+Range = get_model('offer', 'Range')
+RangeProduct = get_model('offer', 'RangeProduct')
+Benefit = get_model('offer', 'Benefit')
 from application.partner.models import RetailCity
 
 
 class Command(BaseCommand):
     def handle(self, **options):
-        from django.db.models import Sum
-        # qs = Product.objects.filter(structure='parent').annotate(
-        #     num_in_stock__sum=Sum('children__stockrecords__num_in_stock')
-        # )
-        # for product in qs:
-        #     if product.num_in_stock__sum == 0:
-        #         product.is_public = False
-        #     else:
-        #         product.is_public = True
+        qs = Product.objects.filter(upc='R800456351 DB')
+        qs = qs.prefetch_related('rangeproduct_set__range__benefit_set')
+        # qs = qs.select_related('rangeproduct_set__range')
+        for product in qs.all():
+            print(product.id)
+            for range_product in product.rangeproduct_set.all():
+                range = range_product.range
+        # qs = RangeProduct.objects.all()
+        # qs = qs.select_related('range')
+        # for range_product in qs:
+        #     range = range_product.range
+        #     print(range.id)
         print(connection.queries)
