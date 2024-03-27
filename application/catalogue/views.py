@@ -75,7 +75,7 @@ def get_products_list(request):
     search_context = search_handler.get_search_context_data(context_object_name="products")
     data = {
         'items': [],
-        'total': search_context['paginator'].count
+        'total': int(search_context['paginator'].count)
     }
     for item in search_context['products']:
         product = {
