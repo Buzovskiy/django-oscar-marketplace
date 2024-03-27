@@ -84,8 +84,16 @@ def get_products_list(request):
         primary_image = item.primary_image().original.url if hasattr(item.primary_image(), 'original') else None
         product['img'] = site_url(primary_image) if isinstance(primary_image, str) else None
         product['title'] = item.title
-        product['price_initial_1c'] = float(request.strategy.fetch_for_parent(item).price.price_initial_1c)
-        product['discount_1c'] = float(request.strategy.fetch_for_parent(item).price.discount_1c)
+        try:
+            product['price_initial_1c'] = float(request.strategy.fetch_for_parent(item).price.price_initial_1c)
+        except TypeError:
+            product['price_initial_1c'] = 0.0
+
+        try:
+            product['discount_1c'] = float(request.strategy.fetch_for_parent(item).price.discount_1c)
+        except TypeError:
+            product['discount_1c'] = 0.0
+
         product['price'] = float(request.strategy.fetch_for_parent(item).price.incl_tax)
         product['currency'] = request.strategy.fetch_for_parent(item).price.currency
         product['shoesType'] = getattr(item.get_categories().first(), 'name' + lang_lookup)
