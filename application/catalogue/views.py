@@ -69,7 +69,8 @@ class ResultsSetPagination(PageNumberPagination):
 def get_products_list(request):
     # v1/products/list
     lang_lookup = get_lang_lookup(request)
-    paginate_by = request.query_params.get('paginate_by', None)
+    # if paginate_by is not set send all products
+    paginate_by = request.query_params.get('paginate_by', 100000)
     search_handler = get_product_search_handler_class()(
         request.GET, request.get_full_path(), [], paginate_by=paginate_by)
     search_context = search_handler.get_search_context_data(context_object_name="products")
@@ -85,18 +86,23 @@ def get_products_list(request):
         product['img'] = site_url(primary_image) if isinstance(primary_image, str) else None
         product['title'] = item.title
         try:
-            product['price_initial_1c'] = float(request.strategy.fetch_for_parent(item).price.price_initial_1c)
+            product['priceInitial'] = float(request.strategy.fetch_for_parent(item).price.price_initial_1c)
         except TypeError:
-            product['price_initial_1c'] = 0.0
+            product['priceInitial'] = 0.0
 
         try:
-            product['discount_1c'] = float(request.strategy.fetch_for_parent(item).price.discount_1c)
+            product['discountPercent'] = float(request.strategy.fetch_for_parent(item).price.discount_1c)
         except TypeError:
-            product['discount_1c'] = 0.0
+            product['discountPercent'] = 0.0
+
+        product['discountValue'] = round(product['priceInitial'] * (1 - product['discountPercent'] / 100), 2)
 
         product['price'] = float(request.strategy.fetch_for_parent(item).price.incl_tax)
         product['currency'] = request.strategy.fetch_for_parent(item).price.currency
-        product['shoesType'] = getattr(item.get_categories().first(), 'name' + lang_lookup)
+        shoesType = getattr(item.get_categories().first(), 'name' + lang_lookup)
+        if not shoesType:
+            shoesType = item.get_categories().first().slug
+        product['shoesType'] = shoesType
         product['productId'] = str(item.id)
 
         # colors
