@@ -70,7 +70,7 @@ def get_products_list(request):
     # v1/products/list
     lang_lookup = get_lang_lookup(request)
     # if paginate_by is not set send all products
-    paginate_by = request.query_params.get('paginate_by', 100000)
+    paginate_by = request.query_params.get('limit', 100000)
     search_handler = get_product_search_handler_class()(
         request.GET, request.get_full_path(), [], paginate_by=paginate_by)
     search_context = search_handler.get_search_context_data(context_object_name="products")
