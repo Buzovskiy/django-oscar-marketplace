@@ -1,12 +1,2 @@
 User-agent: *
-Disallow: /admin/
-Disallow: /dashboard/
-Allow: /*.js
-Allow: /*.css
-Allow: /*.jpg
-Allow: /*.jpeg
-Allow: /*.gif
-Allow: /*.png
-Allow: /*.svg
-
-Host: https://weestep-kids.es/
+Disallow: /
