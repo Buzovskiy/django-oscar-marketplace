@@ -108,7 +108,7 @@ def get_products_list(request):
         # colors
         product['colorsAvailable'] = []
         product['colorsAvailable'].append({
-            'id': 0,
+            'id': 1,
             'image': product['img'],
             'color': item.attributes_container.color_hex_code['value'],
             'productId': str(item.id)
@@ -119,7 +119,7 @@ def get_products_list(request):
             else:
                 rec_image = None
             product['colorsAvailable'].append({
-                'id': item_enum[0] + 1,
+                'id': item_enum[0] + 2,
                 'image': rec_image,
                 'color': item_enum[1].attributes_container.color_hex_code['value'],
                 'productId': str(item_enum[1].id)
@@ -130,7 +130,7 @@ def get_products_list(request):
         sizes = []
         for item_enum in enumerate(item.product_children):
             sizes.append({
-                'id': item_enum[0],
+                'id': item_enum[0] + 1,
                 'value': item_enum[1].attributes_container.size['value'],
             })
         sizes = sorted(sizes, key=lambda size: size['value'])

@@ -2,6 +2,7 @@ from oscar import config
 from django.urls import path, reverse_lazy, include
 from django.conf.urls.i18n import i18n_patterns
 from django.apps import apps
+from django.http import HttpResponseNotFound
 
 
 class OscarRoutingConfig(config.Shop):
@@ -25,6 +26,7 @@ class OscarRoutingConfig(config.Shop):
         from oscar.views.decorators import login_forbidden
 
         urls = [
+            path('', lambda x: HttpResponseNotFound('Not Found')),
             path('', self.blog_app.urls),
             path('interview/', self.interview_app.urls),
             path('contacts/', self.contacts_app.urls),
