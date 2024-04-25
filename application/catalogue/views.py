@@ -79,12 +79,14 @@ def get_products_list(request):
         'total': int(search_context['paginator'].count)
     }
     for item in search_context['products']:
+        category_obj = item.get_categories().first()
+        category_name = getattr(category_obj, 'name' + lang_lookup, category_obj.name)
         product = {
             'productId': item.id
         }
         primary_image = item.primary_image().original.url if hasattr(item.primary_image(), 'original') else None
         product['img'] = site_url(primary_image) if isinstance(primary_image, str) else None
-        product['title'] = item.title
+        product['title'] = f"{category_name} {item.upc}"
         try:
             product['priceInitial'] = float(request.strategy.fetch_for_parent(item).price.price_initial_1c)
         except TypeError:
@@ -99,10 +101,8 @@ def get_products_list(request):
 
         product['price'] = float(request.strategy.fetch_for_parent(item).price.incl_tax)
         product['currency'] = request.strategy.fetch_for_parent(item).price.currency
-        shoesType = getattr(item.get_categories().first(), 'name' + lang_lookup)
-        if not shoesType:
-            shoesType = item.get_categories().first().slug
-        product['shoesType'] = shoesType
+
+        product['shoesType'] = getattr(category_obj, 'slug' + lang_lookup, category_obj.slug)
         product['productId'] = str(item.id)
 
         # colors
@@ -128,9 +128,10 @@ def get_products_list(request):
         # sizes
         product['sizes'] = []
         sizes = []
+        product_children_count = len(item.product_children)
         for item_enum in enumerate(item.product_children):
             sizes.append({
-                'id': item_enum[0] + 1,
+                'id': product_children_count - item_enum[0],
                 'value': item_enum[1].attributes_container.size['value'],
             })
         sizes = sorted(sizes, key=lambda size: size['value'])

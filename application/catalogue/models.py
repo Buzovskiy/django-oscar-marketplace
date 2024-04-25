@@ -113,6 +113,7 @@ class Category(AbstractCategory):
     )
 
     name_es = models.CharField(_('Name ES'), max_length=255, null=True, blank=True)
+    slug_es = models.CharField(_('Slug ES'), max_length=255, null=True, blank=True)
 
 
 class ProductAttribute(AbstractProductAttribute):
