@@ -11,6 +11,7 @@ from .files import FileXml, FileImage
 import xml.etree.ElementTree as ET
 from slugify import slugify_filename
 from application.catalogue.utils import get_sizes_list_from_range
+from application.catalogue.models import AttributeValue
 
 ProductClass = get_model('catalogue', 'ProductClass')
 ProductAttribute = get_model('catalogue', 'ProductAttribute')
@@ -22,6 +23,7 @@ ProductImage = get_model('catalogue', 'ProductImage')
 ColorHexCode = get_model('catalogue', 'ColorHexCode')
 Partner = get_model('partner', 'Partner')
 StockRecord = get_model('partner', 'StockRecord')
+
 
 
 class ImportImage:
@@ -138,11 +140,6 @@ class ImportProduct(ImportCore):
 
             # Save extra attributes that does not exist in xml file
             ProductAttribute.objects.update_or_create(
-                code='size',
-                product_class=product_class,
-                defaults={'name': 'Size', 'type': 'text'},
-            )
-            ProductAttribute.objects.update_or_create(
                 code='color_hex_code',
                 product_class=product_class,
                 defaults={'name': 'Color hex code', 'type': 'text'},
@@ -223,7 +220,18 @@ class ImportProduct(ImportCore):
                 product_attribute_value, created = ProductAttributeValue.objects.update_or_create(
                     attribute=attribute, product=product,
                     defaults={
-                        'value_text': product_attribute_xml.find('Значение').text
+                        'value_text': product_attribute_xml.find('Значение').text,
+                        'value_external_id': product_attribute_xml.find('ИдЗначенияСвойства').text,
+                    },
+                )
+            except ValidationError:
+                continue
+
+            try:
+                AttributeValue.objects.update_or_create(
+                    attribute=attribute, external_id=product_attribute_xml.find('ИдЗначенияСвойства').text,
+                    defaults={
+                        'value': product_attribute_xml.find('Значение').text
                     },
                 )
             except ValidationError:
@@ -247,6 +255,7 @@ class ImportProduct(ImportCore):
         except ObjectDoesNotExist:
             return False
 
+        # Get size of child product
         size_xml = None
         for product_attribute_xml in product_xml.findall('./ЗначенияСвойств/ЗначенияСвойства'):
             attribute_external_id_xml = product_attribute_xml.find('Ид').text
@@ -254,24 +263,19 @@ class ImportProduct(ImportCore):
             if attribute_external_id_xml != 'property_razmer':
                 continue
 
-            try:
-                ProductAttribute.objects.filter(external_id=attribute_external_id_xml).get()
-            except ObjectDoesNotExist:
-                continue
-
-            try:
-                product_attribute_xml.find('Значение').text
-            except AttributeError:
-                continue
-
             if not re.match(r'^\d{2}$', product_attribute_xml.find('Значение').text):
                 continue
 
-            size_xml = product_attribute_xml.find('Значение').text
+            try:
+                ProductAttribute.objects.filter(external_id=attribute_external_id_xml).get()
+                size_xml = product_attribute_xml.find('Значение').text
+            except (ObjectDoesNotExist, AttributeError):
+                continue
 
         if not size_xml:
             return False
 
+        # Save child product
         try:
             product_child = Product.objects.filter(
                 parent=product_parent, external_id=external_id_xml
@@ -287,15 +291,59 @@ class ImportProduct(ImportCore):
         product_child.custom_save()
         product_child.full_clean()
 
-        # save child product size attribute value
-        try:
-            size_attribute = ProductAttribute.objects.filter(code='size').get()
-            ProductAttributeValue.objects.update_or_create(
-                attribute=size_attribute, product=product_child,
-                defaults={'value_text': size_xml},
-            )
-        except (ObjectDoesNotExist, ValidationError):
-            return False
+        # Set AttributeValue and ProductAttributeValue
+        for product_attribute_xml in product_xml.findall('./ЗначенияСвойств/ЗначенияСвойства'):
+            attribute_external_id_xml = product_attribute_xml.find('Ид').text
+
+            if attribute_external_id_xml not in ['property_razmer', 'insole_length']:
+                continue
+
+            try:
+                attribute = ProductAttribute.objects.filter(external_id=attribute_external_id_xml).get()
+            except ObjectDoesNotExist:
+                continue
+
+            try:
+                product_attribute_xml.find('Значение').text
+            except AttributeError:
+                continue
+
+            # save AttributeValue model
+            try:
+                attribute_value_defaults = {
+                    'value': product_attribute_xml.find('Значение').text
+                }
+                # For every language set values equal to field value
+                for lang in settings.LANGUAGES:
+                    lang_code = lang[0]
+                    attribute_value_defaults['value_' + lang_code] = product_attribute_xml.find('Значение').text
+
+                AttributeValue.objects.update_or_create(
+                    attribute=attribute, external_id=product_attribute_xml.find('ИдЗначенияСвойства').text,
+                    defaults=attribute_value_defaults,
+                )
+            except ValidationError:
+                continue
+
+            # set ProductAttributeValue
+            try:
+                prod_attr_val_defaults = {
+                    'value_text': product_attribute_xml.find('Значение').text,
+                    'value_external_id': product_attribute_xml.find('ИдЗначенияСвойства').text
+                }
+                # Set language variations of attr values automatically only for specific attributes
+                if attribute_external_id_xml in ['property_razmer', 'insole_length']:
+                    # For every language set values equal to field value_text
+                    for lang in settings.LANGUAGES:
+                        lang_code = lang[0]
+                        prod_attr_val_defaults[f'value_text_{lang_code}'] = product_attribute_xml.find('Значение').text
+
+                ProductAttributeValue.objects.update_or_create(
+                    attribute=attribute, product=product_child,
+                    defaults=prod_attr_val_defaults,
+                )
+            except (ObjectDoesNotExist, ValidationError):
+                pass
 
 
     @staticmethod

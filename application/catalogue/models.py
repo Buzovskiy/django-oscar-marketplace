@@ -11,10 +11,20 @@ from oscar.apps.catalogue.abstract_models import \
     AbstractProductAttribute, \
     AbstractProductAttributeValue
 from .utils import validate_sizes
+from oscar_routing.utils import getattr_lang
 from .product_attributes import PrefetchedProductAttributesContainer
 
 
 class ProductAttributeValue(AbstractProductAttributeValue):
+
+    value_text_en = models.TextField(_('Text EN'), blank=True, null=True)
+    value_text_es = models.TextField(_('Text ES'), blank=True, null=True)
+    value_external_id = models.CharField(_('Value external ID'), max_length=255, blank=True, null=True)
+
+    @property
+    def value_text_lang(self):
+        """Get value_text taking into account active language"""
+        return getattr_lang(self, 'value_text')
 
     def save(self, *args, **kwargs):
         self.clean()
@@ -61,7 +71,7 @@ class Product(AbstractProduct):
         """
         children = list(self.children.all())
         try:
-            children.sort(key=lambda el: el.attributes_container.size['value'], reverse=False)
+            children.sort(key=lambda el: el.attributes_container.razmer['value'], reverse=False)
         except AttributeError as e:
             pass
         return children
@@ -113,7 +123,21 @@ class Category(AbstractCategory):
     )
 
     name_es = models.CharField(_('Name ES'), max_length=255, null=True, blank=True)
+    name_en = models.CharField(_('Name EN'), max_length=255, null=True, blank=True)
     slug_es = models.CharField(_('Slug ES'), max_length=255, null=True, blank=True)
+
+    @property
+    def full_name(self):
+        """
+        Returns a string representation of the category and it's ancestors,
+        e.g. 'Books > Non-fiction > Essential programming'.
+
+        It's rarely used in Oscar, but used to be stored as a CharField and is
+        hence kept for backwards compatibility. It's also sufficiently useful
+        to keep around.
+        """
+        names = [getattr_lang(category, 'name') for category in self.get_ancestors_and_self()]
+        return self._full_name_separator.join(names)
 
 
 class ProductAttribute(AbstractProductAttribute):
@@ -121,6 +145,17 @@ class ProductAttribute(AbstractProductAttribute):
     external_id = models.CharField(
         _('Code in 1c'), max_length=255, editable=False, null=True, unique=False
     )
+
+
+class AttributeValue(models.Model):
+    attribute = models.ForeignKey('catalogue.ProductAttribute', on_delete=models.CASCADE)
+    external_id = models.CharField(max_length=255, editable=False, null=False, blank=False)
+    value = models.CharField(max_length=255, blank=True, null=True)
+    value_es = models.CharField(_('Value ES'), max_length=255, blank=True, null=True)
+    value_en = models.CharField(_('Value EN'), max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.value
 
 
 class ColorHexCode(models.Model):

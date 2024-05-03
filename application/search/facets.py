@@ -3,13 +3,14 @@ from collections import OrderedDict
 from django.conf import settings
 from haystack.query import SearchQuerySet
 from purl import URL
+from django.utils import translation
 
 
 def base_sqs():
     """
     Return the base SearchQuerySet for Haystack searches.
     """
-    sqs = SearchQuerySet()
+    sqs = SearchQuerySet(using=translation.get_language())
     for facet in settings.OSCAR_SEARCH_FACETS['fields'].values():
         options = facet.get('options', {})
         sqs = sqs.facet(facet['field'], **options)

@@ -90,10 +90,10 @@
                                 {% if product.is_parent %}
                                     {% for child in product.children_ordered_by_size %}
                                         {% get_product_size_hyperlink_data product=child as size_link_data %}
-                                        <a class="{{ size_link_data.link_class }}" href="{{ child|size_variation_url }}">{{ child.attributes_container.size.value }}</a>
+                                        <a class="{{ size_link_data.link_class }}" href="{{ child|size_variation_url }}">{{ child.attributes_container.razmer.value }}</a>
                                     {% endfor %}
                                 {% else %}
-                                    <span>{{ product.attributes_container.size.value }}</span>
+                                    <span>{{ product.attributes_container.razmer.value }}</span>
                                 {% endif %}
 							</div>
 							<div class="cart-size__guide" data-move="cart__form,2,576" data-toggle="modal"

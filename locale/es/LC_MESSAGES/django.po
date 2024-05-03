@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-29 10:14+0100\n"
-"PO-Revision-Date: 2024-02-27 16:07+0000\n"
+"POT-Creation-Date: 2024-05-03 09:44+0200\n"
+"PO-Revision-Date: 2024-05-03 10:15+0000\n"
 "Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,8 +19,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.7\n"
 
+#: .\app_settings\apps.py:8 .\app_settings\models.py:23
+#: .\app_settings\models.py:24
+#, fuzzy
+#| msgid "All publications"
+msgid "Application settings"
+msgstr "Todas las publicaciones"
+
 #: .\app_settings\models.py:11 .\application\blog\models.py:22
-#: .\application\partner\models.py:10 .\application\partner\models.py:26
+#: .\application\partner\models.py:17 .\application\partner\models.py:33
 #: .\application\payment\models.py:7
 msgid "Title"
 msgstr "Título"
@@ -29,7 +36,7 @@ msgstr "Título"
 msgid "Key"
 msgstr ""
 
-#: .\app_settings\models.py:13
+#: .\app_settings\models.py:13 .\application\partner\models.py:9
 msgid "Value"
 msgstr ""
 
@@ -38,12 +45,6 @@ msgstr ""
 #| msgid "Meta description"
 msgid "Description"
 msgstr "Metadescripción"
-
-#: .\app_settings\models.py:23 .\app_settings\models.py:24
-#, fuzzy
-#| msgid "All publications"
-msgid "Application settings"
-msgstr "Todas las publicaciones"
 
 #: .\application\blog\admin.py:21
 msgid "Image in the list of posts"
@@ -61,71 +62,106 @@ msgstr "Enlace"
 msgid "Manage Popularity"
 msgstr "Administrar popularidad"
 
-#: .\application\catalogue\models.py:28
+#: .\application\catalogue\models.py:20
+msgid "Text EN"
+msgstr ""
+
+#: .\application\catalogue\models.py:21
+msgid "Text ES"
+msgstr ""
+
+#: .\application\catalogue\models.py:22
+msgid "Value external ID"
+msgstr ""
+
+#: .\application\catalogue\models.py:38
 msgid "Sizes must by like: 20-26"
 msgstr "Los tamaños deben ser como: 20-26"
 
-#: .\application\catalogue\models.py:34 .\application\catalogue\models.py:88
-#: .\application\catalogue\models.py:119
+#: .\application\catalogue\models.py:44 .\application\catalogue\models.py:98
+#: .\application\catalogue\models.py:146
 msgid "Code in 1c"
 msgstr "Código en 1c"
 
-#: .\application\catalogue\models.py:91
+#: .\application\catalogue\models.py:101
 msgid "Product description"
 msgstr "Descripción del Producto"
 
-#: .\application\catalogue\models.py:94
+#: .\application\catalogue\models.py:104
 msgid "Enter product description that is to display on product page"
 msgstr ""
-"Ingrese la descripción del producto que se mostrará en la página del producto"
+"Ingrese la descripción del producto que se mostrará en la página del "
+"producto"
 
-#: .\application\catalogue\models.py:97
+#: .\application\catalogue\models.py:107
 msgid "Product long description"
 msgstr "Descripción larga del producto"
 
-#: .\application\catalogue\models.py:100
+#: .\application\catalogue\models.py:110
 msgid "Enter product long description that is to display on product page"
 msgstr ""
 "Ingrese la descripción larga del producto que se mostrará en la página del "
 "producto"
 
-#: .\application\catalogue\models.py:103
+#: .\application\catalogue\models.py:113
 msgid "Product design description"
 msgstr "Descripción del diseño del producto"
 
-#: .\application\catalogue\models.py:106
+#: .\application\catalogue\models.py:116
 msgid "Enter product design description that is to display on product page"
 msgstr ""
 "Ingrese la descripción del diseño del producto que se mostrará en la página "
 "del producto"
 
-#: .\application\catalogue\models.py:109
+#: .\application\catalogue\models.py:119
 msgid "Product benefits description"
 msgstr "Descripción de los beneficios del producto"
 
-#: .\application\catalogue\models.py:112
+#: .\application\catalogue\models.py:122
 msgid "Enter product benefits description that is to display on product page"
 msgstr ""
 "Ingrese la descripción de los beneficios del producto que se mostrará en la "
 "página del producto"
 
 #: .\application\catalogue\models.py:125
+#| msgid "Name"
+msgid "Name ES"
+msgstr "Nombre ES"
+
+#: .\application\catalogue\models.py:126
+#| msgid "Name"
+msgid "Name EN"
+msgstr "Nombre EN"
+
+#: .\application\catalogue\models.py:127
+msgid "Slug ES"
+msgstr ""
+
+#: .\application\catalogue\models.py:154
+msgid "Value ES"
+msgstr ""
+
+#: .\application\catalogue\models.py:155
+msgid "Value EN"
+msgstr ""
+
+#: .\application\catalogue\models.py:163
 msgid "Color name"
 msgstr "Nombre del color"
 
-#: .\application\catalogue\models.py:128
+#: .\application\catalogue\models.py:166
 msgid "Color name, e.g. black "
 msgstr "Nombre del color, p.e. negro"
 
-#: .\application\catalogue\models.py:131
+#: .\application\catalogue\models.py:169
 msgid "Hex code"
 msgstr "Сódigo hexadecimal"
 
-#: .\application\catalogue\models.py:135
+#: .\application\catalogue\models.py:173
 msgid "Color hex code, e.g. #000000"
 msgstr "Código hexadecimal de color, p. #000000"
 
-#: .\application\catalogue\models.py:143
+#: .\application\catalogue\models.py:181
 msgid "Color hex code"
 msgstr "Сódigo hexadecimal de color"
 
@@ -273,8 +309,8 @@ msgstr ""
 #: .\application\interview\models.py:21
 msgid "Should be the same as key name value in OSCAR_SEARCH_FACETS settings"
 msgstr ""
-"Debe ser el mismo que el valor del nombre de la clave en la configuración de "
-"OSCAR_SEARCH_FACETS"
+"Debe ser el mismo que el valor del nombre de la clave en la configuración de"
+" OSCAR_SEARCH_FACETS"
 
 #: .\application\interview\models.py:31
 msgid "Filter for the interview"
@@ -310,85 +346,89 @@ msgstr "Filtrar ciudades por países"
 msgid "The number of addresses"
 msgstr "El número de direcciones"
 
-#: .\application\partner\models.py:14
+#: .\application\partner\models.py:11
+msgid "Price"
+msgstr ""
+
+#: .\application\partner\models.py:21
 msgid "Enter the title of retail partner stores"
 msgstr "Ingrese el título de las tiendas minoristas asociadas"
 
-#: .\application\partner\models.py:18
+#: .\application\partner\models.py:25
 msgid "Retail shop partner"
 msgstr "Socio de tienda minorista"
 
-#: .\application\partner\models.py:19
+#: .\application\partner\models.py:26
 msgid "Retail shop partners"
 msgstr "Socios de tiendas minoristas"
 
-#: .\application\partner\models.py:33
+#: .\application\partner\models.py:40
 msgid "Retail city"
 msgstr "Ciudad minorista"
 
-#: .\application\partner\models.py:34
+#: .\application\partner\models.py:41
 msgid "Retail cities"
 msgstr "Ciudades minoristas"
 
-#: .\application\partner\models.py:41
+#: .\application\partner\models.py:48
 msgid "Short description"
 msgstr "Breve descripción"
 
-#: .\application\partner\models.py:45
+#: .\application\partner\models.py:52
 msgid ""
-"Enter short description which will be displayed in parenthesis near title or "
-"leave field empty"
+"Enter short description which will be displayed in parenthesis near title or"
+" leave field empty"
 msgstr ""
 "Ingrese una breve descripción que se mostrará entre paréntesis cerca del "
 "título o deje el campo vacío"
 
-#: .\application\partner\models.py:48 .\application\partner\models.py:77
+#: .\application\partner\models.py:55 .\application\partner\models.py:84
 msgid "Address"
 msgstr "DIRECCIÓN"
 
-#: .\application\partner\models.py:50
+#: .\application\partner\models.py:57
 msgid "Enter address of the retail partner store"
 msgstr "Ingrese la dirección de la tienda minorista asociada"
 
-#: .\application\partner\models.py:53
+#: .\application\partner\models.py:60
 msgid "Store working hours"
 msgstr "Horario de trabajo de la tienda"
 
-#: .\application\partner\models.py:56
+#: .\application\partner\models.py:63
 msgid "Enter store working hours"
 msgstr "Introduce el horario laboral de la tienda"
 
-#: .\application\partner\models.py:58
+#: .\application\partner\models.py:65
 msgid "Web site"
 msgstr "Sitio web"
 
-#: .\application\partner\models.py:58
+#: .\application\partner\models.py:65
 msgid "Enter web site"
 msgstr "Ingresar al sitio web"
 
-#: .\application\partner\models.py:60
+#: .\application\partner\models.py:67
 msgid "Latitude"
 msgstr "Latitud"
 
-#: .\application\partner\models.py:63
+#: .\application\partner\models.py:70
 msgid ""
 "Enter latitude coordinate in decimal format, for example 46.43143143569561"
 msgstr ""
 "Ingrese las coordenadas de latitud en formato decimal, por ejemplo "
 "46.43143143569561"
 
-#: .\application\partner\models.py:66
+#: .\application\partner\models.py:73
 msgid "longitude"
 msgstr "longitud"
 
-#: .\application\partner\models.py:69
+#: .\application\partner\models.py:76
 msgid ""
 "Enter longitude coordinate in decimal format, for example 30.724300888157735"
 msgstr ""
 "Ingrese la coordenada de longitud en formato decimal, por ejemplo "
 "30.724300888157735"
 
-#: .\application\partner\models.py:78
+#: .\application\partner\models.py:85
 msgid "Addresses"
 msgstr "Direcciones"
 
@@ -439,31 +479,27 @@ msgstr "Metapalabras clave"
 msgid "Search optimisation fields"
 msgstr "Campos de optimización de búsqueda"
 
-#: .\project\settings.py:215
+#: .\project\settings.py:202
 msgid "Spanish"
 msgstr "Española"
 
-#: .\project\settings.py:216
+#: .\project\settings.py:203
 msgid "English"
 msgstr "English"
 
-#: .\project\settings.py:335
-msgid "Rating"
-msgstr "Clasificación"
-
-#: .\project\settings.py:336
+#: .\project\settings.py:340
 msgid "Type"
 msgstr "Tipo"
 
-#: .\project\settings.py:337
+#: .\project\settings.py:341
 msgid "Gender"
 msgstr "Género"
 
-#: .\project\settings.py:338
+#: .\project\settings.py:342
 msgid "Season"
 msgstr "Estación"
 
-#: .\project\settings.py:339 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:343 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
 #: .\templates\oscar\catalogue\detail.html:88
 #: .\templates\oscar\checkout\one_page_checkout.html:119
@@ -471,11 +507,17 @@ msgstr "Estación"
 msgid "Size"
 msgstr "Tamaño"
 
-#: .\project\settings.py:340 .\templates\oscar\catalogue\detail.html:119
-msgid "Material"
-msgstr "Material"
+#: .\project\settings.py:344
+#| msgid "Material"
+msgid "Material outer"
+msgstr "Material externo"
 
-#: .\project\settings.py:341 .\templates\oscar\catalogue\detail.html:70
+#: .\project\settings.py:345
+#| msgid "Material"
+msgid "Material inner"
+msgstr "Material interno"
+
+#: .\project\settings.py:346 .\templates\oscar\catalogue\detail.html:70
 #: .\templates\oscar\catalogue\detail.html:176
 #: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:115
@@ -691,8 +733,8 @@ msgstr ""
 #: .\templates\flatpages\brand-of-the-year.html:13
 msgid ""
 "In 2020, we were awarded in Poland with the Certificate of children\\'s "
-"brand of the year. We\\'ve already sold five million pairs in the world, and "
-"a million in Europe."
+"brand of the year. We\\'ve already sold five million pairs in the world, and"
+" a million in Europe."
 msgstr ""
 "En 2020 obtuvimos en Polonia el Certificado de marca infantil del año. Ya "
 "hemos vendido cinco millones de pares en el mundo y un millón en Europa."
@@ -761,7 +803,7 @@ msgstr "Comenzar"
 msgid "Go to the catalog"
 msgstr "Ir al catalogo"
 
-#: .\templates\oscar\base.html:13
+#: .\templates\oscar\base.html:14
 msgid ""
 "Buy children's shoes online at weestep-kids.es: sneakers, boots, ankle "
 "boots, sandals. Buy shoes online at weestep-kids.es."
@@ -769,7 +811,7 @@ msgstr ""
 "Compra calzado infantil online en weestep-kids.es: zapatillas, botas, "
 "botines, sandalias. Compra zapatos online en weestep-kids.es."
 
-#: .\templates\oscar\base.html:14
+#: .\templates\oscar\base.html:15
 msgid "weestep, baby shoes, child shoes, sneakers, boots, sandals"
 msgstr ""
 "weestep, zapatos de bebe, zapatos de niño, zapatillas de deporte, botas, "
@@ -881,13 +923,11 @@ msgstr "¡Podrías estar perdiendo ofertas!"
 #, python-format
 msgid ""
 "\n"
-"                <div class=\"warning\">%(message)s to qualify for the <a "
-"href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
+"                <div class=\"warning\">%(message)s to qualify for the <a href=\"%(url)s\">%(offer_name)s</a> special offer</div>\n"
 "            "
 msgstr ""
 "\n"
-"<div class=\"warning\">%(message)s para calificar para la oferta especial <a "
-"href=\"%(url)s\">%(offer_name)s</a></div>"
+"<div class=\"warning\">%(message)s para calificar para la oferta especial <a href=\"%(url)s\">%(offer_name)s</a></div>"
 
 #: .\templates\oscar\basket\partials\basket_content.html:55
 msgid "color"
@@ -956,6 +996,10 @@ msgstr "Guia de tallas"
 #: .\templates\oscar\catalogue\detail.html:114
 msgid "design"
 msgstr "diseño"
+
+#: .\templates\oscar\catalogue\detail.html:119
+msgid "Material"
+msgstr "Material"
 
 #: .\templates\oscar\catalogue\detail.html:126
 msgid "Benefits"
@@ -1087,14 +1131,12 @@ msgstr "Gracias"
 #, python-format
 msgid ""
 "\n"
-"                        Your order has been placed and a confirmation email "
-"has been sent - your order number is\n"
+"                        Your order has been placed and a confirmation email has been sent - your order number is\n"
 "                        <strong>%(number)s</strong>.\n"
 "                        "
 msgstr ""
 "\n"
-"Se ha realizado su pedido y se ha enviado un correo electrónico de "
-"confirmación; su número de pedido es\n"
+"Se ha realizado su pedido y se ha enviado un correo electrónico de confirmación; su número de pedido es\n"
 "<strong>%(number)s</strong>."
 
 #: .\templates\oscar\checkout\thank_you.html:32
@@ -1206,13 +1248,11 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Found <strong>%(num_results)s</strong> results, showing "
-"<strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
+"                    Found <strong>%(num_results)s</strong> results, showing <strong>%(start)s</strong> to <strong>%(end)s</strong>.\n"
 "                "
 msgstr ""
 "\n"
-"Se encontraron resultados de <strong>%(num_results)s</strong>, que muestran "
-"<strong>%(start)s</strong> a <strong>%(end)s</strong>."
+"Se encontraron resultados de <strong>%(num_results)s</strong>, que muestran <strong>%(start)s</strong> a <strong>%(end)s</strong>."
 
 #: .\templates\oscar\search\results.html:58
 #, python-format
@@ -1239,13 +1279,11 @@ msgstr "Se encontraron <strong>0</strong> resultados."
 #, python-format
 msgid ""
 "\n"
-"                        Did you mean <a href=\"%(search_url)s?q="
-"%(suggestion)s\">\"%(suggestion)s\"</a>?\n"
+"                        Did you mean <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</a>?\n"
 "                    "
 msgstr ""
 "\n"
-"¿Quiso decir <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</"
-"a>?"
+"¿Quiso decir <a href=\"%(search_url)s?q=%(suggestion)s\">\"%(suggestion)s\"</a>?"
 
 #: .\templates\partials\countries-stripe.html:4
 msgid "Where to buy?"
@@ -1266,6 +1304,9 @@ msgstr "sitio web"
 #: .\templates\partner\stores.html:49 .\templates\partner\stores.html:50
 msgid "On the map"
 msgstr "En el mapa"
+
+#~ msgid "Rating"
+#~ msgstr "Clasificación"
 
 #~ msgid ""
 #~ "weestep, wholesale baby shoes, Europe wholesale warehouse shoes Weestep, "

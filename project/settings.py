@@ -133,16 +133,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        # 'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/{decouple.config('SOLR_CORE')}",
-        'ADMIN_URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/admin/cores",
-        'INCLUDE_SPELLING': True,
-    },
-}
-
 ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
@@ -227,6 +217,25 @@ LOCALE_PATHS = (
 
 ROSETTA_MESSAGES_PER_PAGE = 1000
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        # 'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/{decouple.config('SOLR_CORE')}",
+        'ADMIN_URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/admin/cores",
+        'INCLUDE_SPELLING': True,
+    },
+}
+
+for lang in LANGUAGES:
+    lang_code = lang[0]
+    HAYSTACK_CONNECTIONS[lang_code] = {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/{decouple.config('SOLR_CORE')}_{lang_code}",
+        'ADMIN_URL': f"http://solr:{decouple.config('SOLR_PASSWORD')}@127.0.0.1:8983/solr/admin/cores",
+        'INCLUDE_SPELLING': True,
+    }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -327,12 +336,13 @@ OSCAR_SEARCH_FACETS = {
         # The key for these dicts will be used when passing facet data
         # to the template. Same for the 'queries' dict below.
         # ('product_class', {'name': _('Type'), 'field': 'product_class'}),
-        ('rating', {'name': _('Rating'), 'field': 'rating'}),
+        # ('rating', {'name': _('Rating'), 'field': 'rating'}),
         ('category', {'name': _('Type'), 'field': 'category'}),
         ('gender', {'name': _('Gender'), 'field': 'gender'}),
         ('season', {'name': _('Season'), 'field': 'season'}),
         ('size', {'name': _('Size'), 'field': 'size', 'options': {'sort': 'index'}}),
-        ('material', {'name': _('Material'), 'field': 'material'}),
+        ('material_verkha', {'name': _('Material outer'), 'field': 'material_verkha'}),
+        ('material_vnutrennii', {'name': _('Material inner'), 'field': 'material_vnutrennii'}),
         ('color', {'name': _('Color'), 'field': 'color'}),
         # You can specify an 'options' element that will be passed to the
         # SearchQuerySet.facet() call.

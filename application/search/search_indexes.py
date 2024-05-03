@@ -23,15 +23,16 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     title_exact = indexes.CharField(model_attr='title', null=True, indexed=False)
 
     # Fields for faceting
-    product_class = indexes.CharField(null=True, faceted=True)
+    # product_class = indexes.CharField(null=True, faceted=True)
     category = indexes.MultiValueField(null=True, faceted=True)
-    price = indexes.FloatField(null=True, faceted=True)
-    num_in_stock = indexes.IntegerField(null=True, faceted=True)
-    rating = indexes.IntegerField(null=True, faceted=True)
+    # price = indexes.FloatField(null=True, faceted=True)
+    # num_in_stock = indexes.IntegerField(null=True, faceted=True)
+    # rating = indexes.IntegerField(null=True, faceted=True)
     gender = indexes.CharField(null=True, faceted=True)
     season = indexes.CharField(null=True, faceted=True)
     size = indexes.MultiValueField(null=True, faceted=True)
-    material = indexes.CharField(null=True, faceted=True)
+    material_verkha = indexes.CharField(null=True, faceted=True)
+    material_vnutrennii = indexes.CharField(null=True, faceted=True)
     color = indexes.CharField(null=True, faceted=True)
 
     # Spelling suggestions
@@ -48,21 +49,22 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         # Only index browsable products (not each individual child product)
         return self.get_model().objects.browsable().order_by('-date_updated')
+        # return self.get_model().objects.browsable().filter(pk=69810)
 
     def read_queryset(self, using=None):
         return self.get_model().objects.browsable().base_queryset()
 
-    def prepare_product_class(self, obj):
-        return obj.get_product_class().name
+    # def prepare_product_class(self, obj):
+    #     return obj.get_product_class().name
 
     def prepare_category(self, obj):
         categories = obj.categories.all()
         if len(categories) > 0:
             return [category.full_name for category in categories]
 
-    def prepare_rating(self, obj):
-        if obj.rating is not None:
-            return int(obj.rating)
+    # def prepare_rating(self, obj):
+    #     if obj.rating is not None:
+    #         return int(obj.rating)
 
     # Pricing and stock is tricky as it can vary per customer.  However, the
     # most common case is for customers to see the same prices and stock levels
@@ -98,7 +100,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_gender(self, obj):
         try:
             attribute = ProductAttribute.objects.filter(code='pol').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text
+            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
         except ObjectDoesNotExist:
             return None
         else:
@@ -107,7 +109,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_season(self, obj):
         try:
             attribute = ProductAttribute.objects.filter(code='sezon').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text
+            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
         except ObjectDoesNotExist:
             return None
         else:
@@ -118,7 +120,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
             return []
         sizes_list = []
         try:
-            attribute = ProductAttribute.objects.filter(code='size').get()
+            attribute = ProductAttribute.objects.filter(code='razmer').get()
             for product in obj.children.all():
                 try:
                     value = ProductAttributesContainer(product).get_value_by_attribute(attribute).value_text
@@ -131,11 +133,19 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
             return sizes_list
 
 
-
-    def prepare_material(self, obj):
+    def prepare_material_verkha(self, obj):
         try:
             attribute = ProductAttribute.objects.filter(code='material_verkha').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text
+            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
+        except ObjectDoesNotExist:
+            return None
+        else:
+            return value
+
+    def prepare_material_vnutrennii(self, obj):
+        try:
+            attribute = ProductAttribute.objects.filter(code='material_vnutrennii').get()
+            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
         except ObjectDoesNotExist:
             return None
         else:
@@ -144,7 +154,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_color(self, obj):
         try:
             attribute = ProductAttribute.objects.filter(code='tsvet').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text
+            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
             try:
                 hex_code = ColorHexCode.objects.filter(color=value).get().hex_code
             except ObjectDoesNotExist:

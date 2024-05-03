@@ -9,7 +9,7 @@ def get_child_products_sizes(child_products):
     sizes = []
     for product in child_products:
         try:
-            sizes.append(product.attributes_container.size['value'])
+            sizes.append(product.attributes_container.razmer['value'])
         except (AttributeError, KeyError):
             pass
     sizes.sort()

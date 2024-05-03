@@ -47,24 +47,6 @@ class ResultsSetPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
 
 
-# class ApiProductsList(generics.ListAPIView):
-#     serializer_class = ProductSerializer
-#     pagination_class = ResultsSetPagination
-#     queryset = Product.objects.all()
-#
-#     # def get_queryset(self):
-#     #     client_id = self.request.query_params.get('client_id')
-#     #     queryset = MessageClient.objects.filter(
-#     #         client__client_id=client_id).select_related('client').order_by('-created_at')
-#     #     return queryset
-#
-#     def get(self, request, *args, **kwargs):
-#         return self.list(request, *args, **kwargs)
-#
-#     def list(self, request, *args, **kwargs):
-#         response = super().list(request, * args, **kwargs)
-#         return response
-
 @api_view(['GET'])
 def get_products_list(request):
     # v1/products/list
@@ -76,7 +58,8 @@ def get_products_list(request):
     search_context = search_handler.get_search_context_data(context_object_name="products")
     data = {
         'items': [],
-        'total': int(search_context['paginator'].count)
+        'total': int(search_context['paginator'].count),
+        'filters': [],
     }
     for item in search_context['products']:
         category_obj = item.get_categories().first()
@@ -89,17 +72,21 @@ def get_products_list(request):
         product['title'] = f"{category_name} {item.upc}"
         try:
             product['priceInitial'] = float(request.strategy.fetch_for_parent(item).price.price_initial_1c)
-        except TypeError:
+        except (TypeError, AttributeError):
             product['priceInitial'] = 0.0
 
         try:
             product['discountPercent'] = float(request.strategy.fetch_for_parent(item).price.discount_1c)
-        except TypeError:
+        except (TypeError, AttributeError):
             product['discountPercent'] = 0.0
 
         product['discountValue'] = round(product['priceInitial'] * (1 - product['discountPercent'] / 100), 2)
 
-        product['price'] = float(request.strategy.fetch_for_parent(item).price.incl_tax)
+        try:
+            product['price'] = float(request.strategy.fetch_for_parent(item).price.incl_tax)
+        except (TypeError, AttributeError):
+            product['price'] = 0.0
+
         product['currency'] = request.strategy.fetch_for_parent(item).price.currency
 
         product['shoesType'] = getattr(category_obj, 'slug' + lang_lookup, category_obj.slug)
@@ -130,13 +117,47 @@ def get_products_list(request):
         sizes = []
         product_children_count = len(item.product_children)
         for item_enum in enumerate(item.product_children):
+            try:
+                size_value = float(item_enum[1].attributes_container.razmer['value'])
+            except (TypeError, AttributeError):
+                size_value = 0
+            try:
+                centimeters = float(item_enum[1].attributes_container.dlina_stelki['value'])
+            except (TypeError, AttributeError):
+                centimeters = 0
             sizes.append({
                 'id': product_children_count - item_enum[0],
-                'value': item_enum[1].attributes_container.size['value'],
+                'value': size_value,
+                'centimeters': centimeters,
             })
         sizes = sorted(sizes, key=lambda size: size['value'])
         product['sizes'] = sizes
 
         data['items'].append(product)
+
+    # Filters
+    for prod_filter in search_context['facet_data'].items():
+        fi_item = {'values': []}
+        fi = prod_filter[1]
+        fi_item['title'] = fi['name']
+        fi_item['category'] = prod_filter[0]
+
+        for fi_value in fi['results']:
+            fi_val = {
+                'name': fi_value['name'],
+                'value': fi_value['name'],
+                'count': fi_value['count'],
+                'disabled': fi_value['disabled'],
+                'selected': fi_value['selected'],
+                'show_count': fi_value['show_count'],
+            }
+            if 'select_url' in fi_value:
+                fi_val['select_url'] = fi_value['select_url']
+            if 'deselect_url' in fi_value:
+                fi_val['deselect_url'] = fi_value['deselect_url']
+
+            fi_item['values'].append(fi_val)
+
+        data['filters'].append(fi_item)
 
     return JsonResponse(data, status=status.HTTP_200_OK, safe=False)

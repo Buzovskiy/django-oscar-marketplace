@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-29 10:14+0100\n"
+"POT-Creation-Date: 2024-05-03 09:44+0200\n"
 "PO-Revision-Date: 2023-03-14 01:27+0000\n"
 "Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.7\n"
 
+#: .\app_settings\apps.py:8 .\app_settings\models.py:23
+#: .\app_settings\models.py:24
+msgid "Application settings"
+msgstr ""
+
 #: .\app_settings\models.py:11 .\application\blog\models.py:22
-#: .\application\partner\models.py:10 .\application\partner\models.py:26
+#: .\application\partner\models.py:17 .\application\partner\models.py:33
 #: .\application\payment\models.py:7
 msgid "Title"
 msgstr ""
@@ -29,16 +34,12 @@ msgstr ""
 msgid "Key"
 msgstr ""
 
-#: .\app_settings\models.py:13
+#: .\app_settings\models.py:13 .\application\partner\models.py:9
 msgid "Value"
 msgstr ""
 
 #: .\app_settings\models.py:14
 msgid "Description"
-msgstr ""
-
-#: .\app_settings\models.py:23 .\app_settings\models.py:24
-msgid "Application settings"
 msgstr ""
 
 #: .\application\blog\admin.py:21
@@ -57,64 +58,96 @@ msgstr ""
 msgid "Manage Popularity"
 msgstr ""
 
-#: .\application\catalogue\models.py:28
+#: .\application\catalogue\models.py:20
+msgid "Text EN"
+msgstr ""
+
+#: .\application\catalogue\models.py:21
+msgid "Text ES"
+msgstr ""
+
+#: .\application\catalogue\models.py:22
+msgid "Value external ID"
+msgstr ""
+
+#: .\application\catalogue\models.py:38
 msgid "Sizes must by like: 20-26"
 msgstr ""
 
-#: .\application\catalogue\models.py:34 .\application\catalogue\models.py:88
-#: .\application\catalogue\models.py:119
+#: .\application\catalogue\models.py:44 .\application\catalogue\models.py:98
+#: .\application\catalogue\models.py:146
 msgid "Code in 1c"
 msgstr ""
 
-#: .\application\catalogue\models.py:91
+#: .\application\catalogue\models.py:101
 msgid "Product description"
 msgstr ""
 
-#: .\application\catalogue\models.py:94
+#: .\application\catalogue\models.py:104
 msgid "Enter product description that is to display on product page"
 msgstr ""
 
-#: .\application\catalogue\models.py:97
+#: .\application\catalogue\models.py:107
 msgid "Product long description"
 msgstr ""
 
-#: .\application\catalogue\models.py:100
+#: .\application\catalogue\models.py:110
 msgid "Enter product long description that is to display on product page"
 msgstr ""
 
-#: .\application\catalogue\models.py:103
+#: .\application\catalogue\models.py:113
 msgid "Product design description"
 msgstr ""
 
-#: .\application\catalogue\models.py:106
+#: .\application\catalogue\models.py:116
 msgid "Enter product design description that is to display on product page"
 msgstr ""
 
-#: .\application\catalogue\models.py:109
+#: .\application\catalogue\models.py:119
 msgid "Product benefits description"
 msgstr ""
 
-#: .\application\catalogue\models.py:112
+#: .\application\catalogue\models.py:122
 msgid "Enter product benefits description that is to display on product page"
 msgstr ""
 
 #: .\application\catalogue\models.py:125
+msgid "Name ES"
+msgstr ""
+
+#: .\application\catalogue\models.py:126
+msgid "Name EN"
+msgstr ""
+
+#: .\application\catalogue\models.py:127
+msgid "Slug ES"
+msgstr ""
+
+#: .\application\catalogue\models.py:154
+msgid "Value ES"
+msgstr ""
+
+#: .\application\catalogue\models.py:155
+msgid "Value EN"
+msgstr ""
+
+#: .\application\catalogue\models.py:163
 msgid "Color name"
 msgstr ""
 
-#: .\application\catalogue\models.py:128
+#: .\application\catalogue\models.py:166
 msgid "Color name, e.g. black "
 msgstr ""
 
-#: .\application\catalogue\models.py:131
+#: .\application\catalogue\models.py:169
 msgid "Hex code"
 msgstr ""
 
-#: .\application\catalogue\models.py:135
+#: .\application\catalogue\models.py:173
 msgid "Color hex code, e.g. #000000"
 msgstr ""
 
-#: .\application\catalogue\models.py:143
+#: .\application\catalogue\models.py:181
 msgid "Color hex code"
 msgstr ""
 
@@ -293,79 +326,83 @@ msgstr ""
 msgid "The number of addresses"
 msgstr ""
 
-#: .\application\partner\models.py:14
+#: .\application\partner\models.py:11
+msgid "Price"
+msgstr ""
+
+#: .\application\partner\models.py:21
 msgid "Enter the title of retail partner stores"
 msgstr ""
 
-#: .\application\partner\models.py:18
+#: .\application\partner\models.py:25
 msgid "Retail shop partner"
 msgstr ""
 
-#: .\application\partner\models.py:19
+#: .\application\partner\models.py:26
 msgid "Retail shop partners"
 msgstr ""
 
-#: .\application\partner\models.py:33
+#: .\application\partner\models.py:40
 msgid "Retail city"
 msgstr ""
 
-#: .\application\partner\models.py:34
+#: .\application\partner\models.py:41
 msgid "Retail cities"
 msgstr ""
 
-#: .\application\partner\models.py:41
+#: .\application\partner\models.py:48
 msgid "Short description"
 msgstr ""
 
-#: .\application\partner\models.py:45
+#: .\application\partner\models.py:52
 msgid ""
 "Enter short description which will be displayed in parenthesis near title or "
 "leave field empty"
 msgstr ""
 
-#: .\application\partner\models.py:48 .\application\partner\models.py:77
+#: .\application\partner\models.py:55 .\application\partner\models.py:84
 msgid "Address"
 msgstr ""
 
-#: .\application\partner\models.py:50
+#: .\application\partner\models.py:57
 msgid "Enter address of the retail partner store"
 msgstr ""
 
-#: .\application\partner\models.py:53
+#: .\application\partner\models.py:60
 msgid "Store working hours"
 msgstr ""
 
-#: .\application\partner\models.py:56
+#: .\application\partner\models.py:63
 msgid "Enter store working hours"
 msgstr ""
 
-#: .\application\partner\models.py:58
+#: .\application\partner\models.py:65
 msgid "Web site"
 msgstr ""
 
-#: .\application\partner\models.py:58
+#: .\application\partner\models.py:65
 msgid "Enter web site"
 msgstr ""
 
-#: .\application\partner\models.py:60
+#: .\application\partner\models.py:67
 msgid "Latitude"
 msgstr ""
 
-#: .\application\partner\models.py:63
+#: .\application\partner\models.py:70
 msgid ""
 "Enter latitude coordinate in decimal format, for example 46.43143143569561"
 msgstr ""
 
-#: .\application\partner\models.py:66
+#: .\application\partner\models.py:73
 msgid "longitude"
 msgstr ""
 
-#: .\application\partner\models.py:69
+#: .\application\partner\models.py:76
 msgid ""
 "Enter longitude coordinate in decimal format, for example 30.724300888157735"
 msgstr ""
 
-#: .\application\partner\models.py:78
+#: .\application\partner\models.py:85
 msgid "Addresses"
 msgstr ""
 
@@ -416,31 +453,27 @@ msgstr ""
 msgid "Search optimisation fields"
 msgstr ""
 
-#: .\project\settings.py:215
+#: .\project\settings.py:202
 msgid "Spanish"
 msgstr ""
 
-#: .\project\settings.py:216
+#: .\project\settings.py:203
 msgid "English"
 msgstr ""
 
-#: .\project\settings.py:335
-msgid "Rating"
-msgstr ""
-
-#: .\project\settings.py:336
+#: .\project\settings.py:340
 msgid "Type"
 msgstr ""
 
-#: .\project\settings.py:337
+#: .\project\settings.py:341
 msgid "Gender"
 msgstr ""
 
-#: .\project\settings.py:338
+#: .\project\settings.py:342
 msgid "Season"
 msgstr ""
 
-#: .\project\settings.py:339 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:343 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
 #: .\templates\oscar\catalogue\detail.html:88
 #: .\templates\oscar\checkout\one_page_checkout.html:119
@@ -448,11 +481,15 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: .\project\settings.py:340 .\templates\oscar\catalogue\detail.html:119
-msgid "Material"
+#: .\project\settings.py:344
+msgid "Material outer"
 msgstr ""
 
-#: .\project\settings.py:341 .\templates\oscar\catalogue\detail.html:70
+#: .\project\settings.py:345
+msgid "Material inner"
+msgstr ""
+
+#: .\project\settings.py:346 .\templates\oscar\catalogue\detail.html:70
 #: .\templates\oscar\catalogue\detail.html:176
 #: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:115
@@ -715,13 +752,13 @@ msgstr ""
 msgid "Go to the catalog"
 msgstr ""
 
-#: .\templates\oscar\base.html:13
+#: .\templates\oscar\base.html:14
 msgid ""
 "Buy children's shoes online at weestep-kids.es: sneakers, boots, ankle "
 "boots, sandals. Buy shoes online at weestep-kids.es."
 msgstr ""
 
-#: .\templates\oscar\base.html:14
+#: .\templates\oscar\base.html:15
 msgid "weestep, baby shoes, child shoes, sneakers, boots, sandals"
 msgstr ""
 
@@ -885,6 +922,10 @@ msgstr ""
 
 #: .\templates\oscar\catalogue\detail.html:114
 msgid "design"
+msgstr ""
+
+#: .\templates\oscar\catalogue\detail.html:119
+msgid "Material"
 msgstr ""
 
 #: .\templates\oscar\catalogue\detail.html:126
