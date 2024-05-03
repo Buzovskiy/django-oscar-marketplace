@@ -127,7 +127,7 @@ class Category(AbstractCategory):
     slug_es = models.CharField(_('Slug ES'), max_length=255, null=True, blank=True)
 
     @property
-    def full_name(self):
+    def full_name_lang(self):
         """
         Returns a string representation of the category and it's ancestors,
         e.g. 'Books > Non-fiction > Essential programming'.
@@ -137,6 +137,8 @@ class Category(AbstractCategory):
         to keep around.
         """
         names = [getattr_lang(category, 'name') for category in self.get_ancestors_and_self()]
+        if not names:
+            names = [category.name for category in self.get_ancestors_and_self()]
         return self._full_name_separator.join(names)
 
 
