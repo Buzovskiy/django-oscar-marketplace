@@ -2,10 +2,14 @@
 
 from django.db import migrations
 from django.core.management import call_command
+from django.conf import settings
+
+
+fixture_path = settings.BASE_DIR / 'application/search_optimisation_fields/fixtures/add_initial_data.json'
 
 
 def add_initial_data(apps, schema_editor):
-    call_command('loaddata', './application/search_optimisation_fields/fixtures/add_initial_data.json')
+    call_command('loaddata', fixture_path)
 
 
 class Migration(migrations.Migration):

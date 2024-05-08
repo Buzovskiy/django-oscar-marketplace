@@ -11,7 +11,7 @@ from .files import FileXml, FileImage
 import xml.etree.ElementTree as ET
 from slugify import slugify_filename
 from application.catalogue.utils import get_sizes_list_from_range
-from application.catalogue.models import AttributeValue
+from application.catalogue.models import AttributeValue, Filter, FilterValue, ProductFilterValue
 
 ProductClass = get_model('catalogue', 'ProductClass')
 ProductAttribute = get_model('catalogue', 'ProductAttribute')
@@ -24,6 +24,13 @@ ColorHexCode = get_model('catalogue', 'ColorHexCode')
 Partner = get_model('partner', 'Partner')
 StockRecord = get_model('partner', 'StockRecord')
 
+
+def save_filters():
+    for key, facet in settings.OSCAR_SEARCH_FACETS['fields'].items():
+        Filter.objects.update_or_create(
+            field=key
+        )
+    return True
 
 
 class ImportImage:
@@ -242,6 +249,53 @@ class ImportProduct(ImportCore):
                     color=product_attribute_value.value_text,
                 )
 
+        # Save product filters
+        for product_attribute_xml in product_xml.findall('./ЗначенияСвойств/ЗначенияСвойства'):
+            attribute_external_id_xml = product_attribute_xml.find('Ид').text
+            try:
+                filter_obj = Filter.objects.filter(external_id=attribute_external_id_xml).get()
+            except ObjectDoesNotExist:
+                continue
+
+            try:
+                filter_value = product_attribute_xml.find('Значение').text
+            except AttributeError:
+                continue
+
+            if not filter_value:
+                continue
+
+            try:
+                filter_value_obj, created = FilterValue.objects.update_or_create(
+                    filter=filter_obj, value=filter_value
+                )
+            except ValidationError:
+                continue
+
+            try:
+                ProductFilterValue.objects.update_or_create(
+                    product=product, filter=filter_obj, filter_value=filter_value_obj
+                )
+            except ValidationError:
+                continue
+
+            # if attribute.code == settings.ATTR_COLOR_CODE:  # if tsvet
+            #     ColorHexCode.objects.update_or_create(
+            #         color=product_attribute_value.value_text,
+            #     )
+
+        # Save category as filter
+        try:
+            filter_obj = Filter.objects.filter(external_id='category').get()
+            filter_value_obj, created = FilterValue.objects.update_or_create(
+                filter=filter_obj, value=category.name.lower()
+            )
+            ProductFilterValue.objects.update_or_create(
+                product=product, filter=filter_obj, filter_value=filter_value_obj
+            )
+        except (ObjectDoesNotExist, ValidationError):
+            pass
+
         self.save_color_hex_code_product_attribute(product)
 
     @staticmethod
@@ -344,6 +398,47 @@ class ImportProduct(ImportCore):
                 )
             except (ObjectDoesNotExist, ValidationError):
                 pass
+
+        # Set filter
+        for product_attribute_xml in product_xml.findall('./ЗначенияСвойств/ЗначенияСвойства'):
+            attribute_external_id_xml = product_attribute_xml.find('Ид').text
+
+            if attribute_external_id_xml not in ['property_razmer', 'insole_length']:
+                continue
+
+            try:
+                filter_obj = Filter.objects.filter(external_id=attribute_external_id_xml).get()
+            except ObjectDoesNotExist:
+                continue
+
+            try:
+                filter_value = product_attribute_xml.find('Значение').text
+            except AttributeError:
+                continue
+
+            # save AttributeValue model
+            try:
+                filter_value_defaults = {
+                    'value': product_attribute_xml.find('Значение').text
+                }
+                # For every language set values equal to field value
+                # Consider language variations of values and slugs for insole_length and property_razmer
+                # are equal to the value from xml
+                for lang in settings.LANGUAGES:
+                    lang_code = lang[0]
+                    filter_value_defaults['value_' + lang_code] = filter_value
+                    filter_value_defaults['slug_' + lang_code] = filter_value
+
+                filter_value_obj, created = FilterValue.objects.update_or_create(
+                    filter=filter_obj, value=filter_value,
+                    defaults=filter_value_defaults,
+                )
+
+                ProductFilterValue.objects.update_or_create(
+                    product=product_parent, filter=filter_obj, filter_value=filter_value_obj
+                )
+            except ValidationError:
+                continue
 
 
     @staticmethod
