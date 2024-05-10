@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from oscar.apps.catalogue.views import ProductDetailView as CoreProductDetailView
 from oscar.core.loading import get_model, get_class
 from oscar_routing.utils import site_url, get_lang_lookup
+from application.catalogue.models import Filter, FilterValue, ProductFilterValue
+from oscar_routing.utils import getattr_lang
 
 from .serializers import ProductSerializer
 
@@ -53,8 +55,29 @@ def get_products_list(request):
     lang_lookup = get_lang_lookup(request)
     # if paginate_by is not set send all products
     paginate_by = request.query_params.get('limit', 100000)
+
+    # Modify query params for Django Haystack
+    filters = Filter.objects.all()
+    filters_dict = {}
+    for f in filters:
+        filters_dict[getattr_lang(f, 'slug')] = f.field
+    new_query_dict = request.GET.copy()
+    values_list_modified = []
+    for key, value in request.GET.items():
+        if key in filters_dict:
+            values_list = value.split(',')
+            for f_val in values_list:
+                values_list_modified.append(f'{filters_dict[key]}_exact:{f_val}')
+
+    new_query_dict.setlist('selected_facets', values_list_modified)
+
+    solr_query_string = ''
+    for solr_filter in new_query_dict.getlist('selected_facets', []):
+        solr_query_string += f'&selected_facets={solr_filter}'
+    ########################################################################
+
     search_handler = get_product_search_handler_class()(
-        request.GET, request.get_full_path(), [], paginate_by=paginate_by)
+        new_query_dict, request.get_full_path() + solr_query_string, [], paginate_by=paginate_by)
     search_context = search_handler.get_search_context_data(context_object_name="products")
     data = {
         'items': [],
