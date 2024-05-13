@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from oscar.apps.catalogue.views import ProductDetailView as CoreProductDetailView
 from oscar.core.loading import get_model, get_class
 from oscar_routing.utils import site_url, get_lang_lookup
+from application.catalogue.models import Filter, FilterValue, ProductFilterValue
+from oscar_routing.utils import getattr_lang
 
 from .serializers import ProductSerializer
 
@@ -53,14 +55,41 @@ def get_products_list(request):
     lang_lookup = get_lang_lookup(request)
     # if paginate_by is not set send all products
     paginate_by = request.query_params.get('limit', 100000)
+
+    # Modify query params for Django Haystack
+    filters = Filter.objects.prefetch_related('filtervalue_set').all()
+    filters_dict = {}
+    filters_value_dict = {}
+    for f in filters:
+        filters_dict[getattr_lang(f, 'slug')] = f.field
+        filters_value_dict[f.field] = {'filter_object': f, 'filter_values': {}}
+        for fv in f.filtervalue_set.all():
+            filters_value_dict[f.field]['filter_values'][getattr_lang(fv, 'slug')] = fv
+
+    new_query_dict = request.GET.copy()
+    values_list_modified = []
+    for key, value in request.GET.items():
+        if key in filters_dict:
+            values_list = value.split(',')
+            for f_val in values_list:
+                values_list_modified.append(f'{filters_dict[key]}_exact:{f_val}')
+
+    new_query_dict.setlist('selected_facets', values_list_modified)
+
+    solr_query_string = ''
+    for solr_filter in new_query_dict.getlist('selected_facets', []):
+        solr_query_string += f'&selected_facets={solr_filter}'
+    # End modify query params
+
     search_handler = get_product_search_handler_class()(
-        request.GET, request.get_full_path(), [], paginate_by=paginate_by)
+        new_query_dict, request.get_full_path() + solr_query_string, [], paginate_by=paginate_by)
     search_context = search_handler.get_search_context_data(context_object_name="products")
     data = {
         'items': [],
         'total': int(search_context['paginator'].count),
         'filters': [],
     }
+
     for item in search_context['products']:
         category_obj = item.get_categories().first()
         category_name = getattr(category_obj, 'name' + lang_lookup, category_obj.name)
@@ -136,27 +165,33 @@ def get_products_list(request):
         data['items'].append(product)
 
     # Filters
-    for prod_filter in search_context['facet_data'].items():
-        fi_item = {'values': []}
-        fi = prod_filter[1]
-        fi_item['title'] = fi['name']
-        fi_item['category'] = prod_filter[0]
+    for solr_filter in search_context['facet_data'].items():
+        try:
+            f_details = filters_value_dict[solr_filter[0]]
+        except KeyError:
+            continue
 
-        for fi_value in fi['results']:
-            fi_val = {
-                'name': fi_value['name'],
-                'value': fi_value['name'],
-                'count': fi_value['count'],
-                'disabled': fi_value['disabled'],
-                'selected': fi_value['selected'],
-                'show_count': fi_value['show_count'],
-            }
-            if 'select_url' in fi_value:
-                fi_val['select_url'] = fi_value['select_url']
-            if 'deselect_url' in fi_value:
-                fi_val['deselect_url'] = fi_value['deselect_url']
+        fi_item = {
+            'title': getattr_lang(f_details['filter_object'], 'title'),
+            'queryKey': getattr_lang(f_details['filter_object'], 'slug'),
+            'metadata': {
+                'id': f_details['filter_object'].id,
+                'key': f_details['filter_object'].slug
+            },
+            'values': [],
+        }
 
-            fi_item['values'].append(fi_val)
+        for solr_filter_value in solr_filter[1]['results']:
+            try:
+                fv_details = f_details['filter_values'][solr_filter_value['name']]
+            except KeyError:
+                continue
+
+            fi_item['values'].append({
+                'title': getattr_lang(fv_details, 'value'),
+                'queryValue': getattr_lang(fv_details, 'slug'),
+                'count': solr_filter_value['count'],
+            })
 
         data['filters'].append(fi_item)
 

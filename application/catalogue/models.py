@@ -160,6 +160,44 @@ class AttributeValue(models.Model):
         return self.value
 
 
+class Filter(models.Model):
+    """
+    Should be the same as field in OSCAR_SEARCH_FACETS
+    Field and external_id should be mapped manually through admin page.
+    """
+    field = models.CharField(max_length=255, editable=False, null=False, blank=False)
+    slug = models.CharField(_('Slug'), max_length=255, null=True, blank=False)
+    slug_es = models.CharField(_('Slug ES'), max_length=255, null=True, blank=False)
+    slug_en = models.CharField(_('Slug EN'), max_length=255, null=True, blank=False)
+    title_en = models.CharField(_('Title EN'), max_length=255, null=True, blank=False)
+    title_es = models.CharField(_('Title ES'), max_length=255, null=True, blank=False)
+    external_id = models.CharField(
+        max_length=255, editable=True, null=True, blank=False,
+        help_text=_('Should be mapped manually to filter field')
+    )
+
+    def __str__(self):
+        return self.field
+
+
+class FilterValue(models.Model):
+    filter = models.ForeignKey('catalogue.Filter', on_delete=models.CASCADE, editable=False)
+    value = models.CharField(max_length=255, blank=False, null=False, editable=False)
+    value_en = models.CharField(_('Value EN'), max_length=255, null=True, blank=False)
+    value_es = models.CharField(_('Value ES'), max_length=255, null=True, blank=False)
+    slug_en = models.CharField(_('Slug EN'), max_length=255, null=True, blank=False)
+    slug_es = models.CharField(_('Slug ES'), max_length=255, null=True, blank=False)
+
+    def __str__(self):
+        return f"{self.filter}: {self.value}"
+
+
+class ProductFilterValue(models.Model):
+    product = models.ForeignKey('catalogue.Product', on_delete=models.CASCADE)
+    filter = models.ForeignKey('catalogue.Filter', on_delete=models.CASCADE)
+    filter_value = models.ForeignKey('catalogue.FilterValue', on_delete=models.CASCADE)
+
+
 class ColorHexCode(models.Model):
     color = models.CharField(
         _('Color name'),

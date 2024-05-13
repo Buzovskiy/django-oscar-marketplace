@@ -1,7 +1,7 @@
 from django.conf import settings
 from oscar.apps.catalogue.admin import *  # noqa
 from .models import ColorHexCode, AttributeValue
-from .models import ProductAttribute
+from .models import ProductAttribute, Filter, FilterValue
 
 admin.site.unregister(ProductAttribute)
 
@@ -40,3 +40,21 @@ class ProductAttributeAdmin(admin.ModelAdmin):
     readonly_fields = ('external_id',)
     prepopulated_fields = {"code": ("name",)}
     actions = [apply_translations]
+
+
+class FilterValueInline(admin.StackedInline):
+    model = FilterValue
+    readonly_fields = ('value', 'filter')
+    extra = 0
+
+
+@admin.register(Filter)
+class FilterAdmin(admin.ModelAdmin):
+    inlines = [FilterValueInline]
+    list_display = ('field', 'slug', 'slug_en', 'slug_es', 'title_en', 'title_es', 'external_id')
+    readonly_fields = ('field',)
+
+
+# @admin.register(FilterValue)
+# class FilterValueAdmin(admin.ModelAdmin):
+#     readonly_fields = ('value', 'filter')
