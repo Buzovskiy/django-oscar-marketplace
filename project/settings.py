@@ -337,13 +337,15 @@ OSCAR_SEARCH_FACETS = {
         # to the template. Same for the 'queries' dict below.
         # ('product_class', {'name': _('Type'), 'field': 'product_class'}),
         # ('rating', {'name': _('Rating'), 'field': 'rating'}),
-        ('category', {'name': _('Type'), 'field': 'category'}),
-        ('gender', {'name': _('Gender'), 'field': 'gender'}),
-        ('season', {'name': _('Season'), 'field': 'season'}),
+        ('category', {'name': _('Type'), 'field': 'category', 'options': {'sort': 'index'}}),
+        ('gender', {'name': _('Gender'), 'field': 'gender', 'options': {'sort': 'index'}}),
+        ('season', {'name': _('Season'), 'field': 'season', 'options': {'sort': 'index'}}),
         ('size', {'name': _('Size'), 'field': 'size', 'options': {'sort': 'index'}}),
-        ('material_verkha', {'name': _('Material outer'), 'field': 'material_verkha'}),
-        ('material_vnutrennii', {'name': _('Material inner'), 'field': 'material_vnutrennii'}),
-        ('color', {'name': _('Color'), 'field': 'color'}),
+        ('material_verkha', {'name': _('Material outer'), 'field': 'material_verkha', 'options': {'sort': 'index'}}),
+        ('material_vnutrennii', {
+            'name': _('Material inner'), 'field': 'material_vnutrennii', 'options': {'sort': 'index'}
+        }),
+        ('color', {'name': _('Color'), 'field': 'color', 'options': {'sort': 'index'}}),
         # You can specify an 'options' element that will be passed to the
         # SearchQuerySet.facet() call.
         # For instance, with Elasticsearch backend, 'options': {'order': 'term'}

@@ -182,6 +182,9 @@ def get_products_list(request):
         }
 
         for solr_filter_value in solr_filter[1]['results']:
+            if solr_filter_value['disabled']:
+                continue
+
             try:
                 fv_details = f_details['filter_values'][solr_filter_value['name']]
             except KeyError:
@@ -191,6 +194,7 @@ def get_products_list(request):
                 'title': getattr_lang(fv_details, 'value'),
                 'queryValue': getattr_lang(fv_details, 'slug'),
                 'count': solr_filter_value['count'],
+                'showCount': solr_filter_value['show_count'],
             })
 
         data['filters'].append(fi_item)
