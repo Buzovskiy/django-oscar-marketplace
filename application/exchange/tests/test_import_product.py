@@ -13,6 +13,7 @@ ProductClass = get_model('catalogue', 'ProductClass')
 ProductAttribute = get_model('catalogue', 'ProductAttribute')
 Category = get_model('catalogue', 'Category')
 Partner = get_model('partner', 'Partner')
+from application.catalogue.models import Filter
 
 
 @override_settings(MEDIA_ROOT=settings.BASE_DIR / 'media-test')
@@ -157,3 +158,11 @@ class ImportImageTest(TransactionTestCase):
         ImportOffers('offers.xml').save_stock_records()
         import_image_inst = ImportImage('3cb3474f-d9a8-11e9-81dc-2c4d5446690f.jpg')
         import_image_inst.save_product_image()
+
+
+# class FilterTest(TransactionTestCase):
+#     def test_save_filters(self):
+#         save_filters()
+#         for key, facet in settings.OSCAR_SEARCH_FACETS['fields'].items():
+#             count = Filter.objects.filter(field=key).count()
+#             self.assertEqual(1, count)

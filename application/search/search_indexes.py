@@ -2,9 +2,10 @@ import json
 from haystack import indexes
 from django.core.exceptions import ObjectDoesNotExist
 from application.catalogue.product_attributes import ProductAttributesContainer
-from application.catalogue.models import ColorHexCode
+from application.catalogue.models import ColorHexCode, Filter, FilterValue, ProductFilterValue
 
 from oscar.core.loading import get_class, get_model
+from oscar_routing.utils import getattr_lang
 
 # Load default strategy (without a user/request)
 is_solr_supported = get_class('search.features', 'is_solr_supported')
@@ -58,9 +59,11 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     #     return obj.get_product_class().name
 
     def prepare_category(self, obj):
-        categories = obj.categories.all()
-        if len(categories) > 0:
-            return [category.full_name_lang for category in categories]
+        pfv_qs = ProductFilterValue.objects.filter(product=obj).\
+                                        prefetch_related('filter').\
+                                        prefetch_related('filter_value').\
+                                        filter(filter__field='category').all()
+        return [getattr_lang(pfv.filter_value, 'slug') for pfv in pfv_qs]
 
     # def prepare_rating(self, obj):
     #     if obj.rating is not None:
@@ -99,71 +102,61 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_gender(self, obj):
         try:
-            attribute = ProductAttribute.objects.filter(code='pol').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
+            pfv_qs = ProductFilterValue.objects.filter(product=obj). \
+                prefetch_related('filter'). \
+                prefetch_related('filter_value'). \
+                filter(filter__field='gender').first()
+            return getattr_lang(pfv_qs.filter_value, 'slug')
         except ObjectDoesNotExist:
             return None
-        else:
-            return value
 
     def prepare_season(self, obj):
         try:
-            attribute = ProductAttribute.objects.filter(code='sezon').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
+            pfv_qs = ProductFilterValue.objects.filter(product=obj). \
+                prefetch_related('filter'). \
+                prefetch_related('filter_value'). \
+                filter(filter__field='season').first()
+            return getattr_lang(pfv_qs.filter_value, 'slug')
         except ObjectDoesNotExist:
             return None
-        else:
-            return value
 
     def prepare_size(self, obj):
-        if not obj.is_parent:
-            return []
-        sizes_list = []
-        try:
-            attribute = ProductAttribute.objects.filter(code='razmer').get()
-            for product in obj.children.all():
-                try:
-                    value = ProductAttributesContainer(product).get_value_by_attribute(attribute).value_text
-                    sizes_list.append(value)
-                except ObjectDoesNotExist:
-                    pass
-        except ObjectDoesNotExist:
-            return None
-        else:
-            return sizes_list
+        pfv_qs = ProductFilterValue.objects.filter(product=obj).\
+                                        prefetch_related('filter').\
+                                        prefetch_related('filter_value').\
+                                        filter(filter__field='size').all()
+        return [getattr_lang(pfv.filter_value, 'slug') for pfv in pfv_qs]
 
 
     def prepare_material_verkha(self, obj):
         try:
-            attribute = ProductAttribute.objects.filter(code='material_verkha').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
+            pfv_qs = ProductFilterValue.objects.filter(product=obj). \
+                prefetch_related('filter'). \
+                prefetch_related('filter_value'). \
+                filter(filter__field='material_verkha').first()
+            return getattr_lang(pfv_qs.filter_value, 'slug')
         except ObjectDoesNotExist:
             return None
-        else:
-            return value
 
     def prepare_material_vnutrennii(self, obj):
         try:
-            attribute = ProductAttribute.objects.filter(code='material_vnutrennii').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
+            pfv_qs = ProductFilterValue.objects.filter(product=obj). \
+                prefetch_related('filter'). \
+                prefetch_related('filter_value'). \
+                filter(filter__field='material_vnutrennii').first()
+            return getattr_lang(pfv_qs.filter_value, 'slug')
         except ObjectDoesNotExist:
             return None
-        else:
-            return value
 
     def prepare_color(self, obj):
         try:
-            attribute = ProductAttribute.objects.filter(code='tsvet').get()
-            value = ProductAttributesContainer(obj).get_value_by_attribute(attribute).value_text_lang
-            try:
-                hex_code = ColorHexCode.objects.filter(color=value).get().hex_code
-            except ObjectDoesNotExist:
-                hex_code = '#fff'
-            data = json.dumps({'color': value, 'color_hex_code': hex_code})
+            pfv_qs = ProductFilterValue.objects.filter(product=obj). \
+                prefetch_related('filter'). \
+                prefetch_related('filter_value'). \
+                filter(filter__field='color').first()
+            return getattr_lang(pfv_qs.filter_value, 'slug')
         except ObjectDoesNotExist:
             return None
-        else:
-            return data
 
     def prepare(self, obj):
         prepared_data = super().prepare(obj)

@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from .files import FileXml, FileImage, get_images_list
-from .onec import ImportProduct, ImportOffers, ImportImage
+from .onec import ImportProduct, ImportOffers, ImportImage, save_filters
 
 
 class ExchangeFilesForm(forms.Form):
@@ -65,6 +65,7 @@ class ExchangeFilesForm(forms.Form):
         elif cleaned_data.get("action") == 'exchange':
             for xml_file in xml_list:
                 if os.path.basename(xml_file) == 'import.xml':
+                    save_filters()
                     import_product = ImportProduct(xml_file)
                     import_product.save_product_class()
                     import_product.save_default_partner()
