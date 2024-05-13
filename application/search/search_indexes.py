@@ -107,7 +107,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
                 prefetch_related('filter_value'). \
                 filter(filter__field='gender').first()
             return getattr_lang(pfv_qs.filter_value, 'slug')
-        except ObjectDoesNotExist:
+        except (ObjectDoesNotExist, AttributeError):
             return None
 
     def prepare_season(self, obj):
@@ -117,7 +117,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
                 prefetch_related('filter_value'). \
                 filter(filter__field='season').first()
             return getattr_lang(pfv_qs.filter_value, 'slug')
-        except ObjectDoesNotExist:
+        except (ObjectDoesNotExist, AttributeError):
             return None
 
     def prepare_size(self, obj):
@@ -127,7 +127,6 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
                                         filter(filter__field='size').all()
         return [getattr_lang(pfv.filter_value, 'slug') for pfv in pfv_qs]
 
-
     def prepare_material_verkha(self, obj):
         try:
             pfv_qs = ProductFilterValue.objects.filter(product=obj). \
@@ -135,7 +134,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
                 prefetch_related('filter_value'). \
                 filter(filter__field='material_verkha').first()
             return getattr_lang(pfv_qs.filter_value, 'slug')
-        except ObjectDoesNotExist:
+        except (ObjectDoesNotExist, AttributeError):
             return None
 
     def prepare_material_vnutrennii(self, obj):
@@ -145,7 +144,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
                 prefetch_related('filter_value'). \
                 filter(filter__field='material_vnutrennii').first()
             return getattr_lang(pfv_qs.filter_value, 'slug')
-        except ObjectDoesNotExist:
+        except (ObjectDoesNotExist, AttributeError):
             return None
 
     def prepare_color(self, obj):
@@ -155,7 +154,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
                 prefetch_related('filter_value'). \
                 filter(filter__field='color').first()
             return getattr_lang(pfv_qs.filter_value, 'slug')
-        except ObjectDoesNotExist:
+        except (ObjectDoesNotExist, AttributeError):
             return None
 
     def prepare(self, obj):
