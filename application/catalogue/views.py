@@ -1,13 +1,14 @@
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, generics
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from django.db.models import Prefetch
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from oscar.apps.catalogue.views import ProductDetailView as CoreProductDetailView
 from oscar.core.loading import get_model, get_class
-from oscar_routing.utils import site_url, get_lang_lookup
+from oscar_routing.utils import site_url, get_lang_lookup, getattr_lang
 from application.catalogue.models import Filter, FilterValue, ProductFilterValue
-from oscar_routing.utils import getattr_lang
 
 from .serializers import ProductSerializer
 
@@ -17,31 +18,49 @@ get_product_search_handler_class = get_class(
     'catalogue.search_handlers', 'get_product_search_handler_class')
 
 
+def product_detail_qs(qs):
+    queryset_attributes = ProductAttributeValue.objects.select_related('attribute').all()
+    qs = qs.prefetch_related(
+        Prefetch('attributes', queryset=queryset_attributes),
+        Prefetch('recommended_products', queryset=Product.objects.browsable().all()),
+        Prefetch('recommended_products__attributes', queryset=queryset_attributes),
+        Prefetch('children'),
+        Prefetch('children__attributes', queryset=queryset_attributes),
+        Prefetch('recommended_products__children'),
+        Prefetch('recommended_products__children__attributes', queryset=queryset_attributes),
+        Prefetch('recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
+        Prefetch('recommended_products__recommended_products__attributes', queryset=queryset_attributes),
+
+        Prefetch('parent'),
+        Prefetch('parent__attributes', queryset=queryset_attributes),
+        Prefetch('parent__recommended_products', queryset=Product.objects.browsable().all()),
+        Prefetch('parent__recommended_products__attributes', queryset=queryset_attributes),
+        Prefetch('parent__recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
+        Prefetch('parent__recommended_products__recommended_products__attributes', queryset=queryset_attributes),
+    )
+
+    return qs
+
+
 class ProductDetailView(CoreProductDetailView):
 
     def get_queryset(self):
         qs = super(ProductDetailView, self).get_queryset()
-        queryset_attributes = ProductAttributeValue.objects.select_related('attribute').all()
-        qs = qs.prefetch_related(
-            Prefetch('attributes', queryset=queryset_attributes),
-            Prefetch('recommended_products', queryset=Product.objects.browsable().all()),
-            Prefetch('recommended_products__attributes', queryset=queryset_attributes),
-            Prefetch('children'),
-            Prefetch('children__attributes', queryset=queryset_attributes),
-            Prefetch('recommended_products__children'),
-            Prefetch('recommended_products__children__attributes', queryset=queryset_attributes),
-            Prefetch('recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
-            Prefetch('recommended_products__recommended_products__attributes', queryset=queryset_attributes),
+        return product_detail_qs(qs)
 
-            Prefetch('parent'),
-            Prefetch('parent__attributes', queryset=queryset_attributes),
-            Prefetch('parent__recommended_products', queryset=Product.objects.browsable().all()),
-            Prefetch('parent__recommended_products__attributes', queryset=queryset_attributes),
-            Prefetch('parent__recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
-            Prefetch('parent__recommended_products__recommended_products__attributes', queryset=queryset_attributes),
-        )
 
-        return qs
+class ProductDetailsAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            qs = product_detail_qs(Product.objects)
+            return qs.filter(structure='parent').get(pk=pk)
+        except Product.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        product = self.get_object(pk)
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
 
 
 class ResultsSetPagination(PageNumberPagination):
@@ -122,11 +141,11 @@ def get_products_list(request):
         product['productId'] = str(item.id)
 
         # colors
-        product['colorsAvailable'] = []
-        product['colorsAvailable'].append({
-            'id': 1,
+        product['colors'] = []
+        product['colors'].append({
+            'id': item.attributes_container.color_hex_code['pav_id'],
             'image': product['img'],
-            'color': item.attributes_container.color_hex_code['value'],
+            'value': item.attributes_container.color_hex_code['value'],
             'productId': str(item.id)
         })
         for item_enum in enumerate(item.recommended_products.all()):
@@ -134,10 +153,10 @@ def get_products_list(request):
                 rec_image = item_enum[1].primary_image().original.url
             else:
                 rec_image = None
-            product['colorsAvailable'].append({
-                'id': item_enum[0] + 2,
+            product['colors'].append({
+                'id': item_enum[1].attributes_container.color_hex_code['pav_id'],
                 'image': rec_image,
-                'color': item_enum[1].attributes_container.color_hex_code['value'],
+                'value': item_enum[1].attributes_container.color_hex_code['value'],
                 'productId': str(item_enum[1].id)
             })
 

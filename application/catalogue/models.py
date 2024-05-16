@@ -147,6 +147,8 @@ class ProductAttribute(AbstractProductAttribute):
     external_id = models.CharField(
         _('Code in 1c'), max_length=255, editable=False, null=True, unique=False
     )
+    name_en = models.CharField(max_length=255, null=True, blank=True)
+    name_es = models.CharField(max_length=255, null=True, blank=True)
 
 
 class AttributeValue(models.Model):
