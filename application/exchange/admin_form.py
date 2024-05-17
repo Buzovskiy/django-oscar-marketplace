@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from .files import FileXml, FileImage, get_images_list
-from .onec import ImportProduct, ImportOffers, ImportImage, save_filters
+from .onec import ImportProduct, ImportOffers, ImportImage, save_filters, populate_color_hex_codes
 
 
 class ExchangeFilesForm(forms.Form):
@@ -74,6 +74,7 @@ class ExchangeFilesForm(forms.Form):
                     import_product.save_products()
                     import_product.save_recommended()
                     import_product.clean()
+                    populate_color_hex_codes()
                 elif os.path.basename(xml_file) == 'offers.xml':
                     import_offers = ImportOffers(xml_file)
                     import_offers.save_stock_records()

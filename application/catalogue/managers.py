@@ -18,8 +18,8 @@ class ProductQuerySet(ProductQuerySetCore):
         ProductAttributeValue = get_model('catalogue', 'ProductAttributeValue')
         queryset_attributes = ProductAttributeValue.objects.select_related('attribute').all()
         return self.prefetch_related(
-                    Prefetch('children', to_attr='product_children'),
-                    Prefetch('product_children__attributes', queryset=queryset_attributes)
+                    Prefetch('children'),
+                    Prefetch('children__attributes', queryset=queryset_attributes)
                 )
 
     def prefetch_recommended_products_attributes(self):

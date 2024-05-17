@@ -16,7 +16,7 @@
         </div>
         <div class="shop-colors">
             <div class="shop-colors__numbers">
-                {% get_child_products_sizes product.product_children as sizes %}
+                {% get_child_products_sizes product.children as sizes %}
                 {% for size in sizes %}
                     <span>{{ size }}</span>
                 {% endfor %}

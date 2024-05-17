@@ -549,3 +549,15 @@ class ImportOffers(ImportCore):
         for product in product_qs:
             product.is_public = True if product.num_in_stock__sum else False
             product.save()
+
+
+def populate_color_hex_codes():
+    try:
+        attribute = ProductAttribute.objects.get(code='color_hex_code')
+    except ObjectDoesNotExist:
+        return False
+    for product_attribute_value in ProductAttributeValue.objects.filter(attribute=attribute).all():
+        for lang in settings.LANGUAGES:
+            lang_code = lang[0]
+            setattr(product_attribute_value, 'value_text_' + lang_code, product_attribute_value.value_text)
+        product_attribute_value.save()

@@ -10,7 +10,7 @@ from oscar.core.loading import get_model, get_class
 from oscar_routing.utils import site_url, get_lang_lookup, getattr_lang
 from application.catalogue.models import Filter, FilterValue, ProductFilterValue
 
-from .serializers import ProductSerializer
+from .serializers import ProductDetailsSerializer, ProductListSerializer
 
 ProductAttributeValue = get_model('catalogue', 'ProductAttributeValue')
 Product = get_model('catalogue', 'Product')
@@ -59,7 +59,7 @@ class ProductDetailsAPIView(APIView):
 
     def get(self, request, pk):
         product = self.get_object(pk)
-        serializer = ProductSerializer(product)
+        serializer = ProductDetailsSerializer(product, context={'request': request})
         return Response(serializer.data)
 
 
@@ -109,79 +109,10 @@ def get_products_list(request):
         'filters': [],
     }
 
-    for item in search_context['products']:
-        category_obj = item.get_categories().first()
-        category_name = getattr(category_obj, 'name' + lang_lookup, category_obj.name)
-        product = {
-            'productId': item.id
-        }
-        primary_image = item.primary_image().original.url if hasattr(item.primary_image(), 'original') else None
-        product['img'] = site_url(primary_image) if isinstance(primary_image, str) else None
-        product['code'] = item.upc
-        try:
-            product['priceInitial'] = float(request.strategy.fetch_for_parent(item).price.price_initial_1c)
-        except (TypeError, AttributeError):
-            product['priceInitial'] = 0.0
+    product_list_serializer = ProductListSerializer(
+        search_context['products'], many=True, context={'request': request})
 
-        try:
-            product['discountPercent'] = float(request.strategy.fetch_for_parent(item).price.discount_1c)
-        except (TypeError, AttributeError):
-            product['discountPercent'] = 0.0
-
-        product['discountValue'] = round(product['priceInitial'] * (1 - product['discountPercent'] / 100), 2)
-
-        try:
-            product['price'] = float(request.strategy.fetch_for_parent(item).price.incl_tax)
-        except (TypeError, AttributeError):
-            product['price'] = 0.0
-
-        product['currency'] = request.strategy.fetch_for_parent(item).price.currency
-
-        product['shoesType'] = getattr(category_obj, 'slug' + lang_lookup, category_obj.slug)
-        product['productId'] = str(item.id)
-
-        # colors
-        product['colors'] = []
-        product['colors'].append({
-            'id': item.attributes_container.color_hex_code['pav_id'],
-            'image': product['img'],
-            'value': item.attributes_container.color_hex_code['value'],
-            'productId': str(item.id)
-        })
-        for item_enum in enumerate(item.recommended_products.all()):
-            if hasattr(item_enum[1].primary_image(), 'original'):
-                rec_image = item_enum[1].primary_image().original.url
-            else:
-                rec_image = None
-            product['colors'].append({
-                'id': item_enum[1].attributes_container.color_hex_code['pav_id'],
-                'image': rec_image,
-                'value': item_enum[1].attributes_container.color_hex_code['value'],
-                'productId': str(item_enum[1].id)
-            })
-
-        # sizes
-        product['sizes'] = []
-        sizes = []
-        product_children_count = len(item.product_children)
-        for item_enum in enumerate(item.product_children):
-            try:
-                size_value = float(item_enum[1].attributes_container.razmer['value'])
-            except (TypeError, AttributeError):
-                size_value = 0
-            try:
-                centimeters = float(item_enum[1].attributes_container.dlina_stelki['value'])
-            except (TypeError, AttributeError):
-                centimeters = 0
-            sizes.append({
-                'id': product_children_count - item_enum[0],
-                'value': size_value,
-                'centimeters': centimeters,
-            })
-        sizes = sorted(sizes, key=lambda size: size['value'])
-        product['sizes'] = sizes
-
-        data['items'].append(product)
+    data['items'] = product_list_serializer.data
 
     # Filters
     for solr_filter in search_context['facet_data'].items():
