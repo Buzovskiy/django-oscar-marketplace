@@ -35,11 +35,11 @@ class ProductSerializer(serializers.Serializer):
         for recommended_product in instance.recommended_products.all():
             product_data = {'id': recommended_product.id}
             if hasattr(recommended_product.primary_image(), 'original'):
-                product_data['image'] = recommended_product.primary_image().original.url
+                product_data['image'] = site_url(recommended_product.primary_image().original.url)
             else:
                 product_data['image'] = None
 
-            product_data['shoesType'] = recommended_product.categories.first().slug_es
+            product_data['shoesType'] = getattr_lang(recommended_product.categories.first(), 'slug')
             output['youMayLike'].append(product_data)
 
         attribute_codes = ['coloring', 'material_verkha', 'material_vnutrennii', 'khamelion', 'sezon']

@@ -117,7 +117,7 @@ def get_products_list(request):
         }
         primary_image = item.primary_image().original.url if hasattr(item.primary_image(), 'original') else None
         product['img'] = site_url(primary_image) if isinstance(primary_image, str) else None
-        product['title'] = f"{category_name} {item.upc}"
+        product['code'] = item.upc
         try:
             product['priceInitial'] = float(request.strategy.fetch_for_parent(item).price.price_initial_1c)
         except (TypeError, AttributeError):

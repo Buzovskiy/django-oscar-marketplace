@@ -125,6 +125,7 @@ class Category(AbstractCategory):
     name_es = models.CharField(_('Name ES'), max_length=255, null=True, blank=True)
     name_en = models.CharField(_('Name EN'), max_length=255, null=True, blank=True)
     slug_es = models.CharField(_('Slug ES'), max_length=255, null=True, blank=True)
+    slug_en = models.CharField(_('Slug EN'), max_length=255, null=True, blank=True)
 
     @property
     def full_name_lang(self):
