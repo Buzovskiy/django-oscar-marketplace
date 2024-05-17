@@ -459,9 +459,14 @@ class ImportProduct(ImportCore):
         # If there is no color hex code in ColorHexCode, set white color code by default
         color_hex_code = color_hex_code or '#ffffff'
 
+        # For value_text and its language variations set similar data
+        prod_attr_val_data = {'value_text': color_hex_code}
+        for lang in settings.LANGUAGES:
+            prod_attr_val_data[f'value_text_{lang[0]}'] = color_hex_code
+
         ProductAttributeValue.objects.update_or_create(
             attribute=ProductAttribute.objects.filter(code="color_hex_code").get(), product=product,
-            defaults={'value_text': color_hex_code}
+            defaults=prod_attr_val_data
         )
 
     @staticmethod
