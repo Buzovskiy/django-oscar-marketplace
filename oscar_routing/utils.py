@@ -22,6 +22,19 @@ def site_url(url: str) -> str:
     return settings.BASE_URL.rstrip('/') + '/' + url.lstrip('/')
 
 
+def media_site_url(url: str) -> str:
+    """
+    Full url to media file
+    :param url: name
+    :return: url
+    """
+    return '{base_url}/{media_url}/{file_url}'.format(
+        base_url=settings.BASE_URL.rstrip('/'),
+        media_url=settings.MEDIA_URL.strip('/'),
+        file_url=url.lstrip('/')
+    )
+
+
 def get_lang_lookup(request):
     return '' if settings.LANGUAGE_CODE_1C == request.LANGUAGE_CODE else '_' + request.LANGUAGE_CODE
 

@@ -1,4 +1,4 @@
-from oscar_routing.utils import site_url, get_lang_lookup
+from oscar_routing.utils import site_url, get_lang_lookup, media_site_url
 from rest_framework import serializers
 from oscar_routing.utils import site_url, get_lang_lookup, getattr_lang
 
@@ -7,11 +7,13 @@ from .models import Product
 
 class BaseProductSerializer(serializers.Serializer):
     request = None
+    primary_image = None
 
     def to_representation(self, instance):
         self.request = self.context.get('request')
         category_obj = instance.get_categories().first()
 
+        # image_not_found
         output = {'productId': instance.id, 'code': instance.upc}
 
         try:
@@ -33,6 +35,25 @@ class BaseProductSerializer(serializers.Serializer):
         output['currency'] = self.request.strategy.fetch_for_parent(instance).price.currency
 
         output['shoesType'] = getattr_lang(category_obj, 'slug')
+
+        self.primary_image = instance.get_primary_image_or_default_url()
+
+        # colors
+        output['colors'] = []
+        output['colors'].append({
+            'id': instance.attributes_container.color_hex_code['pav_id'],
+            'image': self.primary_image,
+            'value': instance.attributes_container.color_hex_code['value'],
+            'productId': instance.id
+        })
+
+        for recommended_product in instance.recommended_products.all():
+            output['colors'].append({
+                'id': recommended_product.attributes_container.color_hex_code['pav_id'],
+                'image': recommended_product.get_primary_image_or_default_url(),
+                'value': recommended_product.attributes_container.color_hex_code['value'],
+                'productId': recommended_product.id
+            })
 
         # sizes
         output['sizes'] = []
@@ -60,30 +81,7 @@ class BaseProductSerializer(serializers.Serializer):
 class ProductListSerializer(BaseProductSerializer):
     def to_representation(self, instance):
         output = super().to_representation(instance)
-        output.update({})
-        primary_image = instance.primary_image().original.url if hasattr(instance.primary_image(), 'original') else ''
-        output['img'] = site_url(primary_image) if isinstance(primary_image, str) else ''
-
-        # colors
-        output['colors'] = []
-        output['colors'].append({
-            'id': instance.attributes_container.color_hex_code['pav_id'],
-            'image': output['img'],
-            'value': instance.attributes_container.color_hex_code['value'],
-            'productId': instance.id
-        })
-
-        for recommended_product in instance.recommended_products.all():
-            if hasattr(recommended_product.primary_image(), 'original'):
-                rec_image = recommended_product.primary_image().original.url
-            else:
-                rec_image = None
-            output['colors'].append({
-                'id': recommended_product.attributes_container.color_hex_code['pav_id'],
-                'image': rec_image,
-                'value': recommended_product.attributes_container.color_hex_code['value'],
-                'productId': recommended_product.id
-            })
+        output['img'] = self.primary_image
 
         return output
 
@@ -117,14 +115,11 @@ class ProductDetailsSerializer(BaseProductSerializer):
 
         # youMayLike. Recommended products
         for recommended_product in instance.recommended_products.all():
-            product_data = {'id': recommended_product.id}
-            if hasattr(recommended_product.primary_image(), 'original'):
-                product_data['image'] = site_url(recommended_product.primary_image().original.url)
-            else:
-                product_data['image'] = ''
-
-            product_data['shoesType'] = getattr_lang(recommended_product.categories.first(), 'slug')
-            output['youMayLike'].append(product_data)
+            output['youMayLike'].append({
+                'id': recommended_product.id,
+                'image': recommended_product.get_primary_image_or_default_url(),
+                'shoesType': getattr_lang(recommended_product.categories.first(), 'slug')
+            })
 
         attribute_codes = ['coloring', 'material_verkha', 'material_vnutrennii', 'khamelion', 'sezon']
         for attribute_code in attribute_codes:

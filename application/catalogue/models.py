@@ -11,7 +11,7 @@ from oscar.apps.catalogue.abstract_models import \
     AbstractProductAttribute, \
     AbstractProductAttributeValue
 from .utils import validate_sizes
-from oscar_routing.utils import getattr_lang
+from oscar_routing.utils import getattr_lang, media_site_url, site_url
 from .product_attributes import PrefetchedProductAttributesContainer
 
 
@@ -90,6 +90,18 @@ class Product(AbstractProduct):
             return self.parent
         else:
             return self
+
+    def get_primary_image_or_default_url(self):
+        """
+        Get url of primary image with hostname.
+        If no product image, return url of default image
+        :return:
+        """
+        try:
+            image = self.primary_image().original.url
+            return site_url(image) if image else media_site_url('image_not_found.jpg')
+        except AttributeError:
+            return media_site_url('image_not_found.jpg')
 
 
 class Category(AbstractCategory):
