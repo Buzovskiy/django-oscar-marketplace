@@ -1,6 +1,6 @@
 import oscar.apps.catalogue.apps as apps
 from oscar.core.loading import get_class
-from django.urls import path
+from django.urls import path, re_path
 
 
 class CatalogueConfig(apps.CatalogueConfig):
@@ -16,6 +16,9 @@ class CatalogueConfig(apps.CatalogueConfig):
     def get_urls(self):
         urls = super(CatalogueConfig, self).get_urls()
         urls += [
+            re_path(
+                r'^(?P<product_slug>[\w-]*)_(?P<pk>\d+)/$',
+                self.detail_view.as_view(), name='detail'),
             path('v1/products/list', self.api_products_view, name='api-products-list'),
             path('v1/products/<int:pk>', self.product_details_api_view.as_view())
         ]

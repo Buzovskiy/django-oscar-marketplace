@@ -380,3 +380,5 @@ LOGIN_REDIRECT_URL = reverse_lazy('catalogue:index')
 OSCAR_ALLOW_ANON_CHECKOUT = True
 
 CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+CORS_ALLOW_CREDENTIALS = True

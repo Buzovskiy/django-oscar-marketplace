@@ -5,6 +5,43 @@ from oscar_routing.utils import site_url, get_lang_lookup, getattr_lang
 from .models import Product
 
 
+class ProductChildSerializer(serializers.Serializer):
+    request = None
+    primary_image = None
+
+    def to_representation(self, instance):
+        self.request = self.context.get('request')
+        category_obj = instance.get_categories().first()
+
+        # image_not_found
+        output = {'productId': instance.id, 'code': instance.upc}
+
+        stock_record = self.request.strategy.select_stockrecord(instance)
+
+        try:
+            output['priceInitial'] = float(stock_record.price_initial_1c)
+        except (TypeError, AttributeError):
+            output['priceInitial'] = 0.0
+
+        try:
+            output['discount'] = float(stock_record.price_initial_1c.discount_1c)
+        except (TypeError, AttributeError):
+            output['discount'] = 0.0
+
+        try:
+            # output['price'] = float(self.request.strategy.fetch_for_parent(instance).price.incl_tax)
+            output['price'] = round(output['priceInitial'] * (1 - output['discount'] / 100), 2)
+        except (TypeError, AttributeError):
+            output['price'] = 0.0
+
+        output['currency'] = stock_record.price_currency
+        output['shoesType'] = getattr_lang(category_obj, 'slug')
+        output['img'] = instance.get_primary_image_or_default_url()
+        output['size'] = float(instance.attributes_container.razmer['value'])
+
+        return output
+
+
 class BaseProductSerializer(serializers.Serializer):
     request = None
     primary_image = None
