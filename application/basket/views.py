@@ -29,7 +29,7 @@ class BasketView(BasketViewCore):
         })
 
 
-class BasketAPIView(APIView):
+class BaseBasketView(APIView):
     def get_object(self):
         # If neither basket nor basket_id exist, create basket in DB and record basket ID to the session.
         # todo: take into account status submitted. If submitted create new basket.
@@ -45,7 +45,10 @@ class BasketAPIView(APIView):
         # self.apply_offers_to_basket(request, basket)
         return basket
 
-    def get(self, request):
+
+class BasketAPIView(BaseBasketView):
+
+    def get(self, request, *args):
         basket = self.get_object()
         serializer = BasketSerializer(basket, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -89,10 +92,13 @@ class BasketAPIView(APIView):
     def put(self, request):
         return self.patch(request)
 
-    def delete(self, request):
-        product_id = request.data.get('sizeId', None)
+
+class BasketDeleteAPIView(BaseBasketView):
+
+    def delete(self, request, pk):
+        product_id = pk
         if product_id is None:
-            return Response({'sizeId': ['This field is required']}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'product_id': ['This field is required']}, status=status.HTTP_400_BAD_REQUEST)
 
         basket = self.get_object()
 

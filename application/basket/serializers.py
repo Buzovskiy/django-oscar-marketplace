@@ -1,7 +1,7 @@
 from django.db.models import Prefetch
 from rest_framework import serializers
 from .models import Basket, Line
-from application.catalogue.serializers import ProductChildSerializer
+from application.catalogue.serializers import ProductBasketLineSerializer
 from application.catalogue.models import Product
 from oscar.core.loading import get_model, get_class
 ProductAttributeValue = get_model('catalogue', 'ProductAttributeValue')
@@ -14,13 +14,14 @@ class BasketLineSerializer(serializers.Serializer):
         queryset_attributes = ProductAttributeValue.objects.select_related('attribute').all()
         qs = qs.prefetch_related(
             Prefetch('attributes', queryset=queryset_attributes),
+            Prefetch('parent__attributes', queryset=queryset_attributes),
         )
 
         output = {
             'id': instance.id,
             'quantity': instance.quantity,
             'itemsTotal': instance.line_price_incl_tax,
-            'product': ProductChildSerializer(qs.get(), context={'request': self.context['request']}).data
+            'product': ProductBasketLineSerializer(qs.get(), context={'request': self.context['request']}).data
         }
         return output
 

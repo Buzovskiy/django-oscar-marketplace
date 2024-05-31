@@ -5,41 +5,22 @@ from oscar_routing.utils import site_url, get_lang_lookup, getattr_lang
 from .models import Product
 
 
-class ProductChildSerializer(serializers.Serializer):
-    request = None
-    primary_image = None
-
+class SizeSerializer(serializers.Serializer):
     def to_representation(self, instance):
-        self.request = self.context.get('request')
-        category_obj = instance.get_categories().first()
-
-        # image_not_found
-        output = {'productId': instance.id, 'code': instance.upc}
-
-        stock_record = self.request.strategy.select_stockrecord(instance)
+        try:
+            size_value = float(instance.attributes_container.razmer['value'])
+        except (TypeError, AttributeError):
+            size_value = 0
 
         try:
-            output['priceInitial'] = float(stock_record.price_initial_1c)
+            centimeters = float(instance.attributes_container.dlina_stelki['value'])
         except (TypeError, AttributeError):
-            output['priceInitial'] = 0.0
-
-        try:
-            output['discount'] = float(stock_record.price_initial_1c.discount_1c)
-        except (TypeError, AttributeError):
-            output['discount'] = 0.0
-
-        try:
-            # output['price'] = float(self.request.strategy.fetch_for_parent(instance).price.incl_tax)
-            output['price'] = round(output['priceInitial'] * (1 - output['discount'] / 100), 2)
-        except (TypeError, AttributeError):
-            output['price'] = 0.0
-
-        output['currency'] = stock_record.price_currency
-        output['shoesType'] = getattr_lang(category_obj, 'slug')
-        output['img'] = instance.get_primary_image_or_default_url()
-        output['size'] = float(instance.attributes_container.razmer['value'])
-
-        return output
+            centimeters = 0
+        return {
+            'id': instance.id,
+            'value': size_value,
+            'centimeters': centimeters,
+        }
 
 
 class BaseProductSerializer(serializers.Serializer):
@@ -93,23 +74,7 @@ class BaseProductSerializer(serializers.Serializer):
             })
 
         # sizes
-        output['sizes'] = []
-        for product_child in instance.children.all():
-            try:
-                size_value = float(product_child.attributes_container.razmer['value'])
-            except (TypeError, AttributeError):
-                continue
-
-            try:
-                centimeters = float(product_child.attributes_container.dlina_stelki['value'])
-            except (TypeError, AttributeError):
-                centimeters = 0
-            output['sizes'].append({
-                'id': product_child.id,
-                'value': size_value,
-                'centimeters': centimeters,
-            })
-
+        output['sizes'] = SizeSerializer(instance.children.all(), many=True).data
         output['sizes'] = sorted(output['sizes'], key=lambda size: size['value'])
 
         return output
@@ -170,5 +135,22 @@ class ProductDetailsSerializer(BaseProductSerializer):
             attribute_data['title'] = getattr_lang(attribute_container['attribute'], 'name')
             attribute_data['description'] = attribute_container['value']
             output['details'].append(attribute_data)
+
+        return output
+
+
+class ProductBasketLineSerializer(BaseProductSerializer):
+    """Serializes child product"""
+
+    def to_representation(self, instance):
+        output = super().to_representation(instance.parent)
+        output['color'] = {}
+        output['img'] = instance.get_primary_image_or_default_url()
+        output['size'] = SizeSerializer(instance).data
+        try:
+            output['color']['id'] = instance.attributes_container.color_hex_code['pav_id']
+            output['color']['value'] = instance.attributes_container.color_hex_code['value']
+        except (AttributeError, TypeError, KeyError):
+            output['color'] = {}
 
         return output
