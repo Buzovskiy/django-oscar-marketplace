@@ -12,10 +12,28 @@ class BasketLineSerializer(serializers.Serializer):
         qs = Product.objects.filter(pk=instance.product.pk)
 
         queryset_attributes = ProductAttributeValue.objects.select_related('attribute').all()
+        # qs = qs.prefetch_related(
+        #     Prefetch('attributes', queryset=queryset_attributes),
+        #     Prefetch('parent'),
+        #     Prefetch('parent__attributes', queryset=queryset_attributes),
+        # )
         qs = qs.prefetch_related(
             Prefetch('attributes', queryset=queryset_attributes),
+            Prefetch('recommended_products', queryset=Product.objects.browsable().all()),
+            Prefetch('recommended_products__attributes', queryset=queryset_attributes),
+            Prefetch('children'),
+            Prefetch('children__attributes', queryset=queryset_attributes),
+            Prefetch('recommended_products__children'),
+            Prefetch('recommended_products__children__attributes', queryset=queryset_attributes),
+            Prefetch('recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
+            Prefetch('recommended_products__recommended_products__attributes', queryset=queryset_attributes),
+
             Prefetch('parent'),
             Prefetch('parent__attributes', queryset=queryset_attributes),
+            Prefetch('parent__recommended_products', queryset=Product.objects.browsable().all()),
+            Prefetch('parent__recommended_products__attributes', queryset=queryset_attributes),
+            Prefetch('parent__recommended_products__recommended_products', queryset=Product.objects.browsable().all()),
+            Prefetch('parent__recommended_products__recommended_products__attributes', queryset=queryset_attributes),
         )
 
         output = {
