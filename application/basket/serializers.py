@@ -14,6 +14,7 @@ class BasketLineSerializer(serializers.Serializer):
         queryset_attributes = ProductAttributeValue.objects.select_related('attribute').all()
         qs = qs.prefetch_related(
             Prefetch('attributes', queryset=queryset_attributes),
+            Prefetch('parent'),
             Prefetch('parent__attributes', queryset=queryset_attributes),
         )
 
