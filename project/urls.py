@@ -35,7 +35,7 @@ urlpatterns = [
     path('captcha/', include('captcha.urls')),
     path('testmail/', include('testmail.urls')),
     path('1c_exchange/', include(apps.get_app_config('exchange').urls[0])),
-
+    path('v1/checkout/', include('application.checkout.urls')),
     # path('', include(apps.get_app_config('oscar').urls[0])),
 ]
 

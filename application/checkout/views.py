@@ -1,4 +1,6 @@
 import re
+import json
+import stripe
 from extra_views import ModelFormSetView
 from django import http
 from django.views.generic import TemplateView, FormView
@@ -9,6 +11,11 @@ from oscar.apps.checkout.views import PaymentDetailsView as PaymentDetailsViewCo
 from oscar.apps.checkout.session import CheckoutSessionMixin
 from .forms import PaymentMethodForm, ShippingAddressForm, ShippingMethodForm
 from application.shipping.repository import Repository
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from app_settings.models import AppSettings
+from .serializers import PaymentIntentSerializer
 
 
 (BasketLineForm, AddToBasketForm, BasketVoucherForm, SavedLineForm) = get_classes(
@@ -16,6 +23,68 @@ from application.shipping.repository import Repository
                      'BasketVoucherForm', 'SavedLineForm'))
 BasketLineFormSet = get_class('basket.formsets', 'BasketLineFormSet')
 Country = get_model('address', 'country')
+
+
+class PaymentIntentApiView(APIView):
+
+    def post(self, request):
+        stripe.api_key = AppSettings.stripe_api_key.get().value
+        payment_serializer = PaymentIntentSerializer(data=request.data)
+        if payment_serializer.is_valid():
+            carrier = payment_serializer.validated_data.get('carrier')
+            try:
+                payment_intent = stripe.PaymentIntent.create(
+                    amount=payment_serializer.validated_data.get('amount'),
+                    currency=payment_serializer.validated_data.get('currency'),
+                    metadata={
+                        'sessionId': payment_serializer.validated_data.get('sessionId'),
+                        'carrier': carrier if carrier else '',
+                        'products': payment_serializer.validated_data.get('products'),
+                        'shippingDetails': payment_serializer.validated_data.get('products'),
+                    },
+                )
+            except stripe.error.InvalidRequestError as e:
+                return Response(e.__str__(), status=status.HTTP_400_BAD_REQUEST)
+
+            return Response({
+                'client_secret': payment_intent.client_secret,
+            }, status=status.HTTP_201_CREATED)
+        return Response(payment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+        # check_params_serializer = BasketCheckParamsSerializer(data=request.data)
+        # if not check_params_serializer.is_valid():
+        #
+        #
+        # basket = self.get_object()
+        #
+        # try:
+        #     product = Product.objects.filter(structure='child').get(pk=request.data['sizeId'])
+        #     stock_record = product.stockrecords.all()[:1].get()
+        # except (Product.DoesNotExist, StockRecord.DoesNotExist) as err:
+        #     return Response(err.__str__(), status=status.HTTP_400_BAD_REQUEST)
+        #
+        # try:
+        #     # If line exists initialize serializer to update it
+        #     line = Line.objects.filter(basket=basket, product=product).get()
+        #     line_serializer = BasketLinePatchSerializer(line, data=request.data)
+        #     response_http_status = status.HTTP_200_OK
+        # except Line.DoesNotExist:
+        #     # if line does not exist initialize serializer to create it
+        #     line_serializer = BasketLinePatchSerializer(data=request.data)
+        #     response_http_status = status.HTTP_201_CREATED
+        #
+        # if line_serializer.is_valid():
+        #     line_instance = line_serializer.save(
+        #         product=product,
+        #         basket=basket,
+        #         stock_record=stock_record,
+        #     )
+        #     if line_instance.quantity == 0:
+        #         line_instance.delete()
+        #
+        # basket_updated = self.get_object()
+        # basket_serializer = BasketSerializer(basket_updated, context={'request': request})
 
 
 class CheckoutViewMixin:
