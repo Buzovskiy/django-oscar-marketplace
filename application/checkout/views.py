@@ -6,11 +6,13 @@ from django import http
 from django.views.generic import TemplateView, FormView
 from django.urls import reverse_lazy
 from django.shortcuts import HttpResponseRedirect, render
+from django.utils.translation import get_language
 from oscar.core.loading import get_class, get_model, get_classes
 from oscar.apps.checkout.views import PaymentDetailsView as PaymentDetailsViewCore
 from oscar.apps.checkout.session import CheckoutSessionMixin
 from .forms import PaymentMethodForm, ShippingAddressForm, ShippingMethodForm
 from application.shipping.repository import Repository
+from application.basket.models import Basket
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -32,59 +34,35 @@ class PaymentIntentApiView(APIView):
         payment_serializer = PaymentIntentSerializer(data=request.data)
         if payment_serializer.is_valid():
             carrier = payment_serializer.validated_data.get('carrier')
+
+            try:
+                # todo: assign basket in middleware. Assign strategy to basket in middleware,
+                # todo: take above into account when use basket for basket app.
+                basket = Basket.objects.get(pk=self.request.session['basket_id'])
+                basket.strategy = self.request.strategy
+            except (Basket.DoesNotExist, KeyError) as e:
+                return Response(e.__str__(), status=status.HTTP_400_BAD_REQUEST)
+
+            if basket.is_empty:
+                return Response(basket.is_empty, status=status.HTTP_400_BAD_REQUEST)
+
             try:
                 payment_intent = stripe.PaymentIntent.create(
-                    amount=payment_serializer.validated_data.get('amount'),
-                    currency=payment_serializer.validated_data.get('currency'),
+                    amount=int(basket.total_incl_tax * 100),
+                    currency=basket.all_lines().first().price_currency.lower(),
                     metadata={
-                        'sessionId': payment_serializer.validated_data.get('sessionId'),
+                        'language': get_language(),
                         'carrier': carrier if carrier else '',
-                        'products': payment_serializer.validated_data.get('products'),
                         'shippingDetails': payment_serializer.validated_data.get('products'),
                     },
                 )
-            except stripe.error.InvalidRequestError as e:
+            except (stripe.error.InvalidRequestError, stripe.error.PermissionError) as e:
                 return Response(e.__str__(), status=status.HTTP_400_BAD_REQUEST)
 
             return Response({
                 'client_secret': payment_intent.client_secret,
             }, status=status.HTTP_201_CREATED)
         return Response(payment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-        # check_params_serializer = BasketCheckParamsSerializer(data=request.data)
-        # if not check_params_serializer.is_valid():
-        #
-        #
-        # basket = self.get_object()
-        #
-        # try:
-        #     product = Product.objects.filter(structure='child').get(pk=request.data['sizeId'])
-        #     stock_record = product.stockrecords.all()[:1].get()
-        # except (Product.DoesNotExist, StockRecord.DoesNotExist) as err:
-        #     return Response(err.__str__(), status=status.HTTP_400_BAD_REQUEST)
-        #
-        # try:
-        #     # If line exists initialize serializer to update it
-        #     line = Line.objects.filter(basket=basket, product=product).get()
-        #     line_serializer = BasketLinePatchSerializer(line, data=request.data)
-        #     response_http_status = status.HTTP_200_OK
-        # except Line.DoesNotExist:
-        #     # if line does not exist initialize serializer to create it
-        #     line_serializer = BasketLinePatchSerializer(data=request.data)
-        #     response_http_status = status.HTTP_201_CREATED
-        #
-        # if line_serializer.is_valid():
-        #     line_instance = line_serializer.save(
-        #         product=product,
-        #         basket=basket,
-        #         stock_record=stock_record,
-        #     )
-        #     if line_instance.quantity == 0:
-        #         line_instance.delete()
-        #
-        # basket_updated = self.get_object()
-        # basket_serializer = BasketSerializer(basket_updated, context={'request': request})
 
 
 class CheckoutViewMixin:
