@@ -98,6 +98,7 @@ INSTALLED_APPS = [
     'oscar_routing',
     'app_settings',
     'application.blog.apps.BlogConfig',
+    # 'application.ordernew.apps.OrdernewConfig',
     'application.contacts.apps.ContactsConfig',
     'application.exchange.apps.ExchangeConfig',
     'application.interview.apps.InterviewConfig',

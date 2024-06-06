@@ -1,9 +1,14 @@
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from oscar.core.loading import get_model
-from oscar.apps.order.utils import OrderDispatcher as OrderDispatcherCore
+from oscar.apps.order.utils import OrderDispatcher as OrderDispatcherCore, \
+    OrderNumberGenerator as OrderNumberGeneratorCore
 
 CommunicationEventType = get_model('communication', 'CommunicationEventType')
+
+
+class OrderNumberGenerator(OrderNumberGeneratorCore):
+    pass
 
 
 class OrderDispatcher(OrderDispatcherCore):
@@ -33,4 +38,3 @@ class OrderDispatcher(OrderDispatcherCore):
             event_type = None
 
         self.create_communication_event(order, event_type, dispatched_messages)
-

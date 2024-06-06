@@ -13,6 +13,7 @@ from oscar.apps.checkout.session import CheckoutSessionMixin
 from .forms import PaymentMethodForm, ShippingAddressForm, ShippingMethodForm
 from application.shipping.repository import Repository
 from application.basket.models import Basket
+from application.order.utils import OrderNumberGenerator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -28,13 +29,14 @@ Country = get_model('address', 'country')
 
 
 class PaymentIntentApiView(APIView):
-
     def post(self, request):
+        """
+        Create payment intent and return client secret and order number in response.
+        http://127.0.0.1:8000/en/v1/checkout/payment-intent/
+        """
         stripe.api_key = AppSettings.stripe_api_key.get().value
         payment_serializer = PaymentIntentSerializer(data=request.data)
         if payment_serializer.is_valid():
-            carrier = payment_serializer.validated_data.get('carrier')
-
             try:
                 # todo: assign basket in middleware. Assign strategy to basket in middleware,
                 # todo: take above into account when use basket for basket app.
@@ -46,21 +48,35 @@ class PaymentIntentApiView(APIView):
             if basket.is_empty:
                 return Response(basket.is_empty, status=status.HTTP_400_BAD_REQUEST)
 
+            order_number = OrderNumberGenerator().order_number(basket)
+
             try:
                 payment_intent = stripe.PaymentIntent.create(
                     amount=int(basket.total_incl_tax * 100),
                     currency=basket.all_lines().first().price_currency.lower(),
                     metadata={
                         'language': get_language(),
-                        'carrier': carrier if carrier else '',
-                        'shippingDetails': payment_serializer.validated_data.get('products'),
+                        'carrier': payment_serializer.validated_data.get('carrier'),
+                        'shippingDetails': payment_serializer.validated_data.get('shippingDetails'),
+                        'orderNumber': order_number,
+                        'basketId': basket.id
                     },
                 )
+
             except (stripe.error.InvalidRequestError, stripe.error.PermissionError) as e:
                 return Response(e.__str__(), status=status.HTTP_400_BAD_REQUEST)
 
+            # not for production
+            if request.GET.get('debug') == '1':
+                stripe.PaymentIntent.confirm(
+                    payment_intent.id,
+                    payment_method="pm_card_visa",
+                    return_url="https://www.example.com",
+                )
+
             return Response({
-                'client_secret': payment_intent.client_secret,
+                'clientSecret': payment_intent.client_secret,
+                'orderNumber': order_number,
             }, status=status.HTTP_201_CREATED)
         return Response(payment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
