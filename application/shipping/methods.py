@@ -1,9 +1,19 @@
 from django.utils.translation import gettext_lazy as _
 from django.templatetags.static import static
 from oscar.core.loading import get_class
+from oscar.apps.shipping.methods import NoShippingRequired as NoShippingRequiredCore, \
+    FixedPrice as FixedPriceCore
 
 
 Free = get_class('shipping.methods', 'Free')
+
+
+class NoShippingRequired(NoShippingRequiredCore):
+    pass
+
+
+class FixedPrice(FixedPriceCore):
+    pass
 
 
 class CORREOS(Free):

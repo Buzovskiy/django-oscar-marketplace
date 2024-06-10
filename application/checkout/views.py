@@ -66,7 +66,6 @@ class PaymentIntentApiView(APIView):
             except (stripe.error.InvalidRequestError, stripe.error.PermissionError) as e:
                 return Response(e.__str__(), status=status.HTTP_400_BAD_REQUEST)
 
-            # not for production
             if request.GET.get('debug') == '1':
                 stripe.PaymentIntent.confirm(
                     payment_intent.id,
