@@ -44,6 +44,7 @@ class BaseBasketView(APIView):
         # See middleware
         # self.apply_offers_to_basket(request, basket)
         return basket
+        # return self.request.basket
 
 
 class BasketAPIView(BaseBasketView):

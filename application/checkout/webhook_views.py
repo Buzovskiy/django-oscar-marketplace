@@ -1,5 +1,6 @@
 import re
 import json
+from decimal import Decimal
 import stripe
 from django.http import HttpResponse
 from extra_views import ModelFormSetView
@@ -17,6 +18,7 @@ from application.shipping.repository import Repository
 from application.shipping.methods import NoShippingRequired, FixedPrice
 from application.basket.models import Basket
 from application.order.models import ShippingAddress, Order
+from application.checkout.calculators import OrderTotalCalculator
 from application.order.utils import OrderCreator
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -54,6 +56,8 @@ def stripe_webhook_view(request):
 
     if basket.is_submitted:
         return HttpResponse(f'Basket with id {basket.id} is already submitted', status=200)
+
+    basket.strategy = request.strategy
 
     order_number = metadata.get('orderNumber')
     if Order.objects.filter(number=order_number).count():
@@ -97,25 +101,35 @@ def stripe_webhook_view(request):
     shipping_address_data['search_text'] = ''
 
     # Save shipping address
-    # shipping_address = ShippingAddress.objects.create(**shipping_address_data)
-    #
-    # # Get shipping method
-    # shipping_method = carrier['name'] if carrier is not None else ''
-    #
-    # order = OrderCreator().place_order(
-    #     user=None,
-    #     order_number=order_number,
-    #     basket=basket,
-    #     shipping_address=shipping_address,
-    #     shipping_method=shipping_method,
-    #     # shipping_charge=shipping_charge,
-    #     # total=order_total,
-    #     # billing_address=billing_address,
-    #     # status=status,
-    #     # request=request,
-    #     # surcharges=surcharges,
-    #     # **kwargs
-    # )
-    # # self.save_payment_details(order)
+    shipping_address = ShippingAddress.objects.create(**shipping_address_data)
+
+    # Get shipping method
+    if carrier is not None:
+        shipping_method_price = Decimal(carrier['price'])
+        shipping_method = FixedPrice(
+            charge_excl_tax=shipping_method_price,
+            charge_incl_tax=shipping_method_price,
+            name=carrier['name']
+        )
+    else:
+        shipping_method = NoShippingRequired()
+    shipping_charge = shipping_method.calculate(basket)
+    order_total = OrderTotalCalculator(request).calculate(
+            basket, shipping_charge, surcharges=None)
+
+    order = OrderCreator().place_order(
+        user=None,
+        order_number=order_number,
+        basket=basket,
+        shipping_address=shipping_address,
+        shipping_method=shipping_method,
+        shipping_charge=shipping_charge,
+        total=order_total,
+        billing_address=None,
+        status=None,
+        request=request,
+        surcharges=None
+    )
+    # basket.submit()
 
     return Response(status=status.HTTP_200_OK)

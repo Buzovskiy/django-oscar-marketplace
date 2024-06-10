@@ -13,7 +13,11 @@ class NoShippingRequired(NoShippingRequiredCore):
 
 
 class FixedPrice(FixedPriceCore):
-    pass
+    def __init__(self, *args, **kwargs):
+        if 'name' in kwargs:
+            name = kwargs.pop('name')
+            self.name = name
+        super().__init__(*args, **kwargs)
 
 
 class CORREOS(Free):
