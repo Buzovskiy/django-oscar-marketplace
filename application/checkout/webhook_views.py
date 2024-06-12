@@ -2,6 +2,7 @@ import re
 import json
 from decimal import Decimal
 import stripe
+from django.conf import settings
 from django.http import HttpResponse
 from extra_views import ModelFormSetView
 from django import http
@@ -10,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.shortcuts import HttpResponseRedirect, render
 from django.utils.translation import get_language
+from django.utils import translation
 from oscar.core.loading import get_class, get_model, get_classes
 from oscar.apps.checkout.views import PaymentDetailsView as PaymentDetailsViewCore
 from oscar.apps.checkout.session import CheckoutSessionMixin
@@ -19,6 +21,7 @@ from application.shipping.methods import NoShippingRequired, FixedPrice
 from application.basket.models import Basket
 from application.order.models import ShippingAddress, Order
 from application.checkout.calculators import OrderTotalCalculator
+from application.checkout.mixins import OrderPlacementMixin
 from application.order.utils import OrderCreator
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -62,6 +65,8 @@ def stripe_webhook_view(request):
     order_number = metadata.get('orderNumber')
     if Order.objects.filter(number=order_number).count():
         return HttpResponse(f'Order with id {order_number} already exists', status=200)
+
+    language_code = metadata.get('language', settings.LANGUAGE_CODE)
 
     shippingDetails = json.loads(metadata['shippingDetails'])
 
@@ -128,8 +133,16 @@ def stripe_webhook_view(request):
         billing_address=None,
         status=None,
         request=request,
-        surcharges=None
+        surcharges=None,
+        guest_email=shipping_address_data['email']
     )
-    # basket.submit()
 
+    basket.submit()
+
+    # Activate language
+    if language_code in [lang[0] for lang in settings.LANGUAGES]:
+        translation.activate(language_code)
+    order_placement_mixin_instance = OrderPlacementMixin()
+    order_placement_mixin_instance.request = request
+    order_placement_mixin_instance.send_order_placed_email(order)
     return Response(status=status.HTTP_200_OK)

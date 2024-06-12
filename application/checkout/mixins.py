@@ -8,6 +8,11 @@ from app_settings.models import AppSettings
 
 class OrderPlacementMixin(OrderPlacementMixinCore):
 
+    def get_message_context(self, order):
+        ctx = super().get_message_context(order)
+        ctx['client_site_name'] = settings.CLIENT_SITE_NAME
+        return ctx
+
     def handle_redirect_to_payment_page(self, basket):
         next_page_url = self.get_stripe_payment_page_url(basket)
         response = HttpResponseRedirect(next_page_url)

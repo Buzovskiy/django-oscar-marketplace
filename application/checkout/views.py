@@ -37,16 +37,20 @@ class PaymentIntentApiView(APIView):
         stripe.api_key = AppSettings.stripe_api_key.get().value
         payment_serializer = PaymentIntentSerializer(data=request.data)
         if payment_serializer.is_valid():
-            try:
-                # todo: assign basket in middleware. Assign strategy to basket in middleware,
-                # todo: take above into account when use basket for basket app.
-                basket = Basket.objects.get(pk=self.request.session['basket_id'])
-                basket.strategy = self.request.strategy
-            except (Basket.DoesNotExist, KeyError) as e:
-                return Response(e.__str__(), status=status.HTTP_400_BAD_REQUEST)
+            # try:
+            #     # todo: assign basket in middleware. Assign strategy to basket in middleware,
+            #     # todo: take above into account when use basket for basket app.
+            #     basket = Basket.objects.get(pk=self.request.session['basket_id'])
+            #     basket.strategy = self.request.strategy
+            # except (Basket.DoesNotExist, KeyError) as e:
+            #     return Response(e.__str__(), status=status.HTTP_400_BAD_REQUEST)
+
+            basket = self.request.basket
+            if basket.id is None:
+                http.HttpResponse('No basket found', status=status.HTTP_400_BAD_REQUEST)
 
             if basket.is_empty:
-                return Response(basket.is_empty, status=status.HTTP_400_BAD_REQUEST)
+                return Response('Basket is empty', status=status.HTTP_400_BAD_REQUEST)
 
             order_number = OrderNumberGenerator().order_number(basket)
 
