@@ -29,28 +29,28 @@ class BasketView(BasketViewCore):
         })
 
 
-class BaseBasketView(APIView):
-    def get_object(self):
-        # If neither basket nor basket_id exist, create basket in DB and record basket ID to the session.
-        # todo: take into account status submitted. If submitted create new basket.
-        # todo: delete line if product not browsable or not exist.
-        try:
-            # todo: prefetch products
-            basket = Basket.objects.get(pk=self.request.session['basket_id'])
-        except (Basket.DoesNotExist, KeyError):
-            basket = Basket.objects.create()
-            self.request.session['basket_id'] = basket.id
-        basket.strategy = self.request.strategy
-        # See middleware
-        # self.apply_offers_to_basket(request, basket)
-        return basket
-        # return self.request.basket
+# class BaseBasketView(APIView):
+#     def get_object(self):
+#         # If neither basket nor basket_id exist, create basket in DB and record basket ID to the session.
+#         # todo: take into account status submitted. If submitted create new basket.
+#         # todo: delete line if product not browsable or not exist.
+#         # try:
+#         #     # todo: prefetch products
+#         #     basket = Basket.objects.get(pk=self.request.session['basket_id'])
+#         # except (Basket.DoesNotExist, KeyError):
+#         #     basket = Basket.objects.create()
+#         #     self.request.session['basket_id'] = basket.id
+#         # basket.strategy = self.request.strategy
+#         # # See middleware
+#         # # self.apply_offers_to_basket(request, basket)
+#         # return basket
+#         return self.request.basket
 
 
-class BasketAPIView(BaseBasketView):
+class BasketAPIView(APIView):
 
     def get(self, request, *args):
-        basket = self.get_object()
+        basket = request.basket
         serializer = BasketSerializer(basket, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -59,7 +59,10 @@ class BasketAPIView(BaseBasketView):
         if not check_params_serializer.is_valid():
             return Response(check_params_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        basket = self.get_object()
+        basket = request.basket
+
+        if basket.id is None:
+            basket.save()
 
         try:
             product = Product.objects.filter(structure='child').get(pk=request.data['sizeId'])
@@ -86,22 +89,21 @@ class BasketAPIView(BaseBasketView):
             if line_instance.quantity == 0:
                 line_instance.delete()
 
-        basket_updated = self.get_object()
-        basket_serializer = BasketSerializer(basket_updated, context={'request': request})
+        basket_serializer = BasketSerializer(basket, context={'request': request})
         return Response(basket_serializer.data, status=response_http_status)
 
     def put(self, request):
         return self.patch(request)
 
 
-class BasketDeleteAPIView(BaseBasketView):
+class BasketDeleteAPIView(APIView):
 
     def delete(self, request, pk):
         product_id = pk
         if product_id is None:
             return Response({'product_id': ['This field is required']}, status=status.HTTP_400_BAD_REQUEST)
 
-        basket = self.get_object()
+        basket = self.request.basket
 
         try:
             product = Product.objects.get(pk=product_id)
@@ -118,6 +120,5 @@ class BasketDeleteAPIView(BaseBasketView):
         except Line.DoesNotExist:
             response_http_status = status.HTTP_200_OK
 
-        basket_updated = self.get_object()
-        basket_serializer = BasketSerializer(basket_updated, context={'request': request})
+        basket_serializer = BasketSerializer(basket, context={'request': request})
         return Response(basket_serializer.data, status=response_http_status)
