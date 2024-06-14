@@ -25,3 +25,7 @@ docker exec -it solr-container ls -al /opt/solr/server/solr/weestepstore.pl/conf
 3. python manage.py build_solr_schema --configure-directory=C:\Users\buzov\PycharmProjects\solr-6.6.6\server\solr\weestepstore.pl\conf
 4. python manage.py build_solr_schema --reload-core weestepstore.pl
 5. python manage.py rebuild_index --noinput
+
+
+##### Frontend for development
+https://weestep-kids-sgo8-zkmns-projects.vercel.app/es

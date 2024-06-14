@@ -123,7 +123,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'oscar.apps.basket.middleware.BasketMiddleware',
+    # 'oscar.apps.basket.middleware.BasketMiddleware',
+    'application.basket.middleware.APIBasketMiddleware',
     'oscar_routing.middleware.block_ip.BlockedIpMiddleware',
 ]
 
@@ -381,10 +382,12 @@ LOGIN_REDIRECT_URL = reverse_lazy('catalogue:index')
 
 OSCAR_ALLOW_ANON_CHECKOUT = True
 
+OSCAR_BASKET_COOKIE_SECURE = True
+
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
-# CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
