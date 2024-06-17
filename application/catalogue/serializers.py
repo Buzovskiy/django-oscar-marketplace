@@ -1,8 +1,7 @@
 from oscar_routing.utils import site_url, get_lang_lookup, media_site_url
 from rest_framework import serializers
 from oscar_routing.utils import site_url, get_lang_lookup, getattr_lang
-
-from .models import Product
+from django.conf import settings
 
 
 class SizeSerializer(serializers.Serializer):
@@ -16,10 +15,12 @@ class SizeSerializer(serializers.Serializer):
             centimeters = float(instance.attributes_container.dlina_stelki['value'])
         except (TypeError, AttributeError):
             centimeters = 0
+        num_in_stock = instance.stockrecords.filter(partner__name=settings.PARTNER_DEFAULT['name']).first().num_in_stock
         return {
             'id': instance.id,
             'value': size_value,
             'centimeters': centimeters,
+            'available': num_in_stock,
         }
 
 
