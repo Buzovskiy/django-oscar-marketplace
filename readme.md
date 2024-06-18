@@ -28,5 +28,4 @@ docker exec -it solr-container ls -al /opt/solr/server/solr/weestepstore.pl/conf
 
 
 ##### Frontend for development
-https://weestep-kids-sgo8-zkmns-projects.vercel.app/es
 https://weestep-kids.vercel.app/
