@@ -1,0 +1,8 @@
+{% load checkout_custom_tags %}
+
+{% for line in order.lines.all %}
+    <tr>
+        {% checkout_order_line_title order_line=line as line_title %}
+        <td>{{ line_title }} &times; {{ line.quantity }}</td>
+    </tr>
+{% endfor %}

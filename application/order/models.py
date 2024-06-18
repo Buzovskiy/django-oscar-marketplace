@@ -7,6 +7,7 @@ from application.payment.models import PaymentMethod
 
 class ShippingAddress(AbstractShippingAddress):
     email = models.EmailField(blank=False, null=True)
+    base_fields = hash_fields = ['salutation', 'line1', 'line2', 'line3', 'line4', 'state', 'postcode']
 
 
 class Order(AbstractOrder):
