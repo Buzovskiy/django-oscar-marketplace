@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-12 14:20+0200\n"
+"POT-Creation-Date: 2024-06-18 14:50+0200\n"
 "PO-Revision-Date: 2024-01-09 08:55+0000\n"
 "Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -339,7 +339,7 @@ msgstr ""
 msgid "Filter values for the interview"
 msgstr ""
 
-#: .\application\order\models.py:15
+#: .\application\order\models.py:16
 #: .\templates\oscar\checkout\one_page_checkout.html:162
 #: .\templates\oscar\checkout\preview.html:135
 msgid "Payment method"
@@ -480,27 +480,27 @@ msgstr ""
 msgid "Search optimisation fields"
 msgstr ""
 
-#: .\project\settings.py:203
+#: .\project\settings.py:204
 msgid "Spanish"
 msgstr ""
 
-#: .\project\settings.py:204
+#: .\project\settings.py:205
 msgid "English"
 msgstr ""
 
-#: .\project\settings.py:341
+#: .\project\settings.py:342
 msgid "Type"
 msgstr ""
 
-#: .\project\settings.py:342
+#: .\project\settings.py:343
 msgid "Gender"
 msgstr ""
 
-#: .\project\settings.py:343
+#: .\project\settings.py:344
 msgid "Season"
 msgstr ""
 
-#: .\project\settings.py:344 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:345 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
 #: .\templates\oscar\catalogue\detail.html:88
 #: .\templates\oscar\checkout\one_page_checkout.html:119
@@ -508,15 +508,15 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: .\project\settings.py:345
+#: .\project\settings.py:346
 msgid "Material outer"
 msgstr ""
 
-#: .\project\settings.py:347
+#: .\project\settings.py:348
 msgid "Material inner"
 msgstr ""
 
-#: .\project\settings.py:349 .\templates\oscar\catalogue\detail.html:70
+#: .\project\settings.py:350 .\templates\oscar\catalogue\detail.html:70
 #: .\templates\oscar\catalogue\detail.html:176
 #: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:115
@@ -1154,50 +1154,44 @@ msgstr ""
 msgid "Your email address has changed at %(site_name)s."
 msgstr ""
 
-#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:7
+#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:8
 #: .\templates\oscar\communication\emails\commtype_product_alert_body.html:10
 #: .\templates\oscar\communication\emails\commtype_product_alert_body.txt:1
 msgid "Hello,"
 msgstr ""
 
-#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:8
+#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:9
 #, python-format
 msgid ""
-"We are pleased to confirm your order %(order_number)s has been received and\n"
-"        will be processed shortly."
+"We are pleased to confirm your order %(order_number)s\n"
+"                has been received and\n"
+"                will be processed shortly."
 msgstr ""
 
-#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:17
+#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:20
 #: .\templates\oscar\communication\emails\commtype_order_placed_body.txt:6
 msgid "Your order contains:"
 msgstr ""
 
-#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:30
+#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:34
 #: .\templates\oscar\communication\emails\commtype_order_placed_body.txt:10
 #: .\templates\oscar\partials\mini_basket.html:5
 msgid "Basket total:"
 msgstr ""
 
-#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:34
+#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:38
 #: .\templates\oscar\communication\emails\commtype_order_placed_body.txt:11
 msgid "Shipping:"
 msgstr ""
 
-#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:38
+#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:42
 #: .\templates\oscar\communication\emails\commtype_order_placed_body.txt:12
 msgid "Order Total:"
 msgstr ""
 
-#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:51
+#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:56
 #: .\templates\oscar\communication\emails\commtype_order_placed_body.txt:14
 msgid "Shipping address:"
-msgstr ""
-
-#: .\templates\oscar\communication\emails\commtype_order_placed_body.html:60
-#, python-format
-msgid ""
-"You can view the status of this order by clicking <a href=\"%(status_url)s\" "
-"title=\"order status\">here</a>"
 msgstr ""
 
 #: .\templates\oscar\communication\emails\commtype_order_placed_body.txt:1
