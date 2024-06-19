@@ -145,4 +145,5 @@ def stripe_webhook_view(request):
     order_placement_mixin_instance = OrderPlacementMixin()
     order_placement_mixin_instance.request = request
     order_placement_mixin_instance.send_order_placed_email(order)
+    order_placement_mixin_instance.send_order_placed_telegram_notification(order)
     return Response(status=status.HTTP_200_OK)

@@ -1,7 +1,9 @@
+from asgiref.sync import async_to_sync
 import stripe
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from telegram import Bot
 from oscar.apps.checkout.mixins import OrderPlacementMixin as OrderPlacementMixinCore
 from app_settings.models import AppSettings
 
@@ -59,3 +61,23 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
             return self.get_success_url()
 
         return checkout_session.url
+
+    def send_order_placed_telegram_notification(self, order):
+        text = "*Новый заказ!*\n"
+        text += f"\nid заказа: *{order.id}*; \n\n"
+        for line in order.lines.all():
+            text += f"{line.title} x {line.quantity} - *{line.line_price_incl_tax}{order.currency}* \n"
+        text += f"\nBasket total: *{order.basket_total_incl_tax}{order.currency}*"
+        text += f"\nShipping: *{order.shipping_incl_tax}{order.currency}*"
+        text += f"\nOrder total: *{order.total_incl_tax}{order.currency}*"
+        text += f"\n\nShipping method: *{order.shipping_method}*"
+        text += f"\nClient data:"
+        for field in order.shipping_address.active_address_fields():
+            text += f"\n*{field}*"
+
+        bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
+        async_to_sync(bot.send_message)(
+            chat_id=settings.TELEGRAM_GROUP_CHAT_ID,
+            text=text,
+            parse_mode='markdown'
+        )

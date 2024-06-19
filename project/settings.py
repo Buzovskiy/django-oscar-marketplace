@@ -31,6 +31,8 @@ DEBUG = decouple.config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = decouple.config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 BASE_URL = decouple.config('BASE_URL')
 CLIENT_SITE_NAME = decouple.config('CLIENT_SITE_NAME')
+TELEGRAM_BOT_TOKEN = decouple.config('TELEGRAM_BOT_TOKEN')
+TELEGRAM_GROUP_CHAT_ID = decouple.config('TELEGRAM_GROUP_CHAT_ID')
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20 Mb
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
