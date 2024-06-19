@@ -74,6 +74,7 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
         text += f"\nClient data:"
         for field in order.shipping_address.active_address_fields():
             text += f"\n*{field}*"
+        text += f"\nTelephone: *{order.shipping_address.phone_number}*"
 
         bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
         async_to_sync(bot.send_message)(
