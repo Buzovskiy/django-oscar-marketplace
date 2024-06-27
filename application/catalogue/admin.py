@@ -1,7 +1,7 @@
 from django.conf import settings
 from oscar.apps.catalogue.admin import *  # noqa
 from .models import ColorHexCode, AttributeValue
-from .models import ProductAttribute, Filter, FilterValue
+from .models import ProductAttribute, Filter, FilterValue, Sorting
 
 admin.site.unregister(ProductAttribute)
 
@@ -55,6 +55,6 @@ class FilterAdmin(admin.ModelAdmin):
     readonly_fields = ('field',)
 
 
-# @admin.register(FilterValue)
-# class FilterValueAdmin(admin.ModelAdmin):
-#     readonly_fields = ('value', 'filter')
+@admin.register(Sorting)
+class SortingAdmin(admin.ModelAdmin):
+    list_display = ('field', 'slug', 'slug_en', 'slug_es', 'title_en', 'title_es', 'default')

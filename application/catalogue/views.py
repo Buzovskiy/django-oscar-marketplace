@@ -8,9 +8,9 @@ from django.http import JsonResponse, Http404
 from oscar.apps.catalogue.views import ProductDetailView as CoreProductDetailView
 from oscar.core.loading import get_model, get_class
 from oscar_routing.utils import site_url, get_lang_lookup, getattr_lang
-from application.catalogue.models import Filter, FilterValue, ProductFilterValue
+from application.catalogue.models import Filter, FilterValue, ProductFilterValue, Sorting, Sort
 
-from .serializers import ProductDetailsSerializer, ProductListSerializer
+from .serializers import ProductDetailsSerializer, ProductListSerializer, OrderingSerializer
 
 ProductAttributeValue = get_model('catalogue', 'ProductAttributeValue')
 Product = get_model('catalogue', 'Product')
@@ -98,6 +98,23 @@ def get_products_list(request):
     solr_query_string = ''
     for solr_filter in new_query_dict.getlist('selected_facets', []):
         solr_query_string += f'&selected_facets={solr_filter}'
+
+    ###############
+    # sorting_methods = {}
+    # active_sorting_field = None
+    # for sort_method in Sorting.objects.all():
+    #     sorting_methods[getattr_lang(sort_method, 'slug')] = sort_method.field
+    #     if sort_method.default:  # relevan
+    #         active_sorting_field = sort_method.field
+    #
+    # sorting_title = getattr_lang(Sort(), 'slug')
+    # if new_query_dict.__contains__(sorting_title):
+    #     sorting_value = new_query_dict.get(sorting_title)
+    #     if sorting_value in sorting_methods:
+    #         sorting_value_solr = active_sorting_field = sorting_methods[sorting_value]
+    #         new_query_dict.setlist('sort_by', [sorting_value_solr])
+    #         solr_query_string += f'&sort_by={sorting_value_solr}'
+
     # End modify query params
 
     search_handler = get_product_search_handler_class()(
@@ -107,6 +124,7 @@ def get_products_list(request):
         'items': [],
         'total': int(search_context['paginator'].count),
         'filters': [],
+        # 'ordering': OrderingSerializer(Sort(), context={'active_sorting_field': active_sorting_field}).data
     }
 
     product_list_serializer = ProductListSerializer(

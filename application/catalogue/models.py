@@ -191,6 +191,8 @@ class Filter(models.Model):
         help_text=_('Should be mapped manually to filter field')
     )
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.field
 
@@ -245,3 +247,27 @@ def product_category_changed(sender, instance, action, model, pk_set, **kwargs):
         category = model.objects.get(pk=list(pk_set).pop())
         instance.title = f"Kids {category.name} {instance.upc}"
         instance.save()
+
+
+class Sort:
+    slug = 'sort-by'
+    slug_es = 'ordenar-por'
+    slug_en = 'sort-by'
+    title_en = 'sort by'
+    title_es = 'ordenar por'
+
+
+class Sorting(models.Model):
+
+    field = models.CharField(max_length=255, null=False, blank=False)
+    slug = models.CharField(_('Slug'), max_length=255, null=True, blank=False)
+    slug_es = models.CharField(_('Slug ES'), max_length=255, null=True, blank=False)
+    slug_en = models.CharField(_('Slug EN'), max_length=255, null=True, blank=False)
+    title_en = models.CharField(_('Title EN'), max_length=255, null=True, blank=False)
+    title_es = models.CharField(_('Title ES'), max_length=255, null=True, blank=False)
+    default = models.BooleanField(default=False)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.field

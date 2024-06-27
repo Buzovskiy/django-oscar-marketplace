@@ -57,8 +57,8 @@ class SearchForm(FacetedSearchForm):
         (RELEVANCY, _("Relevancy")),
         # (TOP_RATED, _("Customer rating")),
         (NEWEST, _("Newest")),
-        # (PRICE_HIGH_TO_LOW, _("Price high to low")),
-        # (PRICE_LOW_TO_HIGH, _("Price low to high")),
+        (PRICE_HIGH_TO_LOW, _("Price high to low")),
+        (PRICE_LOW_TO_HIGH, _("Price low to high")),
         # (TITLE_A_TO_Z, _("Title A to Z")),
         # (TITLE_Z_TO_A, _("Title Z to A")),
     ]
@@ -137,6 +137,8 @@ class SearchForm(FacetedSearchForm):
                 self.cleaned_data['sort_by'], None)
             if sort_field:
                 sqs = sqs.order_by(sort_field)
+            else:
+                sqs = sqs.order_by('-date_updated')
 
         return sqs
 

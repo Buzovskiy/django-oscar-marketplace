@@ -2,6 +2,7 @@ from oscar_routing.utils import site_url, get_lang_lookup, media_site_url
 from rest_framework import serializers
 from oscar_routing.utils import site_url, get_lang_lookup, getattr_lang
 from django.conf import settings
+from .models import Sorting
 
 
 class SizeSerializer(serializers.Serializer):
@@ -153,5 +154,25 @@ class ProductBasketLineSerializer(BaseProductSerializer):
             output['color']['value'] = instance.attributes_container.color_hex_code['value']
         except (AttributeError, TypeError, KeyError):
             output['color'] = {}
+
+        return output
+
+
+class OrderingSerializer(serializers.Serializer):
+    def to_representation(self, instance):
+        output = {
+            'title': getattr_lang(instance, 'title'),
+            'queryKey': getattr_lang(instance, 'slug'),
+            'values': []
+        }
+
+        active_sorting_field = self.context.get('active_sorting_field')
+        for sorting_method in Sorting.objects.all():
+            output['values'].append({
+                'id': sorting_method.id,
+                'title': getattr_lang(sorting_method, 'title'),
+                'queryValue': getattr_lang(sorting_method, 'slug'),
+                'active': True if active_sorting_field == sorting_method.field else False
+            })
 
         return output
