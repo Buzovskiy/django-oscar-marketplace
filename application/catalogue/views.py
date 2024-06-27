@@ -100,20 +100,20 @@ def get_products_list(request):
         solr_query_string += f'&selected_facets={solr_filter}'
 
     ###############
-    # sorting_methods = {}
-    # active_sorting_field = None
-    # for sort_method in Sorting.objects.all():
-    #     sorting_methods[getattr_lang(sort_method, 'slug')] = sort_method.field
-    #     if sort_method.default:  # relevan
-    #         active_sorting_field = sort_method.field
-    #
-    # sorting_title = getattr_lang(Sort(), 'slug')
-    # if new_query_dict.__contains__(sorting_title):
-    #     sorting_value = new_query_dict.get(sorting_title)
-    #     if sorting_value in sorting_methods:
-    #         sorting_value_solr = active_sorting_field = sorting_methods[sorting_value]
-    #         new_query_dict.setlist('sort_by', [sorting_value_solr])
-    #         solr_query_string += f'&sort_by={sorting_value_solr}'
+    sorting_methods = {}
+    active_sorting_field = None
+    for sort_method in Sorting.objects.all():
+        sorting_methods[getattr_lang(sort_method, 'slug')] = sort_method.field
+        if sort_method.default:  # relevan
+            active_sorting_field = sort_method.field
+
+    sorting_title = getattr_lang(Sort(), 'slug')
+    if new_query_dict.__contains__(sorting_title):
+        sorting_value = new_query_dict.get(sorting_title)
+        if sorting_value in sorting_methods:
+            sorting_value_solr = active_sorting_field = sorting_methods[sorting_value]
+            new_query_dict.setlist('sort_by', [sorting_value_solr])
+            solr_query_string += f'&sort_by={sorting_value_solr}'
 
     # End modify query params
 
@@ -124,7 +124,7 @@ def get_products_list(request):
         'items': [],
         'total': int(search_context['paginator'].count),
         'filters': [],
-        # 'ordering': OrderingSerializer(Sort(), context={'active_sorting_field': active_sorting_field}).data
+        'ordering': OrderingSerializer(Sort(), context={'active_sorting_field': active_sorting_field}).data
     }
 
     product_list_serializer = ProductListSerializer(
