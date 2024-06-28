@@ -54,7 +54,9 @@
     <tr>
         <td class="content-block">
             <p>{% trans 'Shipping address:' %}</p>
-            <p>{% for field in order.shipping_address.active_address_fields %}  {{ field }}<br/>
+            <p>
+                {% for field, value in order.shipping_address.get_data_for_notification.items %}
+                <span>{{field}}</span>: <span>{{value}}</span><br/>
             {% endfor %}</p>
             {% if order.shipping_code == 'no-shipping-required' %}
                 <p><a href="https://maps.app.goo.gl/TeTAdWe2z2ZDxBSF7">https://maps.app.goo.gl/TeTAdWe2z2ZDxBSF7</a></p>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-18 14:50+0200\n"
+"POT-Creation-Date: 2024-06-28 18:02+0200\n"
 "PO-Revision-Date: 2022-01-26 18:22+0000\n"
 "Last-Translator:   <buzovskiy.v@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,34 +132,34 @@ msgid "Name EN"
 msgstr ""
 
 #: .\application\catalogue\models.py:139 .\application\catalogue\models.py:185
-#: .\application\catalogue\models.py:204
+#: .\application\catalogue\models.py:206 .\application\catalogue\models.py:264
 msgid "Slug ES"
 msgstr ""
 
 #: .\application\catalogue\models.py:140 .\application\catalogue\models.py:186
-#: .\application\catalogue\models.py:203
+#: .\application\catalogue\models.py:205 .\application\catalogue\models.py:265
 msgid "Slug EN"
 msgstr ""
 
-#: .\application\catalogue\models.py:171 .\application\catalogue\models.py:202
+#: .\application\catalogue\models.py:171 .\application\catalogue\models.py:204
 msgid "Value ES"
 msgstr ""
 
-#: .\application\catalogue\models.py:172 .\application\catalogue\models.py:201
+#: .\application\catalogue\models.py:172 .\application\catalogue\models.py:203
 msgid "Value EN"
 msgstr ""
 
-#: .\application\catalogue\models.py:184
+#: .\application\catalogue\models.py:184 .\application\catalogue\models.py:263
 msgid "Slug"
 msgstr ""
 
-#: .\application\catalogue\models.py:187
+#: .\application\catalogue\models.py:187 .\application\catalogue\models.py:266
 #, fuzzy
 #| msgid "Title"
 msgid "Title EN"
 msgstr "Название"
 
-#: .\application\catalogue\models.py:188
+#: .\application\catalogue\models.py:188 .\application\catalogue\models.py:267
 #, fuzzy
 #| msgid "Title"
 msgid "Title ES"
@@ -169,23 +169,23 @@ msgstr "Название"
 msgid "Should be mapped manually to filter field"
 msgstr ""
 
-#: .\application\catalogue\models.py:218
+#: .\application\catalogue\models.py:220
 msgid "Color name"
 msgstr ""
 
-#: .\application\catalogue\models.py:221
+#: .\application\catalogue\models.py:223
 msgid "Color name, e.g. black "
 msgstr ""
 
-#: .\application\catalogue\models.py:224
+#: .\application\catalogue\models.py:226
 msgid "Hex code"
 msgstr ""
 
-#: .\application\catalogue\models.py:228
+#: .\application\catalogue\models.py:230
 msgid "Color hex code, e.g. #000000"
 msgstr ""
 
-#: .\application\catalogue\models.py:236
+#: .\application\catalogue\models.py:238
 msgid "Color hex code"
 msgstr ""
 
@@ -206,13 +206,13 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: .\application\contacts\forms.py:16
+#: .\application\contacts\forms.py:16 .\application\order\models.py:15
 #: .\templates\oscar\checkout\preview.html:41
 msgid "Last name"
 msgstr ""
 
 #: .\application\contacts\forms.py:22 .\application\customer\forms.py:11
-#: .\application\customer\forms.py:28
+#: .\application\customer\forms.py:28 .\application\order\models.py:16
 #: .\templates\oscar\checkout\preview.html:49
 msgid "Email"
 msgstr ""
@@ -229,11 +229,11 @@ msgstr ""
 msgid "Country"
 msgstr "Страна"
 
-#: .\application\contacts\forms.py:38
+#: .\application\contacts\forms.py:38 .\application\order\models.py:21
 msgid "City"
 msgstr ""
 
-#: .\application\contacts\forms.py:43
+#: .\application\contacts\forms.py:43 .\application\order\models.py:22
 #: .\templates\oscar\checkout\preview.html:53
 msgid "Postal code"
 msgstr ""
@@ -367,7 +367,31 @@ msgstr ""
 msgid "Filter values for the interview"
 msgstr ""
 
-#: .\application\order\models.py:16
+#: .\application\order\models.py:14 .\templates\oscar\checkout\preview.html:37
+msgid "First name"
+msgstr ""
+
+#: .\application\order\models.py:17 .\templates\oscar\checkout\preview.html:45
+msgid "Phone number"
+msgstr ""
+
+#: .\application\order\models.py:18
+msgid "Street"
+msgstr ""
+
+#: .\application\order\models.py:19
+msgid "Street number"
+msgstr ""
+
+#: .\application\order\models.py:20
+msgid "Appartment number"
+msgstr ""
+
+#: .\application\order\models.py:23
+msgid "Additional"
+msgstr ""
+
+#: .\application\order\models.py:30
 #: .\templates\oscar\checkout\one_page_checkout.html:162
 #: .\templates\oscar\checkout\preview.html:135
 msgid "Payment method"
@@ -486,6 +510,14 @@ msgstr ""
 msgid "Newest"
 msgstr ""
 
+#: .\application\search\forms.py:60
+msgid "Price high to low"
+msgstr ""
+
+#: .\application\search\forms.py:61
+msgid "Price low to high"
+msgstr ""
+
 #: .\application\search\search_handlers.py:105
 msgid "Page is not 'last', nor can it be converted to an int."
 msgstr ""
@@ -518,27 +550,27 @@ msgstr ""
 msgid "Search optimisation fields"
 msgstr ""
 
-#: .\project\settings.py:204
+#: .\project\settings.py:206
 msgid "Spanish"
 msgstr ""
 
-#: .\project\settings.py:205
+#: .\project\settings.py:207
 msgid "English"
 msgstr ""
 
-#: .\project\settings.py:342
+#: .\project\settings.py:344
 msgid "Type"
 msgstr ""
 
-#: .\project\settings.py:343
+#: .\project\settings.py:345
 msgid "Gender"
 msgstr ""
 
-#: .\project\settings.py:344
+#: .\project\settings.py:346
 msgid "Season"
 msgstr ""
 
-#: .\project\settings.py:345 .\templates\admin\exchange\files_list.html:45
+#: .\project\settings.py:347 .\templates\admin\exchange\files_list.html:45
 #: .\templates\oscar\basket\partials\basket_content.html:59
 #: .\templates\oscar\catalogue\detail.html:88
 #: .\templates\oscar\checkout\one_page_checkout.html:119
@@ -546,15 +578,15 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: .\project\settings.py:346
+#: .\project\settings.py:348
 msgid "Material outer"
 msgstr ""
 
-#: .\project\settings.py:348
+#: .\project\settings.py:350
 msgid "Material inner"
 msgstr ""
 
-#: .\project\settings.py:350 .\templates\oscar\catalogue\detail.html:70
+#: .\project\settings.py:352 .\templates\oscar\catalogue\detail.html:70
 #: .\templates\oscar\catalogue\detail.html:176
 #: .\templates\oscar\catalogue\partials\product.html:25
 #: .\templates\oscar\checkout\one_page_checkout.html:115
@@ -1090,14 +1122,6 @@ msgstr ""
 
 #: .\templates\oscar\checkout\preview.html:19
 msgid "Order confirmation"
-msgstr ""
-
-#: .\templates\oscar\checkout\preview.html:37
-msgid "First name"
-msgstr ""
-
-#: .\templates\oscar\checkout\preview.html:45
-msgid "Phone number"
 msgstr ""
 
 #: .\templates\oscar\checkout\preview.html:197

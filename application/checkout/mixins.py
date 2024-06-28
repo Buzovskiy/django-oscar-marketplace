@@ -72,9 +72,10 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
         text += f"\nOrder total: *{order.total_incl_tax}{order.currency}*"
         text += f"\n\nShipping method: *{order.shipping_method}*"
         text += f"\nClient data:"
-        for field in order.shipping_address.active_address_fields():
-            text += f"\n*{field}*"
-        text += f"\nTelephone: *{order.shipping_address.phone_number}*"
+        # for field in order.shipping_address.active_address_fields():
+        #     text += f"\n*{field}*"
+        for key, value in order.shipping_address.get_data_for_notification().items():
+            text += f"\n{key}: *{value}*"
 
         bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
         async_to_sync(bot.send_message)(

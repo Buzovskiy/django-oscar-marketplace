@@ -1,34 +1,19 @@
-import re
 import json
 from decimal import Decimal
-import stripe
 from django.conf import settings
 from django.http import HttpResponse
-from extra_views import ModelFormSetView
-from django import http
-from django.views.generic import TemplateView, FormView
 from django.views.decorators.csrf import csrf_exempt
-from django.urls import reverse_lazy
-from django.shortcuts import HttpResponseRedirect, render
-from django.utils.translation import get_language
 from django.utils import translation
 from oscar.core.loading import get_class, get_model, get_classes
-from oscar.apps.checkout.views import PaymentDetailsView as PaymentDetailsViewCore
-from oscar.apps.checkout.session import CheckoutSessionMixin
-from .forms import PaymentMethodForm, ShippingAddressForm, ShippingMethodForm
-from application.shipping.repository import Repository
 from application.shipping.methods import NoShippingRequired, FixedPrice
 from application.basket.models import Basket
 from application.order.models import ShippingAddress, Order
 from application.checkout.calculators import OrderTotalCalculator
 from application.checkout.mixins import OrderPlacementMixin
 from application.order.utils import OrderCreator
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from app_settings.models import AppSettings
-from .serializers import PaymentIntentSerializer
 
 (BasketLineForm, AddToBasketForm, BasketVoucherForm, SavedLineForm) = get_classes(
     'basket.forms', ('BasketLineForm', 'AddToBasketForm',
@@ -93,6 +78,8 @@ def stripe_webhook_view(request):
         shipping_address_data['line2'] = shippingDetails['streetNumber']
     if 'city' in shippingDetails:
         shipping_address_data['line3'] = shippingDetails['city']
+    if 'apNumber' in shippingDetails:
+        shipping_address_data['line4'] = shippingDetails['apNumber']
     shipping_address_data['state'] = ''
     if 'postalCode' in shippingDetails:
         shipping_address_data['postcode'] = shippingDetails['postalCode']
