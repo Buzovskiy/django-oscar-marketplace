@@ -1,4 +1,6 @@
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 from oscar.apps.catalogue.admin import *  # noqa
 from .models import ColorHexCode, AttributeValue
 from .models import ProductAttribute, Filter, FilterValue, Sorting
@@ -10,7 +12,22 @@ admin.site.unregister(ProductAttribute)
 class ColorHexCodeAdmin(admin.ModelAdmin):
     list_display = ['color', 'hex_code']
     list_editable = ['hex_code']
+    actions = ['populate_hex_codes']
     ordering = ('-hex_code',)
+
+    @admin.action(description='Populate color hex code to colors filters')
+    def populate_hex_codes(self, request, queryset):
+        updated_count = 0
+        filter_colors_count = FilterValue.objects.filter(filter__field='color').count()
+        for source in queryset:
+            try:
+                color_filter = FilterValue.objects.filter(filter__field='color', value=source.color).get()
+                color_filter.hex_code = source.hex_code
+                color_filter.save()
+                updated_count += 1
+            except ObjectDoesNotExist:
+                continue
+        messages.success(request, f'Updated {updated_count} filter colors of total {filter_colors_count}')
 
 
 class AttributeValueInline(admin.StackedInline):

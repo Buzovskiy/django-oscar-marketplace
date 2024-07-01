@@ -204,6 +204,9 @@ class FilterValue(models.Model):
     value_es = models.CharField(_('Value ES'), max_length=255, null=True, blank=False)
     slug_en = models.CharField(_('Slug EN'), max_length=255, null=True, blank=False)
     slug_es = models.CharField(_('Slug ES'), max_length=255, null=True, blank=False)
+    hex_code = models.CharField(_('Hex Code'), max_length=255, null=True, blank=True)
+
+    objects = models.Manager()
 
     def __str__(self):
         return f"{self.filter}: {self.value}"

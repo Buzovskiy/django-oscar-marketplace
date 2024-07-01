@@ -156,13 +156,18 @@ def get_products_list(request):
             except KeyError:
                 continue
 
-            fi_item['values'].append({
+            fi_item_value = {
                 'title': getattr_lang(fv_details, 'value'),
                 'queryValue': getattr_lang(fv_details, 'slug'),
                 'count': solr_filter_value['count'],
                 'showCount': solr_filter_value['show_count'],
                 'disabled': solr_filter_value['disabled'],
-            })
+            }
+            
+            if fv_details.hex_code:
+                fi_item_value['value'] = fv_details.hex_code
+
+            fi_item['values'].append(fi_item_value)
 
         data['filters'].append(fi_item)
 
