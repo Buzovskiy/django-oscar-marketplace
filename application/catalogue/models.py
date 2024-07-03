@@ -274,3 +274,16 @@ class Sorting(models.Model):
 
     def __str__(self):
         return self.field
+
+
+def update_product_attribute_values_translations(queryset):
+    qs = queryset.prefetch_related('attributevalue_set')
+    for attribute in qs.all():
+        for attribute_value in attribute.attributevalue_set.all():
+            product_attribute_value = ProductAttributeValue.objects.filter(attribute=attribute)
+            product_attribute_value = product_attribute_value.filter(value_external_id=attribute_value.external_id)
+            prod_attr_val_data = {}
+            for lang in settings.LANGUAGES:
+                prod_attr_val_data[f'value_text_{lang[0]}'] = getattr(attribute_value, f'value_{lang[0]}')
+
+            product_attribute_value.update(**prod_attr_val_data)

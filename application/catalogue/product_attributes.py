@@ -1,5 +1,6 @@
 from oscar.apps.catalogue.product_attributes import ProductAttributesContainer as ProductAttributesContainerCore
 from oscar_routing.utils import getattr_lang
+from django.conf import settings
 
 
 class ProductAttributesContainer(ProductAttributesContainerCore):

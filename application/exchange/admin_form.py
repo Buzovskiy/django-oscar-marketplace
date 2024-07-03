@@ -2,9 +2,12 @@ import os
 from django import forms
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.core.management import call_command
 from django.utils.translation import gettext_lazy as _
 from .files import FileXml, FileImage, get_images_list
 from .onec import ImportProduct, ImportOffers, ImportImage, save_filters, populate_color_hex_codes
+from application.catalogue.models import update_product_attribute_values_translations
+from application.catalogue.models import ProductAttribute
 
 
 class ExchangeFilesForm(forms.Form):
@@ -86,10 +89,14 @@ class ExchangeFilesForm(forms.Form):
                     import_product.save_recommended()
                     import_product.clean()
                     populate_color_hex_codes()
+                    # todo: update product attribute values translations only for products in import.xml
+                    update_product_attribute_values_translations(ProductAttribute.objects.all())
                 elif os.path.basename(xml_file) == 'offers.xml':
                     import_offers = ImportOffers(xml_file)
                     import_offers.save_stock_records()
                     import_offers.clean()
+                    # todo: rebuild index only for products in exchange
+                    call_command('rebuild_index', '--noinput')
 
             for image in image_list:
                 import_image_inst = ImportImage(image)
