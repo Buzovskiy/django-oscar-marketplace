@@ -6,7 +6,8 @@ from django.conf import settings
 from pathlib import Path
 import glob
 from django.http import HttpResponse
-from .files import FileImage, FileXml
+from .files import FileImage, FileXml, get_images_list
+from .admin_form import ExchangeFilesForm
 
 
 class IndexView(TemplateView):
@@ -60,5 +61,21 @@ class IndexView(TemplateView):
             filename = os.path.basename(filename)  # import.xml
             # merge_files.
             FileXml().make_file(filename)
+
+            form_data = {'action': 'exchange'}
+            if FileXml(filename).full_path.exists():
+                form_data['xml'] = [filename]
+
+            if filename == 'offers.xml':
+                form_data['image'] = [image_obj.file_name for image_obj in get_images_list()]
+
+            form = ExchangeFilesForm(form_data)
+            if form.is_valid():
+                form.process_data()  # Start exchange of xml files and images
+            # else:
+            #     error = 'Error processing files'
+            #     if '__all__' in form.errors and len(form.errors['__all__']):
+            #         error += '\n' + '\n'.join(form.errors['__all__'])
+            #     return HttpResponse(error)
 
         return HttpResponse('success\n')

@@ -14,14 +14,10 @@ class ExchangeFilesForm(forms.Form):
     """
 
     def __init__(self, *args, **kwargs):
-        try:
-            self.request = kwargs.pop('request')
-        except KeyError:
-            pass
         super().__init__(*args, **kwargs)
 
-        xml_list = [FileXml('import.xml'), FileXml('offers.xml')]
-        self.fields['xml'].choices = [(obj.file_name, obj) for obj in xml_list if obj.full_path.exists()]
+        xml_list = [obj for obj in [FileXml('import.xml'), FileXml('offers.xml')] if obj.full_path.exists()]
+        self.fields['xml'].choices = [(obj.file_name, obj) for obj in xml_list]
         self.fields['image'].choices = [(image_obj.file_name, image_obj) for image_obj in get_images_list()]
 
     xml = forms.MultipleChoiceField(
@@ -53,16 +49,31 @@ class ExchangeFilesForm(forms.Form):
         cleaned_data = super().clean()
         xml_list = cleaned_data.get("xml")
         image_list = cleaned_data.get("image")
-        if hasattr(self, 'request'):
-            if not len(xml_list) and not len(image_list):
-                messages.add_message(self.request, messages.WARNING,
-                                     _('Items must be selected in order to perform actions on them. No items have'))
-                raise ValidationError("Validation error")
 
-        if cleaned_data.get("action") == 'delete':
+        if xml_list is None:
+            raise ValidationError("File import.xml or offers.xml does not exist!")
+
+        for file_name in xml_list:
+            if not FileXml(file_name).full_path.exists():
+                raise ValidationError(f"File {file_name} does not exist!")
+        if not len(xml_list) and not len(image_list):
+            raise ValidationError(_('Items must be selected in order to perform actions on them. No items have'))
+
+    def delete_file(self):
+        xml_list = self.cleaned_data.get("xml")
+        image_list = self.cleaned_data.get("image")
+        for file in xml_list:
+            FileXml(file).remove()
+        for file in image_list:
+            FileImage(file).remove()
+
+    def process_data(self):
+        xml_list = self.cleaned_data.get("xml")
+        image_list = self.cleaned_data.get("image")
+
+        if self.cleaned_data.get("action") == 'delete':
             self.delete_file()
-            messages.add_message(self.request, messages.SUCCESS, message=_('Files are deleted successfully'))
-        elif cleaned_data.get("action") == 'exchange':
+        elif self.cleaned_data.get("action") == 'exchange':
             for xml_file in xml_list:
                 if os.path.basename(xml_file) == 'import.xml':
                     save_filters()
@@ -84,14 +95,3 @@ class ExchangeFilesForm(forms.Form):
                 import_image_inst = ImportImage(image)
                 import_image_inst.save_product_image()
                 import_image_inst.clean()
-
-            messages.add_message(self.request, messages.SUCCESS, message=_('Exchange is done successfully'))
-
-    def delete_file(self):
-        cleaned_data = super().clean()
-        xml_list = cleaned_data.get("xml")
-        image_list = cleaned_data.get("image")
-        for file in xml_list:
-            FileXml(file).remove()
-        for file in image_list:
-            FileImage(file).remove()

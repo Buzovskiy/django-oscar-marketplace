@@ -1,6 +1,6 @@
 import mimetypes
 import os
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse
 from django.urls import path
@@ -48,8 +48,17 @@ class ExchangeAdmin(admin.ModelAdmin):
         form = ExchangeFilesForm()
 
         if request.method == 'POST' and request.POST.get('index'):
-            form = ExchangeFilesForm(request.POST, request=request)
-            form.is_valid()
+            form = ExchangeFilesForm(request.POST)
+            if form.is_valid():
+                form.process_data()  # Start exchange of xml files and images
+                if form.cleaned_data.get("action") == 'delete':
+                    messages.add_message(request, messages.SUCCESS, message=_('Files are deleted successfully'))
+                elif form.cleaned_data.get("action") == 'exchange':
+                    messages.add_message(request, messages.SUCCESS, message=_('Exchange is done successfully'))
+            else:
+                for error in form.non_field_errors():
+                    messages.add_message(request, messages.WARNING, error)
+
             return redirect('admin:exchange-files')
 
         items_count = len(form['image'].field.widget.choices) + len(form['xml'].field.widget.choices)
