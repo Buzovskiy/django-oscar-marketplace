@@ -56,8 +56,10 @@
             <p>{% trans 'Shipping address:' %}</p>
             <p>
                 {% for field, value in order.shipping_address.get_data_for_notification.items %}
-                <span>{{field}}</span>: <span>{{value}}</span><br/>
-            {% endfor %}</p>
+                    <span>{{field}}</span>: <span>{{value}}</span><br/>
+                {% endfor %}
+                <span>{% trans 'Shipping method' %}</span>: <span>{{ order.shipping_method }}</span>
+            </p>
             {% if order.shipping_code == 'no-shipping-required' %}
                 <p><a href="https://maps.app.goo.gl/TeTAdWe2z2ZDxBSF7">https://maps.app.goo.gl/TeTAdWe2z2ZDxBSF7</a></p>
             {% endif %}
