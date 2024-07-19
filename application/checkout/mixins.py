@@ -63,6 +63,7 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
         return checkout_session.url
 
     def send_order_placed_telegram_notification(self, order):
+        data_voucher = order.data_for_voucher_notification
         text = "*Новый заказ!*\n"
         text += f"\nid заказа: *{order.id}*; \n\n"
         for line in order.lines.all():
@@ -70,6 +71,8 @@ class OrderPlacementMixin(OrderPlacementMixinCore):
         text += f"\nBasket total: *{order.basket_total_incl_tax}{order.currency}*"
         text += f"\nShipping: *{order.shipping_incl_tax}{order.currency}*"
         text += f"\nOrder total: *{order.total_incl_tax}{order.currency}*"
+        if data_voucher:
+            text += f"\n{data_voucher[0]}: *{data_voucher[1]}*"
         text += f"\n\nShipping method: *{order.shipping_method}*"
         text += f"\nClient data:"
         # for field in order.shipping_address.active_address_fields():

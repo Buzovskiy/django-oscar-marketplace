@@ -7,6 +7,7 @@ from django.views.generic import TemplateView, FormView
 from django.urls import reverse_lazy
 from django.shortcuts import HttpResponseRedirect, render
 from django.utils.translation import get_language
+from django.core.exceptions import ObjectDoesNotExist
 from oscar.core.loading import get_class, get_model, get_classes
 from oscar.apps.checkout.views import PaymentDetailsView as PaymentDetailsViewCore
 from oscar.apps.checkout.session import CheckoutSessionMixin
@@ -14,18 +15,20 @@ from .forms import PaymentMethodForm, ShippingAddressForm, ShippingMethodForm
 from application.shipping.repository import Repository
 from application.basket.models import Basket
 from application.order.utils import OrderNumberGenerator
+from application.voucher.models import Voucher
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from app_settings.models import AppSettings
 from .serializers import PaymentIntentSerializer
-
+from application.voucher.exceptions import VoucherIsNotValid
 
 (BasketLineForm, AddToBasketForm, BasketVoucherForm, SavedLineForm) = get_classes(
     'basket.forms', ('BasketLineForm', 'AddToBasketForm',
                      'BasketVoucherForm', 'SavedLineForm'))
 BasketLineFormSet = get_class('basket.formsets', 'BasketLineFormSet')
 Country = get_model('address', 'country')
+Applicator = get_class('offer.applicator', 'Applicator')
 
 
 class PaymentIntentApiView(APIView):
@@ -55,6 +58,23 @@ class PaymentIntentApiView(APIView):
             order_number = OrderNumberGenerator().order_number(basket)
 
             try:
+                promo_code = json.loads(payment_serializer.validated_data.get('promoCode'))
+                voucher = Voucher.objects.get(code=promo_code.get('code'))
+                # Check voucher if it is valid
+                if voucher.is_expired():
+                    raise VoucherIsNotValid('Voucher expired')
+                if not voucher.is_active():
+                    raise VoucherIsNotValid('Voucher not active')
+                is_available, message = voucher.is_available_to_user(self.request.user)
+                if not is_available:
+                    raise VoucherIsNotValid('Voucher not active')
+            except (TypeError, KeyError, VoucherIsNotValid, ObjectDoesNotExist):
+                promo_code = None
+            else:
+                basket.vouchers.add(voucher)
+                Applicator().apply(basket, self.request.user, self.request)
+
+            try:
                 payment_intent = stripe.PaymentIntent.create(
                     amount=int(basket.total_incl_tax * 100),
                     currency=basket.all_lines().first().price_currency.lower(),
@@ -62,6 +82,7 @@ class PaymentIntentApiView(APIView):
                         'language': get_language(),
                         'carrier': payment_serializer.validated_data.get('carrier'),
                         'shippingDetails': payment_serializer.validated_data.get('shippingDetails'),
+                        'promoCode': payment_serializer.validated_data.get('promoCode'),
                         'orderNumber': order_number,
                         'basketId': basket.id
                     },

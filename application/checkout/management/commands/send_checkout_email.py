@@ -17,6 +17,6 @@ class Command(BaseCommand):
             "Subject here",
             "Here is the message.",
             "kidsweestep@gmail.com",
-            ["buzovskiy.v@gmail.com"],
+            ["test-td9z6s3rw@srv1.mail-tester.com"],
             fail_silently=False,
         )

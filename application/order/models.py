@@ -30,5 +30,12 @@ class Order(AbstractOrder):
         PaymentMethod, verbose_name=_('Payment method'),
         null=True, on_delete=models.SET_NULL)
 
+    @property
+    def data_for_voucher_notification(self):
+        voucher = self.discounts.first()
+        if not voucher:
+            return None
+        return _('Promo code'), voucher.voucher_code
+
 
 from oscar.apps.order.models import *  # noqa isort:skip

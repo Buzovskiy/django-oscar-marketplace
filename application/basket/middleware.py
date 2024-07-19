@@ -1,6 +1,9 @@
 from django.conf import settings
 from django.utils.functional import SimpleLazyObject, empty
+from django.core.exceptions import ObjectDoesNotExist
 from oscar.apps.basket.middleware import BasketMiddleware as BasketMiddlewareCore
+from oscar.core.loading import get_class, get_model, get_classes
+from application.basket.models import Basket
 
 
 class APIBasketMiddleware(BasketMiddlewareCore):
@@ -23,8 +26,8 @@ class APIBasketMiddleware(BasketMiddlewareCore):
         # Check if we need to set a cookie. If the cookies is already available
         # but is set in the cookies_to_delete list then we need to re-set it.
         has_basket_cookie = (
-            cookie_key in request.COOKIES
-            and cookie_key not in cookies_to_delete)
+                cookie_key in request.COOKIES
+                and cookie_key not in cookies_to_delete)
 
         # If a basket has had products added to it, but the user is anonymous
         # then we need to assign it to a cookie

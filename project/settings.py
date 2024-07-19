@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'application.customer.apps.CustomerConfig',
     'application.search.apps.SearchConfig',
 
-    'oscar.apps.voucher.apps.VoucherConfig',
+    # 'oscar.apps.voucher.apps.VoucherConfig',
     'oscar.apps.wishlists.apps.WishlistsConfig',
     'oscar.apps.dashboard.apps.DashboardConfig',
     'oscar.apps.dashboard.reports.apps.ReportsDashboardConfig',
@@ -105,6 +105,7 @@ INSTALLED_APPS = [
     'application.exchange.apps.ExchangeConfig',
     'application.interview.apps.InterviewConfig',
     'application.search_optimisation_fields.apps.SearchOptimisationFieldsConfig',
+    'application.voucher.apps.VoucherConfig'
 ]
 
 if DEBUG:

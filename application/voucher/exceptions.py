@@ -1,0 +1,2 @@
+class VoucherIsNotValid(Exception):
+    pass

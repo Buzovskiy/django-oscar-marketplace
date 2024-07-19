@@ -20,6 +20,7 @@ from rest_framework.decorators import api_view
                      'BasketVoucherForm', 'SavedLineForm'))
 BasketLineFormSet = get_class('basket.formsets', 'BasketLineFormSet')
 Country = get_model('address', 'country')
+Applicator = get_class('offer.applicator', 'Applicator')
 
 
 @csrf_exempt
@@ -38,6 +39,7 @@ def stripe_webhook_view(request):
 
     basket_id = metadata.get('basketId', None)
     try:
+        # todo: get basket in middleware
         basket = Basket.objects.get(id=basket_id)
     except Basket.DoesNotExist as e:
         return HttpResponse(e, status=200)
@@ -46,6 +48,8 @@ def stripe_webhook_view(request):
         return HttpResponse(f'Basket with id {basket.id} is already submitted', status=200)
 
     basket.strategy = request.strategy
+    if not basket.is_empty:
+        Applicator().apply(basket, request.user, request)
 
     order_number = metadata.get('orderNumber')
     if Order.objects.filter(number=order_number).count():
