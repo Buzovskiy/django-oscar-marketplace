@@ -56,6 +56,7 @@ class PaymentIntentApiView(APIView):
             order_number = OrderNumberGenerator().order_number(basket)
 
             try:
+                #todo: create separate serializer for promo code data
                 promo_code = json.loads(payment_serializer.validated_data.get('promoCode'))
                 voucher = Voucher.objects.get(code=promo_code.get('code'))
                 # Check voucher if it is valid
@@ -66,7 +67,7 @@ class PaymentIntentApiView(APIView):
                 is_available, message = voucher.is_available_to_user(self.request.user)
                 if not is_available:
                     raise VoucherIsNotValid('Voucher not active')
-            except (TypeError, KeyError, VoucherIsNotValid, ObjectDoesNotExist):
+            except (AttributeError, TypeError, KeyError, VoucherIsNotValid, ObjectDoesNotExist):
                 promo_code = None
             else:
                 basket.vouchers.add(voucher)
