@@ -38,6 +38,12 @@
                                 <td class="alignright">{% trans 'Shipping:' %}</td>
                                 <td class="alignright">{{ order.shipping_incl_tax|currency:order.currency }}</td>
                             </tr>
+                            {% if order.data_for_voucher_notification %}
+                                <tr>
+                                    <td class="alignright">{{ order.data_for_voucher_notification.0 }}:</td>
+                                    <td class="alignright">{{ order.data_for_voucher_notification.1 }}</td>
+                                </tr>
+                            {% endif %}
                             <tr class="total">
                                 <td class="alignright" width="80%">{% trans 'Order Total:' %}</td>
                                 <td class="alignright">{{ order.total_incl_tax|currency:order.currency }}</td>
@@ -56,7 +62,7 @@
             <p>{% trans 'Shipping address:' %}</p>
             <p>
                 {% for field, value in order.shipping_address.get_data_for_notification.items %}
-                    <span>{{field}}</span>: <span>{{value}}</span><br/>
+                    <span>{{ field }}</span>: <span>{{ value }}</span><br/>
                 {% endfor %}
                 <span>{% trans 'Shipping method' %}</span>: <span>{{ order.shipping_method }}</span>
             </p>

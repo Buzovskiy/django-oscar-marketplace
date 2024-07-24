@@ -1,9 +1,8 @@
 import re
 import json
 import stripe
-from extra_views import ModelFormSetView
 from django import http
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import HttpResponseRedirect, render
 from django.utils.translation import get_language
@@ -13,7 +12,6 @@ from oscar.apps.checkout.views import PaymentDetailsView as PaymentDetailsViewCo
 from oscar.apps.checkout.session import CheckoutSessionMixin
 from .forms import PaymentMethodForm, ShippingAddressForm, ShippingMethodForm
 from application.shipping.repository import Repository
-from application.basket.models import Basket
 from application.order.utils import OrderNumberGenerator
 from application.voucher.models import Voucher
 from rest_framework.views import APIView

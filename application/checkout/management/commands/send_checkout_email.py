@@ -16,7 +16,7 @@ class Command(BaseCommand):
         send_mail(
             "Subject here",
             "Here is the message.",
-            "kidsweestep@gmail.com",
-            ["test-td9z6s3rw@srv1.mail-tester.com"],
+            "no-reply@weestep.es",
+            [""],
             fail_silently=False,
         )
