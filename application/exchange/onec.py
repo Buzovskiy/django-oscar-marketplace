@@ -11,7 +11,8 @@ from .files import FileXml, FileImage
 import xml.etree.ElementTree as ET
 from slugify import slugify_filename
 from application.catalogue.utils import get_sizes_list_from_range
-from application.catalogue.models import AttributeValue, Filter, FilterValue, ProductFilterValue
+from application.catalogue.models import AttributeValue, Filter, FilterValue, ProductFilterValue, \
+    ProductsForExchange
 
 ProductClass = get_model('catalogue', 'ProductClass')
 ProductAttribute = get_model('catalogue', 'ProductAttribute')
@@ -88,6 +89,12 @@ class ImportCore:
 
 
 class ImportProduct(ImportCore):
+    """
+    For products which yet are not in database the exchange is done in two steps:
+    1. during offers.xml exchange if qty is greater 0 the product is registered for exchange in
+    the database ProductsForExchange;
+    2. during import.xml exchange if product is registered for exchange it is added to the database
+    """
 
     @staticmethod
     def save_product_class():
@@ -165,6 +172,13 @@ class ImportProduct(ImportCore):
         """product.title, see .models.product_category_changed"""
         product_class = ProductClass.objects.filter(name='Shoes').get()
         external_id_xml = product_xml.find('Ид').text
+
+        try:
+            product_for_exchange = ProductsForExchange.objects.filter(
+                external_id=external_id_xml).get()
+        except ObjectDoesNotExist:
+            return False
+
         try:
             category_external_id_xml = product_xml.find('./Группы/Ид').text
         except AttributeError:
@@ -202,6 +216,9 @@ class ImportProduct(ImportCore):
                 'product_class': product_class,
             },
         )
+
+        product_for_exchange.product = product
+        product_for_exchange.save()
 
         # Add category to product
         product.categories.add(category)
@@ -440,7 +457,6 @@ class ImportProduct(ImportCore):
             except ValidationError:
                 continue
 
-
     @staticmethod
     def save_color_hex_code_product_attribute(product):
         """
@@ -502,6 +518,17 @@ class ImportOffers(ImportCore):
             if len(external_id_xml.split('#')) != 2:
                 continue
 
+            # If quantity below 0, turn it into 0
+            num_in_stock_xml = float(offer_xml.find('Количество').text)
+            num_in_stock_xml = num_in_stock_xml if num_in_stock_xml > 0 else 0
+
+            parent_external_id = external_id_xml.split('#')[0]
+            if num_in_stock_xml > 0:
+                ProductsForExchange.objects.update_or_create(
+                    external_id=parent_external_id,
+                    defaults={'external_id': parent_external_id}
+                )
+
             try:  # try finding product and partner. If not found, go to another one
                 product = Product.objects.filter(
                     structure='child',
@@ -510,10 +537,6 @@ class ImportOffers(ImportCore):
                 partner = Partner.objects.filter(code=settings.PARTNER_DEFAULT['code']).get()
             except ObjectDoesNotExist:
                 continue
-
-            # If quantity below 0, turn it into 0
-            num_in_stock_xml = float(offer_xml.find('Количество').text)
-            num_in_stock_xml = num_in_stock_xml if num_in_stock_xml > 0 else 0
 
             product.is_public = False if num_in_stock_xml == 0 else True
             product.save()

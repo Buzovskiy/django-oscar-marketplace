@@ -2,8 +2,9 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from oscar.apps.catalogue.admin import *  # noqa
-from .models import ColorHexCode, AttributeValue
-from .models import ProductAttribute, Filter, FilterValue, Sorting, update_product_attribute_values_translations
+from .models import ProductAttribute, Filter, FilterValue, Sorting, \
+    update_product_attribute_values_translations, ColorHexCode, AttributeValue, \
+    ProductsForExchange
 
 admin.site.unregister(ProductAttribute)
 
@@ -66,3 +67,8 @@ class FilterAdmin(admin.ModelAdmin):
 @admin.register(Sorting)
 class SortingAdmin(admin.ModelAdmin):
     list_display = ('field', 'slug', 'slug_en', 'slug_es', 'title_en', 'title_es', 'default')
+
+
+@admin.register(ProductsForExchange)
+class ProductsForExchangeAdmin(admin.ModelAdmin):
+    list_display = ('external_id', 'product')

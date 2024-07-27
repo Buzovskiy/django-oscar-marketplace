@@ -241,6 +241,24 @@ class ColorHexCode(models.Model):
         verbose_name = _('Color hex code')
 
 
+class ProductsForExchange(models.Model):
+    """
+    This table contains external ids of products to take part in exchange.
+    """
+    external_id = models.CharField(
+        _('Code in 1c'), max_length=255, editable=True, null=True, unique=True
+    )
+    product = models.OneToOneField(
+        'catalogue.Product', on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        try:
+            title = self.product.title
+        except AttributeError:
+            title = ''
+        return title
+
+
 from oscar.apps.catalogue.models import *  # noqa isort:skip
 
 
